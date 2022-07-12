@@ -13,10 +13,22 @@ function App({cardsOnPage}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={<MainScreen cardsOnPage={cardsOnPage}/>}/>
-        <Route path={AppRoute.Login} element={<LoginScreen/>}/>
-        <Route path={AppRoute.Favorites} element={<FavoritesScreen/>}/>
-        <Route path={AppRoute.Room} element={<RoomScreen/>}/>
+        <Route
+          path={AppRoute.Main}
+          element={<MainScreen cardsOnPage={cardsOnPage} />}
+        />
+        <Route
+          path={AppRoute.Login}
+          element={<LoginScreen />}
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element={<FavoritesScreen />}
+        />
+        <Route
+          path={AppRoute.Room}
+          element={<RoomScreen />}
+        />
       </Routes>
     </BrowserRouter>
   );
