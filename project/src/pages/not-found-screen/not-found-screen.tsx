@@ -30,7 +30,8 @@ function NotFoundScreen() {
           <a
             className="not-found__return-link"
             href="/"
-          >Return to main page</a>
+          >Return to main page
+          </a>
         </section>
       </main>
     </div>
