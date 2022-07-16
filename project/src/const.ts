@@ -13,10 +13,15 @@ enum AuthorizationStatus {
 }
 
 enum HousingType {
-  Apartment = 'apartment',
-  PrivateRoom = 'room',
-  House = 'house',
-  Hotel = 'hotel',
+  Apartment = 'Apartment',
+  Room = 'Private room',
+  House = 'House',
+  Hotel = 'Hotel',
 }
 
-export { AppRoute, AuthorizationStatus, HousingType };
+const Setting = {
+  CARDS_ON_PAGE: 5,
+  MAX_RATING: 5,
+};
+
+export { AppRoute, AuthorizationStatus, HousingType, Setting };

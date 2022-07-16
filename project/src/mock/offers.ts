@@ -11,7 +11,7 @@ export const offers: Offer[] = [
     description:
       'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum molestiae dolor molestias iste temporibus, nulla totam quam cumque minus blanditiis voluptate ex voluptas unde obcaecati possimus similique? Eum, nesciunt cupiditate!',
     isPremium: false,
-    type: HousingType.PrivateRoom,
+    type: HousingType.Room,
     rating: 4,
     bedrooms: 1,
     maxGuests: 2,
