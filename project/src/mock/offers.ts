@@ -1,7 +1,8 @@
 import { HousingType } from '../const';
 import { Offer } from '../types/offer';
-import { owners } from './owners';
-import { reviews } from './reviews';
+import { users } from './users';
+import { comments } from './comments';
+import { cities } from './cities';
 
 export const offers: Offer[] = [
   {
@@ -14,12 +15,13 @@ export const offers: Offer[] = [
     type: HousingType.Room,
     rating: 4,
     bedrooms: 1,
-    maxGuests: 2,
-    nightPrice: 34,
-    features: ['Wi-Fi', 'Washing machine'],
-    owner: owners.angelina,
+    maxAdults: 2,
+    price: 34,
+    goods: ['Wi-Fi', 'Washing machine'],
+    host: users.angelina,
     isFavorite: true,
-    reviews: reviews,
+    comments: comments,
+    city: cities.amsterdam,
   },
   {
     id: 2,
@@ -31,9 +33,9 @@ export const offers: Offer[] = [
     type: HousingType.Hotel,
     rating: 3,
     bedrooms: 5,
-    maxGuests: 5,
-    nightPrice: 50,
-    features: [
+    maxAdults: 5,
+    price: 50,
+    goods: [
       'Wi-Fi',
       'Washing machine',
       'Coffee machine',
@@ -41,9 +43,10 @@ export const offers: Offer[] = [
       'Fridge',
       'Kitchen',
     ],
-    owner: owners.angelina,
+    host: users.angelina,
     isFavorite: false,
-    reviews: reviews,
+    comments: comments,
+    city: cities.brussels,
   },
   {
     id: 3,
@@ -55,12 +58,13 @@ export const offers: Offer[] = [
     type: HousingType.House,
     rating: 4,
     bedrooms: 2,
-    maxGuests: 3,
-    nightPrice: 23,
-    features: ['Wi-Fi', 'Washing machine', 'Baby Seat', 'Cabel TV'],
-    owner: owners.max,
+    maxAdults: 3,
+    price: 23,
+    goods: ['Wi-Fi', 'Washing machine', 'Baby Seat', 'Cabel TV'],
+    host: users.max,
     isFavorite: true,
-    reviews: reviews,
+    comments: comments,
+    city: cities.paris,
   },
   {
     id: 4,
@@ -72,9 +76,9 @@ export const offers: Offer[] = [
     type: HousingType.Apartment,
     rating: 5,
     bedrooms: 1,
-    maxGuests: 2,
-    nightPrice: 100,
-    features: [
+    maxAdults: 2,
+    price: 100,
+    goods: [
       'Wi-Fi',
       'Washing machine',
       'Baby Seat',
@@ -84,8 +88,9 @@ export const offers: Offer[] = [
       'Fridge',
       'Kitchen',
     ],
-    owner: owners.max,
+    host: users.max,
     isFavorite: false,
-    reviews: reviews,
+    comments: comments,
+    city: cities.paris,
   },
 ];

@@ -1,5 +1,6 @@
-import { Owner } from './owner';
-import { Review } from './review';
+import { City } from './city';
+import { User } from './user';
+import { Comment } from './comment';
 
 export type Offer = {
   id: number;
@@ -10,10 +11,11 @@ export type Offer = {
   type: string;
   rating: number;
   bedrooms: number;
-  maxGuests: number;
-  nightPrice: number;
-  features: string[];
-  owner: Owner;
+  maxAdults: number;
+  price: number;
+  goods: string[];
+  host: User;
   isFavorite: boolean;
-  reviews: Review[];
-}
+  comments: Comment[];
+  city: City;
+};
