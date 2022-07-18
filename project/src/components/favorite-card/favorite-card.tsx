@@ -1,36 +1,29 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
 import { Offer } from '../../types/offer';
 import { getRatingStyle, setFavoriteButtonClassName } from '../utils';
 
-type PlaceCardProps = {
+type FavoriteCardProps = {
   offer: Offer;
-  isActive: boolean;
-  onHover: () => void;
 };
 
-function PlaceCard({ offer, isActive, onHover }: PlaceCardProps): JSX.Element {
-
+function FavoroteCard({ offer }: FavoriteCardProps): JSX.Element {
   return (
-    <article className="cities__card place-card" onMouseOver={onHover}>
-      {
-        offer.isPremium &&
+    <article className="favorites__card place-card">
+      {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
-        </div>
-      }
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Room}/${offer.id}`}>
+        </div>}
+      <div className="favorites__image-wrapper place-card__image-wrapper">
+        <a href="#todo">
           <img
             className="place-card__image"
             src={offer.images[0]}
-            width="260"
-            height="200"
+            width="150"
+            height="110"
             alt={offer.title}
           />
-        </Link>
+        </a>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>
@@ -57,12 +50,12 @@ function PlaceCard({ offer, isActive, onHover }: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Room}/${offer.id}`}>{offer.title}</Link>
+          <a href="#todo">{offer.title}</a>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
-    </article >
+    </article>
   );
 }
 
-export default PlaceCard;
+export default FavoroteCard;

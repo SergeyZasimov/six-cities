@@ -2,8 +2,8 @@ enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Room = '/offer/:id',
-  NotFound = '*'
+  Room = '/offer',
+  NotFound = '*',
 }
 
 enum AuthorizationStatus {
@@ -12,4 +12,16 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export { AppRoute, AuthorizationStatus };
+enum HousingType {
+  Apartment = 'Apartment',
+  Room = 'Private room',
+  House = 'House',
+  Hotel = 'Hotel',
+}
+
+enum Setting {
+  CardsOnPage = 5,
+  MaxRating = 5,
+}
+
+export { AppRoute, AuthorizationStatus, HousingType, Setting };
