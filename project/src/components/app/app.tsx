@@ -34,7 +34,7 @@ function App({ cardsOnPage, offers }: AppProps): JSX.Element {
           }
         />
         <Route
-          path={AppRoute.Room}
+          path={`${AppRoute.Room}/:id`}
           element={<RoomScreen offers={offers} />}
         />
         <Route

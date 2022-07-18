@@ -11,6 +11,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App cardsOnPage={Setting.CARDS_ON_PAGE} offers={offers} />
+    <App cardsOnPage={Setting.CardsOnPage} offers={offers} />
   </React.StrictMode>,
 );

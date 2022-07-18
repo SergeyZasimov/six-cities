@@ -1,161 +1,83 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, Fragment, useState } from 'react';
+import { Setting } from '../../const';
 
-type Comment = {
+type NewComment = {
   rating: number;
-  text: string;
+  comment: string;
 };
 
-function CommentForm() {
+function CommentForm(): JSX.Element {
 
-  const [comment, setComment] = useState({ rating: 0, text: '' } as Comment);
+  const [comment, setComment] = useState({ rating: 0, comment: '' } as NewComment);
 
-  const setRating = (evt: ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeRating = (evt: ChangeEvent<HTMLInputElement>): void => {
     evt.preventDefault();
     setComment({ ...comment, rating: +evt.target.value });
   };
 
-  const setCommentText = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
+  const handleChangeText = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
     evt.preventDefault();
-    setComment({ ...comment, text: evt.target.value });
+    setComment({ ...comment, comment: evt.target.value });
   };
 
   return (
     <form
-      className="reviews__form form"
+      className="comments__form form"
       action="#"
       method="post"
     >
       <label
-        className="reviews__label form__label"
-        htmlFor="review"
-      >Your review
+        className="comments__label form__label"
+        htmlFor="comment"
+      >Your comment
       </label>
-      <div className="reviews__rating-form form__rating">
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="5"
-          id="5-stars"
-          type="radio"
-          onChange={setRating}
-        />
-        <label
-          htmlFor="5-stars"
-          className="reviews__rating-label form__rating-label"
-          title="perfect"
-        >
-          <svg
-            className="form__star-image"
-            width="37"
-            height="33"
-          >
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="4"
-          id="4-stars"
-          type="radio"
-          onChange={setRating}
-        />
-        <label
-          htmlFor="4-stars"
-          className="reviews__rating-label form__rating-label"
-          title="good"
-        >
-          <svg
-            className="form__star-image"
-            width="37"
-            height="33"
-          >
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="3"
-          id="3-stars"
-          type="radio"
-          onChange={setRating}
-        />
-        <label
-          htmlFor="3-stars"
-          className="reviews__rating-label form__rating-label"
-          title="not bad"
-        >
-          <svg
-            className="form__star-image"
-            width="37"
-            height="33"
-          >
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="2"
-          id="2-stars"
-          type="radio"
-          onChange={setRating}
-        />
-        <label
-          htmlFor="2-stars"
-          className="reviews__rating-label form__rating-label"
-          title="badly"
-        >
-          <svg
-            className="form__star-image"
-            width="37"
-            height="33"
-          >
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="1"
-          id="1-star"
-          type="radio"
-          onChange={setRating}
-        />
-        <label
-          htmlFor="1-star"
-          className="reviews__rating-label form__rating-label"
-          title="terribly"
-        >
-          <svg
-            className="form__star-image"
-            width="37"
-            height="33"
-          >
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+      <div className="comments__rating-form form__rating">
+        {
+          [...Array(Setting.MaxRating)].map((_, index) => {
+            const starNumber: number = Setting.MaxRating - index;
+            return (
+              <Fragment key={starNumber}>
+                <input
+                  className="form__rating-input visually-hidden"
+                  name="rating"
+                  value={starNumber}
+                  id={`${starNumber}-star`}
+                  type="radio"
+                  onChange={handleChangeRating}
+                />
+                <label
+                  htmlFor={`${starNumber}-star`}
+                  className="comments__rating-label form__rating-label"
+                  title="perfect"
+                >
+                  <svg
+                    className="form__star-image"
+                    width="37"
+                    height="33"
+                  >
+                    <use xlinkHref="#icon-star"></use>
+                  </svg>
+                </label>
+              </Fragment>
+            );
+          })
+        }
       </div>
       <textarea
-        className="reviews__textarea form__textarea"
-        id="review"
-        name="review"
+        className="comments__textarea form__textarea"
+        id="comment"
+        name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={setCommentText}
+        onChange={handleChangeText}
       >
       </textarea>
-      <div className="reviews__button-wrapper">
-        <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and
-          describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+      <div className="comments__button-wrapper">
+        <p className="comments__help">
+          To submit comment please make sure to set <span className="comments__star">rating</span> and
+          describe your stay with at least <b className="comments__text-amount">50 characters</b>.
         </p>
         <button
-          className="reviews__submit form__submit button"
+          className="comments__submit form__submit button"
           type="submit"
           disabled
         >Submit

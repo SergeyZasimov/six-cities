@@ -1,14 +1,14 @@
-import { Review } from '../types/review';
+import { Comment } from '../types/comment';
 import { users } from './users';
 
-export const reviews: Review[] = [
+export const comments: Comment[] = [
   {
     id: 1,
     user: users.angelina,
     name: 'Angelina',
     rating: 4,
     date: 'June 2022',
-    review:
+    comment:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime laborum veniam et aspernatur quibusdam ipsum!',
   },
   {
@@ -17,7 +17,7 @@ export const reviews: Review[] = [
     name: 'Max',
     rating: 5,
     date: 'July 2022',
-    review:
+    comment:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime laborum veniam et aspernatur quibusdam ipsum!',
   },
 ];

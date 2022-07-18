@@ -2,7 +2,7 @@ enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Room = '/offer/:id',
+  Room = '/offer',
   NotFound = '*',
 }
 
@@ -19,9 +19,9 @@ enum HousingType {
   Hotel = 'Hotel',
 }
 
-const Setting = {
-  CARDS_ON_PAGE: 5,
-  MAX_RATING: 5,
-};
+enum Setting {
+  CardsOnPage = 5,
+  MaxRating = 5,
+}
 
 export { AppRoute, AuthorizationStatus, HousingType, Setting };

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { getRatingStyle, setFavoriteButtonClassName } from '../../components/utils';
 import { Offer } from '../../types/offer';
-import { Review } from '../../types/review';
+import { Comment } from '../../types/comment';
 import CommentForm from '../../components/comment-form/comment-form';
 
 type RoomScreenProps = {
@@ -163,40 +163,40 @@ function RoomScreen({ offers }: RoomScreenProps): JSX.Element {
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{room.reviews.length}</span></h2>
-                <ul className="reviews__list">
+              <section className="property__comments comments">
+                <h2 className="comments__title">Comments &middot; <span className="comments__amount">{room.comments.length}</span></h2>
+                <ul className="comments__list">
                   {
-                    room.reviews.map((review: Review) => (
-                      <li className="reviews__item" key={review.id}>
-                        <div className="reviews__user user">
-                          <div className="reviews__avatar-wrapper user__avatar-wrapper">
+                    room.comments.map((comment: Comment) => (
+                      <li className="comments__item" key={comment.id}>
+                        <div className="comments__user user">
+                          <div className="comments__avatar-wrapper user__avatar-wrapper">
                             <img
-                              className="reviews__avatar user__avatar"
-                              src={review.user.avatarUrl}
+                              className="comments__avatar user__avatar"
+                              src={comment.user.avatarUrl}
                               width="54"
                               height="54"
-                              alt={`Reviews ${review.user.name}`}
+                              alt={`Comments ${comment.user.name}`}
                             />
                           </div>
-                          <span className="reviews__user-name">
-                            {review.user.name}
+                          <span className="comments__user-name">
+                            {comment.user.name}
                           </span>
                         </div>
-                        <div className="reviews__info">
-                          <div className="reviews__rating rating">
-                            <div className="reviews__stars rating__stars">
-                              <span style={getRatingStyle(review.rating)}></span>
+                        <div className="comments__info">
+                          <div className="comments__rating rating">
+                            <div className="comments__stars rating__stars">
+                              <span style={getRatingStyle(comment.rating)}></span>
                               <span className="visually-hidden">Rating</span>
                             </div>
                           </div>
-                          <p className="reviews__text">
-                            {review.review}
+                          <p className="comments__text">
+                            {comment.comment}
                           </p>
                           <time
-                            className="reviews__time"
-                            dateTime={review.date}
-                          >{review.date}
+                            className="comments__time"
+                            dateTime={comment.date}
+                          >{comment.date}
                           </time>
                         </div>
                       </li>

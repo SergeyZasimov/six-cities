@@ -8,9 +8,9 @@ type CardListProp = {
 
 function PlaceCardList({ offers }: CardListProp): JSX.Element {
 
-  const [activeCardID, setActiveCardID] = useState<number>();
+  const [activeCardId, setActiveCardId] = useState<number>();
 
-  const isActive = (id: number): boolean => activeCardID === id;
+  const isActive = (id: number): boolean => activeCardId === id;
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -20,7 +20,7 @@ function PlaceCardList({ offers }: CardListProp): JSX.Element {
             key={offer.id}
             offer={offer}
             isActive={isActive(offer.id)}
-            onHover={() => setActiveCardID(offer.id)}
+            onHover={() => setActiveCardId(offer.id)}
           />))
       }
     </div>
