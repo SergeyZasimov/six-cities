@@ -1,7 +1,7 @@
 import { HousingType } from '../const';
 import { Offer } from '../types/offer';
 import { users } from './users';
-import { comments } from './comments';
+import { reviews } from './reviews';
 import { cities } from './cities';
 
 export const offers: Offer[] = [
@@ -20,7 +20,7 @@ export const offers: Offer[] = [
     goods: ['Wi-Fi', 'Washing machine'],
     host: users.angelina,
     isFavorite: true,
-    comments: comments,
+    reviews: reviews,
     city: cities.amsterdam,
   },
   {
@@ -45,7 +45,7 @@ export const offers: Offer[] = [
     ],
     host: users.angelina,
     isFavorite: false,
-    comments: comments,
+    reviews: reviews,
     city: cities.brussels,
   },
   {
@@ -63,7 +63,7 @@ export const offers: Offer[] = [
     goods: ['Wi-Fi', 'Washing machine', 'Baby Seat', 'Cabel TV'],
     host: users.max,
     isFavorite: true,
-    comments: comments,
+    reviews: reviews,
     city: cities.paris,
   },
   {
@@ -90,7 +90,7 @@ export const offers: Offer[] = [
     ],
     host: users.max,
     isFavorite: true,
-    comments: comments,
+    reviews: reviews,
     city: cities.paris,
   },
 ];

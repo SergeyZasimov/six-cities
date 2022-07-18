@@ -1,6 +1,6 @@
 import { City } from './city';
 import { User } from './user';
-import { Comment } from './comment';
+import { Review } from './review';
 
 export type Offer = {
   id: number;
@@ -16,6 +16,6 @@ export type Offer = {
   goods: string[];
   host: User;
   isFavorite: boolean;
-  comments: Comment[];
+  reviews: Review[];
   city: City;
 };
