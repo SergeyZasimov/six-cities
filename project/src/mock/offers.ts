@@ -89,7 +89,7 @@ export const offers: Offer[] = [
       'Kitchen',
     ],
     host: users.max,
-    isFavorite: false,
+    isFavorite: true,
     comments: comments,
     city: cities.paris,
   },
