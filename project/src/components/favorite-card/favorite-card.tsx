@@ -1,5 +1,5 @@
 import { Offer } from '../../types/offer';
-import { getRating, setFavoriteButtonClassName } from '../utils';
+import { getRatingStyle, setFavoriteButtonClassName } from '../utils';
 
 type FavoriteCardProps = {
   offer: Offer;
@@ -30,7 +30,7 @@ function FavoroteCard({ offer }: FavoriteCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={setFavoriteButtonClassName(offer)}
+            className={setFavoriteButtonClassName(offer.isFavorite, 'place-card')}
             type="button"
           >
             <svg
@@ -45,7 +45,7 @@ function FavoroteCard({ offer }: FavoriteCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={getRating(offer.rating)}></span>
+            <span style={getRatingStyle(offer.rating)}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

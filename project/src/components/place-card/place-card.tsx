@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
-import { getRating, setFavoriteButtonClassName } from '../utils';
+import { getRatingStyle, setFavoriteButtonClassName } from '../utils';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -18,7 +19,7 @@ function PlaceCard({ offer, isActive, onHover }: PlaceCardProps): JSX.Element {
         </div>
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="/">
+        <Link to={`/offer/${offer.id}`}>
           <img
             className="place-card__image"
             src={offer.images[0]}
@@ -26,7 +27,7 @@ function PlaceCard({ offer, isActive, onHover }: PlaceCardProps): JSX.Element {
             height="200"
             alt={offer.title}
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -35,7 +36,7 @@ function PlaceCard({ offer, isActive, onHover }: PlaceCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={setFavoriteButtonClassName(offer)}
+            className={setFavoriteButtonClassName(offer.isFavorite, 'place-card')}
             type="button"
           >
             <svg
@@ -50,12 +51,12 @@ function PlaceCard({ offer, isActive, onHover }: PlaceCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={getRating(offer.rating)}></span>
+            <span style={getRatingStyle(offer.rating)}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{offer.title}</a>
+          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

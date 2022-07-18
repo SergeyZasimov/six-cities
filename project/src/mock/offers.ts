@@ -7,13 +7,13 @@ import { cities } from './cities';
 export const offers: Offer[] = [
   {
     id: 1,
-    images: ['./img/apartment-01.jpg'],
+    images: ['./img/apartment-01.jpg', './img/apartment-03.jpg'],
     title: 'Beautiful & luxurious studio at great location',
     description:
       'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum molestiae dolor molestias iste temporibus, nulla totam quam cumque minus blanditiis voluptate ex voluptas unde obcaecati possimus similique? Eum, nesciunt cupiditate!',
     isPremium: false,
     type: HousingType.Room,
-    rating: 4,
+    rating: 3.5,
     bedrooms: 1,
     maxAdults: 2,
     price: 34,
