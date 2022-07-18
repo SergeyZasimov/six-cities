@@ -19,7 +19,7 @@ function App({ cardsOnPage, offers }: AppProps): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen cardsOnPage={cardsOnPage} />}
+          element={<MainScreen cardsOnPage={cardsOnPage} offers={offers} />}
         />
         <Route
           path={AppRoute.Login}

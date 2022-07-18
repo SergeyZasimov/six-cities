@@ -6,7 +6,7 @@ import { reviews } from './reviews';
 export const offers: Offer[] = [
   {
     id: 1,
-    images: ['./apartments-images/apartment-01.jpg'],
+    images: ['./img/apartment-01.jpg'],
     title: 'Beautiful & luxurious studio at great location',
     description:
       'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum molestiae dolor molestias iste temporibus, nulla totam quam cumque minus blanditiis voluptate ex voluptas unde obcaecati possimus similique? Eum, nesciunt cupiditate!',
@@ -23,7 +23,7 @@ export const offers: Offer[] = [
   },
   {
     id: 2,
-    images: ['./apartments-images/apartment-02.jpg'],
+    images: ['./img/apartment-02.jpg'],
     title: 'Lorem ipsum dolor sit amet',
     description:
       'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum molestiae dolor molestias iste temporibus, nulla totam quam cumque minus blanditiis voluptate ex voluptas unde obcaecati possimus similique? Eum, nesciunt cupiditate!',
@@ -47,7 +47,7 @@ export const offers: Offer[] = [
   },
   {
     id: 3,
-    images: ['./apartments-images/apartment-03.jpg'],
+    images: ['./img/apartment-03.jpg'],
     title: 'Perspiciatis deserunt molestias ab assumenda sit modi quae',
     description:
       'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum molestiae dolor molestias iste temporibus, nulla totam quam cumque minus blanditiis voluptate ex voluptas unde obcaecati possimus similique? Eum, nesciunt cupiditate!',
@@ -64,7 +64,7 @@ export const offers: Offer[] = [
   },
   {
     id: 4,
-    images: ['./apartments-images/apartment-02.jpg'],
+    images: ['./img/apartment-02.jpg'],
     title: 'Quaerat facere blanditiis accusantium ea',
     description:
       'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum molestiae dolor molestias iste temporibus, nulla totam quam cumque minus blanditiis voluptate ex voluptas unde obcaecati possimus similique? Eum, nesciunt cupiditate!',

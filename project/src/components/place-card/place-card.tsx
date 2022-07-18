@@ -3,17 +3,31 @@ import { Offer } from '../../types/offer';
 
 type PlaceCardProps = {
   offer: Offer;
+  isActive: boolean;
+  onHover: () => void;
 };
 
-function PlaceCard({ offer }: PlaceCardProps): JSX.Element {
+function PlaceCard({ offer, isActive, onHover }: PlaceCardProps): JSX.Element {
 
   const getRating = (rating: number, maxRating: number): { width: string; } => {
-    const width = (rating / maxRating).toFixed(1).toString();
-    return { width };
+    const width = ((rating / maxRating) * 100).toString();
+    return { width: `${width}%` };
   };
 
+  const setFavoriteButtonClassName = (): string => (
+    offer.isFavorite
+      ? 'place-card__bookmark-button place-card__bookmark-button--active button'
+      : 'place-card__bookmark-button button'
+  );
+
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" onMouseOver={onHover}>
+      {
+        offer.isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      }
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/">
           <img
@@ -32,7 +46,7 @@ function PlaceCard({ offer }: PlaceCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className="place-card__bookmark-button place-card__bookmark-button--active button"
+            className={setFavoriteButtonClassName()}
             type="button"
           >
             <svg

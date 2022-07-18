@@ -3,7 +3,7 @@ import { Review } from '../types/review';
 export const reviews: Review[] = [
   {
     id: 1,
-    avatar: './avatars/avatar-angelina.jpg',
+    avatar: './img/avatar-angelina.jpg',
     name: 'Angelina',
     rating: 4,
     date: 'June 2022',
@@ -11,7 +11,7 @@ export const reviews: Review[] = [
   },
   {
     id: 2,
-    avatar: './avatars/avatar-max.jpg',
+    avatar: './img/avatar-max.jpg',
     name: 'Max',
     rating: 5,
     date: 'July 2022',

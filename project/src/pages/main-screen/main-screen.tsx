@@ -1,10 +1,12 @@
-import PlaceCard from '../../components/place-card/place-card';
+import PlaceCardList from '../../components/place-card-list/place-card-list';
+import { Offer } from '../../types/offer';
 
 type MainScreenProps = {
   cardsOnPage: number;
+  offers: Offer[];
 };
 
-function MainScreen({cardsOnPage}: MainScreenProps): JSX.Element {
+function MainScreen({ cardsOnPage, offers }: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -148,13 +150,9 @@ function MainScreen({cardsOnPage}: MainScreenProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-              </div>
+
+              <PlaceCardList offers={offers} />
+
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
