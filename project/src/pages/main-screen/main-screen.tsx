@@ -1,3 +1,4 @@
+import CityMap from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import { Offer } from '../../types/offer';
 
@@ -155,7 +156,7 @@ function MainScreen({ cardsOnPage, offers }: MainScreenProps): JSX.Element {
 
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <CityMap />
             </div>
           </div>
         </div>
