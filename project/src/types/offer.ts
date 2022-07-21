@@ -20,5 +20,5 @@ export type Offer = {
   isFavorite: boolean;
   comments: Comment[];
   city: City;
-  location?: Location;
+  location: Location;
 };
