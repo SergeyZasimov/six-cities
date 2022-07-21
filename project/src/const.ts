@@ -24,4 +24,9 @@ enum Setting {
   MaxRating = 5,
 }
 
-export { AppRoute, AuthorizationStatus, HousingType, Setting };
+enum IconUrl {
+  Default = './img/pin.svg',
+  Current = './img/pin-active.svg',
+}
+
+export { AppRoute, AuthorizationStatus, HousingType, Setting, IconUrl };
