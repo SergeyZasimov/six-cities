@@ -22,16 +22,16 @@ function CommentForm(): JSX.Element {
 
   return (
     <form
-      className="comments__form form"
+      className="reviews__form form"
       action="#"
       method="post"
     >
       <label
-        className="comments__label form__label"
-        htmlFor="comment"
-      >Your comment
+        className="reviews__label form__label"
+        htmlFor="review"
+      >Your review
       </label>
-      <div className="comments__rating-form form__rating">
+      <div className="reviews__rating-form form__rating">
         {
           [...Array(Setting.MaxRating)].map((_, index) => {
             const starNumber: number = Setting.MaxRating - index;
@@ -47,7 +47,7 @@ function CommentForm(): JSX.Element {
                 />
                 <label
                   htmlFor={`${starNumber}-star`}
-                  className="comments__rating-label form__rating-label"
+                  className="reviews__rating-label form__rating-label"
                   title="perfect"
                 >
                   <svg
@@ -64,20 +64,20 @@ function CommentForm(): JSX.Element {
         }
       </div>
       <textarea
-        className="comments__textarea form__textarea"
-        id="comment"
-        name="comment"
+        className="reviews__textarea form__textarea"
+        id="review"
+        name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleChangeText}
       >
       </textarea>
-      <div className="comments__button-wrapper">
-        <p className="comments__help">
-          To submit comment please make sure to set <span className="comments__star">rating</span> and
-          describe your stay with at least <b className="comments__text-amount">50 characters</b>.
+      <div className="reviews__button-wrapper">
+        <p className="reviews__help">
+          To submit review please make sure to set <span className="reviews__star">rating</span> and
+          describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button
-          className="comments__submit form__submit button"
+          className="reviews__submit form__submit button"
           type="submit"
           disabled
         >Submit
