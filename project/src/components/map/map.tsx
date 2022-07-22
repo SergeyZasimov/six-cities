@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react';
-import { cities } from '../../mock/cities';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap';
 import { Icon, Marker } from 'leaflet';
 import { IconUrl } from '../../const';
 import { Offer } from '../../types/offer';
+import { City } from '../../types/city';
 
 type MapProps = {
   offers: Offer[];
   activeCardId: number | null;
-
+  city: City;
 };
 
 const defaultIcon = new Icon({
@@ -24,9 +24,8 @@ const activeIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function CityMap({ offers, activeCardId }: MapProps): JSX.Element {
+function CityMap({ offers, activeCardId, city }: MapProps): JSX.Element {
 
-  const city = cities.amsterdam;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 

@@ -29,4 +29,6 @@ enum IconUrl {
   Active = './img/pin-active.svg',
 }
 
-export { AppRoute, AuthorizationStatus, HousingType, Setting, IconUrl };
+const DefaultCityName = 'Amsterdam';
+
+export { AppRoute, AuthorizationStatus, HousingType, Setting, IconUrl, DefaultCityName };
