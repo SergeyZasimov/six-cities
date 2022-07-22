@@ -12,9 +12,8 @@ function MainScreen({ cardsOnPage, offers }: MainScreenProps): JSX.Element {
 
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
 
-  const onHoverCard = (id: number): void => {
-    const activeCard = offers.find((offer) => offer.id === id) as Offer;
-    setActiveCardId(activeCard.id);
+  const onHoverCard = (id: number | null): void => {
+    setActiveCardId(id);
   };
 
   return (
@@ -163,7 +162,6 @@ function MainScreen({ cardsOnPage, offers }: MainScreenProps): JSX.Element {
 
               <PlaceCardList
                 offers={offers}
-                activeCardId={activeCardId}
                 onHoverCard={onHoverCard}
               />
 

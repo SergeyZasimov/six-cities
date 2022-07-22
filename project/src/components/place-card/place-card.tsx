@@ -5,14 +5,18 @@ import { getRatingStyle, setFavoriteButtonClassName } from '../utils';
 
 type PlaceCardProps = {
   offer: Offer;
-  isActive: boolean;
   onHover: () => void;
+  onLeave: () => void;
 };
 
-function PlaceCard({ offer, isActive, onHover }: PlaceCardProps): JSX.Element {
+function PlaceCard({ offer, onHover, onLeave }: PlaceCardProps): JSX.Element {
 
   return (
-    <article className="cities__card place-card" onMouseOver={onHover}>
+    <article
+      className="cities__card place-card"
+      onMouseOver={onHover}
+      onMouseLeave={onLeave}
+    >
       {
         offer.isPremium &&
         <div className="place-card__mark">
