@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import CityMap from '../../components/map/map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import { Offer } from '../../types/offer';
@@ -8,6 +9,14 @@ type MainScreenProps = {
 };
 
 function MainScreen({ cardsOnPage, offers }: MainScreenProps): JSX.Element {
+
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+
+  const onHoverCard = (id: number): void => {
+    const activeCard = offers.find((offer) => offer.id === id) as Offer;
+    setActiveCardId(activeCard.id);
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -152,11 +161,18 @@ function MainScreen({ cardsOnPage, offers }: MainScreenProps): JSX.Element {
                 </ul>
               </form>
 
-              <PlaceCardList offers={offers} />
+              <PlaceCardList
+                offers={offers}
+                activeCardId={activeCardId}
+                onHoverCard={onHoverCard}
+              />
 
             </section>
             <div className="cities__right-section">
-              <CityMap />
+              <CityMap
+                offers={offers}
+                activeCardId={activeCardId}
+              />
             </div>
           </div>
         </div>

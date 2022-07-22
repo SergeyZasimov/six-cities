@@ -26,7 +26,7 @@ enum Setting {
 
 enum IconUrl {
   Default = './img/pin.svg',
-  Current = './img/pin-active.svg',
+  Active = './img/pin-active.svg',
 }
 
 export { AppRoute, AuthorizationStatus, HousingType, Setting, IconUrl };

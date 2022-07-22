@@ -4,11 +4,11 @@ import PlaceCard from '../place-card/place-card';
 
 type CardListProp = {
   offers: Offer[];
+  activeCardId: number | null;
+  onHoverCard: (id: number) => void;
 };
 
-function PlaceCardList({ offers }: CardListProp): JSX.Element {
-
-  const [activeCardId, setActiveCardId] = useState<number>();
+function PlaceCardList({ offers, activeCardId, onHoverCard }: CardListProp): JSX.Element {
 
   const isActive = (id: number): boolean => activeCardId === id;
 
@@ -20,7 +20,7 @@ function PlaceCardList({ offers }: CardListProp): JSX.Element {
             key={offer.id}
             offer={offer}
             isActive={isActive(offer.id)}
-            onHover={() => setActiveCardId(offer.id)}
+            onHover={() => onHoverCard(offer.id)}
           />))
       }
     </div>
