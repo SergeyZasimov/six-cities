@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map';
 import { Icon, Marker } from 'leaflet';
 import { IconUrl } from '../../const';
 import { Offer } from '../../types/offer';
@@ -12,13 +12,13 @@ type MapProps = {
   city: City;
 };
 
-const defaultIcon = new Icon({
+const DEFAULT_ICON = new Icon({
   iconUrl: IconUrl.Default,
   iconSize: [40, 40],
   iconAnchor: [20, 40]
 });
 
-const activeIcon = new Icon({
+const ACTIVE_ICON = new Icon({
   iconUrl: IconUrl.Active,
   iconSize: [40, 40],
   iconAnchor: [20, 40]
@@ -40,8 +40,8 @@ function CityMap({ offers, activeCardId, city }: MapProps): JSX.Element {
         marker
           .setIcon(
             offer.id === activeCardId
-              ? activeIcon
-              : defaultIcon
+              ? ACTIVE_ICON
+              : DEFAULT_ICON
           )
           .addTo(map);
       });

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import CityMap from '../../components/map/map';
+import CityMap from '../../components/city-map/city-map';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
-import { DefaultCityName } from '../../const';
+import { DEFAULT_CITY_NAME } from '../../const';
 import { City } from '../../types/city';
 import { Offer } from '../../types/offer';
 import LocationList from '../location-list/location-list';
@@ -15,15 +15,15 @@ type MainScreenProps = {
 function MainScreen({ cardsOnPage, offers, cities }: MainScreenProps): JSX.Element {
 
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
-  const [selectedCityName, setSelectedCityName] = useState<string>(DefaultCityName);
+  const [selectedCityName, setSelectedCityName] = useState<string>(DEFAULT_CITY_NAME);
 
-  const findLocation = (name: string): City => cities.find((location) => location.name === name)!;
+  const findLocation = (name: string): City => cities.find((location) => location.name === name) as City;
 
-  const onHoverCard = (id: number | null): void => {
+  const handleCardHover = (id: number | null): void => {
     setActiveCardId(id);
   };
 
-  const onSelectLocation = (name: string): void => {
+  const handleLocationSelect = (name: string): void => {
     setSelectedCityName(name);
   };
 
@@ -78,7 +78,7 @@ function MainScreen({ cardsOnPage, offers, cities }: MainScreenProps): JSX.Eleme
             <LocationList
               cities={cities}
               selectedLocation={selectedCityName}
-              onSelectLocation={onSelectLocation}
+              onSelectLocation={handleLocationSelect}
             />
           </section>
         </div>
@@ -132,7 +132,7 @@ function MainScreen({ cardsOnPage, offers, cities }: MainScreenProps): JSX.Eleme
 
               <PlaceCardList
                 offers={offers}
-                onHoverCard={onHoverCard}
+                onHoverCard={handleCardHover}
               />
 
             </section>
