@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import CityMap from '../../components/city-map/city-map';
+import LocationList from '../../components/location-list/location-list';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import { DEFAULT_CITY_NAME } from '../../const';
 import { City } from '../../types/city';
 import { Offer } from '../../types/offer';
-import LocationList from '../location-list/location-list';
 
 type MainScreenProps = {
   cardsOnPage: number;
