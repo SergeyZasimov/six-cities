@@ -7,19 +7,21 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { Offer } from '../../types/offer';
+import { City } from '../../types/city';
 
 type AppProps = {
   cardsOnPage: number;
   offers: Offer[];
+  cities: City[];
 };
 
-function App({ cardsOnPage, offers }: AppProps): JSX.Element {
+function App({ cardsOnPage, offers, cities }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen cardsOnPage={cardsOnPage} offers={offers} />}
+          element={<MainScreen cardsOnPage={cardsOnPage} offers={offers} cities={cities} />}
         />
         <Route
           path={AppRoute.Login}

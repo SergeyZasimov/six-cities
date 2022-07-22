@@ -22,6 +22,11 @@ export const offers: Offer[] = [
     isFavorite: true,
     comments: comments,
     city: cities.amsterdam,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 10,
+    }
   },
   {
     id: 2,
@@ -46,7 +51,12 @@ export const offers: Offer[] = [
     host: users.angelina,
     isFavorite: false,
     comments: comments,
-    city: cities.brussels,
+    city: cities.amsterdam,
+    location: {
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
+      zoom: 10,
+    }
   },
   {
     id: 3,
@@ -64,7 +74,12 @@ export const offers: Offer[] = [
     host: users.max,
     isFavorite: true,
     comments: comments,
-    city: cities.paris,
+    city: cities.amsterdam,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+      zoom: 10,
+    }
   },
   {
     id: 4,
@@ -91,6 +106,11 @@ export const offers: Offer[] = [
     host: users.max,
     isFavorite: true,
     comments: comments,
-    city: cities.paris,
+    city: cities.amsterdam,
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 10,
+    }
   },
 ];
