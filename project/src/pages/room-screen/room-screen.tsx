@@ -3,23 +3,16 @@ import { getRatingStyle, setFavoriteButtonClassName } from '../../components/uti
 import { Offer } from '../../types/offer';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import NearPlaceList from '../../components/near-place-list/near-place-list';
-import CityMap from '../../components/city-map/city-map';
-import { MapClassNamePrefix } from '../../const';
-import { useState } from 'react';
+import { CardType, MapType } from '../../const';
+import MapHocProps from '../../types/map-hoc';
 
 type RoomScreenProps = {
   offers: Offer[];
 };
 
-function RoomScreen({ offers }: RoomScreenProps): JSX.Element {
+function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & MapHocProps): JSX.Element {
 
   const { id: paramId } = useParams();
-  const [activeCardId, setActiveCardId] = useState<number | null>(null);
-
-  const handleCardHover = (id: number | null): void => {
-    setActiveCardId(id);
-  };
 
   const room = offers.find((offer: Offer) => offer.id === +paramId!) as Offer;
 
@@ -181,18 +174,19 @@ function RoomScreen({ offers }: RoomScreenProps): JSX.Element {
           </div>
         </section>
         <div className="container">
-          <CityMap
-            classNamePrefix={MapClassNamePrefix.Property}
-            offers={offers.slice(0, 3)}
-            activeCardId={activeCardId}
-            city={room.city}
-          />
+          {
+            renderMap(
+              MapType.Property,
+              offers.slice(0, 3),
+              room.city
+            )
+          }
+
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearPlaceList
-              offers={offers.slice(0, 3)}
-              onHoverCard={handleCardHover}
-            />
+            {
+              renderOfferList(CardType.NearPlaces, offers.slice(0, 3))
+            }
           </section>
         </div>
       </main>

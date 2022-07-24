@@ -17,6 +17,7 @@ type AppProps = {
 };
 
 const MainScreenWithMap = withMap(MainScreen);
+const RoomScreenWithMap = withMap(RoomScreen);
 
 function App({ cardsOnPage, offers, cities }: AppProps): JSX.Element {
   return (
@@ -40,7 +41,7 @@ function App({ cardsOnPage, offers, cities }: AppProps): JSX.Element {
         />
         <Route
           path={`${AppRoute.Room}/:id`}
-          element={<RoomScreen offers={offers} />}
+          element={<RoomScreenWithMap offers={offers} />}
         />
         <Route
           path={AppRoute.NotFound}

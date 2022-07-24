@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import LocationList from '../../components/location-list/location-list';
-import { DEFAULT_CITY_NAME, MapClassNamePrefix } from '../../const';
+import { CardType, DEFAULT_CITY_NAME, MapType } from '../../const';
 import { City } from '../../types/city';
+import MapHocProps from '../../types/map-hoc';
 import { Offer } from '../../types/offer';
 
 type MainScreenProps = {
   cardsOnPage: number;
   offers: Offer[];
   cities: City[];
-  renderMap: (classNamePrefix: string, offers: Offer[], city: City) => JSX.Element;
-  renderOfferList: (offers: Offer[]) => JSX.Element;
 };
 
-function MainScreen({ cardsOnPage, offers, cities, renderMap, renderOfferList }: MainScreenProps): JSX.Element {
+function MainScreen({ cardsOnPage, offers, cities, renderMap, renderOfferList }: MainScreenProps & MapHocProps): JSX.Element {
 
   const [selectedCityName, setSelectedCityName] = useState<string>(DEFAULT_CITY_NAME);
 
@@ -21,7 +20,6 @@ function MainScreen({ cardsOnPage, offers, cities, renderMap, renderOfferList }:
   const handleLocationSelect = (name: string): void => {
     setSelectedCityName(name);
   };
-
 
   return (
     <div className="page page--gray page--main">
@@ -125,13 +123,13 @@ function MainScreen({ cardsOnPage, offers, cities, renderMap, renderOfferList }:
                 </ul>
               </form>
 
-              { renderOfferList(offers) }
+              {renderOfferList(CardType.Cities, offers)}
 
             </section>
             <div className="cities__right-section">
               {
                 renderMap(
-                  MapClassNamePrefix.Cities,
+                  MapType.Cities,
                   offers,
                   findLocation(selectedCityName),
                 )

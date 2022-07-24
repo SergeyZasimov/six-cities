@@ -1,20 +1,18 @@
 import { ComponentType, useState } from 'react';
 import CityMap from '../components/city-map/city-map';
-import PlaceCardList from '../components/place-card-list/place-card-list';
+import OfferList from '../components/offer-list/offer-list';
 import { City } from '../types/city';
+import MapHocProps from '../types/map-hoc';
 import { Offer } from '../types/offer';
 
-type HOCProps = {
-  renderMap: (classNamePrefix: string, offers: Offer[], city: City) => void;
-  renderOfferList: (offers: Offer[]) => void;
-};
 
 function withMap<T>(Component: ComponentType<T>)
-  : ComponentType<Omit<T, keyof HOCProps>> {
+  : ComponentType<Omit<T, keyof MapHocProps>> {
 
-  type ComponentProps = Omit<T, keyof HOCProps>;
+  type ComponentProps = Omit<T, keyof MapHocProps>;
 
   function WithMap(props: ComponentProps): JSX.Element {
+
     const [activeCardId, setActiveCardId] = useState<number | null>(null);
 
     const handleCardHover = (id: number | null): void => {
@@ -24,16 +22,17 @@ function withMap<T>(Component: ComponentType<T>)
     return (
       <Component
         {...props as T}
-        renderMap={(classNamePrefix: string, offers: Offer[], city: City) => (
+        renderMap={(mapType: string, offers: Offer[], city: City) => (
           <CityMap
-            classNamePrefix={classNamePrefix}
+            mapType={mapType}
             offers={offers}
             activeCardId={activeCardId}
             city={city}
           />
         )}
-        renderOfferList={(offers: Offer[]) => (
-          <PlaceCardList
+        renderOfferList={(type: string, offers: Offer[]) => (
+          <OfferList
+            type={type}
             offers={offers}
             onHoverCard={handleCardHover}
           />

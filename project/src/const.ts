@@ -20,7 +20,7 @@ enum HousingType {
 }
 
 enum Setting {
-  CardsOnPage = 5,
+  CardsOnPage = 4,
   MaxRating = 5,
 }
 
@@ -29,13 +29,13 @@ enum IconUrl {
   Active = './img/pin-active.svg',
 }
 
-enum CardClassNamePrefix {
+enum CardType {
   Cities = 'cities',
   Favorites = 'favorites',
   NearPlaces = 'near-places',
 }
 
-enum MapClassNamePrefix {
+enum MapType {
   Cities = 'cities',
   Property = 'property',
 }
@@ -48,7 +48,7 @@ export {
   HousingType,
   Setting,
   IconUrl,
-  CardClassNamePrefix,
-  MapClassNamePrefix,
+  CardType,
+  MapType,
   DEFAULT_CITY_NAME,
 };

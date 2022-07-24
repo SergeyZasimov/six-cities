@@ -1,19 +1,18 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, CardClassNamePrefix } from '../../const';
+import { AppRoute, CardType } from '../../const';
 import { Offer } from '../../types/offer';
 import { getRatingStyle, setFavoriteButtonClassName } from '../utils';
 
 type OfferCardProps = {
-  classNamePrefix: string;
+  cardType: string;
   offer: Offer;
-  onHover?: () => void;
-  onLeave?: () => void;
+  onHoverCard?: (id: number | null) => void;
 };
 
-function OfferCard({ classNamePrefix, offer, onHover, onLeave }: OfferCardProps): JSX.Element {
+function OfferCard({ cardType, offer, onHoverCard }: OfferCardProps): JSX.Element {
 
   const setImageSize = () => {
-    if (classNamePrefix === CardClassNamePrefix.Favorites) {
+    if (cardType === CardType.Favorites) {
       return {
         width: '150',
         height: '110',
@@ -25,11 +24,23 @@ function OfferCard({ classNamePrefix, offer, onHover, onLeave }: OfferCardProps)
     };
   };
 
+  const handleMouseOver = () => {
+    if (onHoverCard) {
+      return onHoverCard(offer.id);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (onHoverCard) {
+      return onHoverCard(null);
+    }
+  };
+
   return (
     <article
-      className={`${classNamePrefix}__card place-card`}
-      onMouseOver={onHover}
-      onMouseLeave={onLeave}
+      className={`${cardType}__card place-card`}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
     >
       {
         offer.isPremium &&
@@ -37,7 +48,7 @@ function OfferCard({ classNamePrefix, offer, onHover, onLeave }: OfferCardProps)
           <span>Premium</span>
         </div>
       }
-      <div className={`${classNamePrefix}__image-wrapper place-card__image-wrapper`}>
+      <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
         <Link to={`${AppRoute.Room}/${offer.id}`}>
           <img
             className="place-card__image"
@@ -49,7 +60,7 @@ function OfferCard({ classNamePrefix, offer, onHover, onLeave }: OfferCardProps)
       </div>
       <div className={
         `place-card__info
-        ${classNamePrefix === CardClassNamePrefix.Favorites ? 'favorites__card-info' : ''}
+        ${cardType === CardType.Favorites ? 'favorites__card-info' : ''}
         `
       }
       >

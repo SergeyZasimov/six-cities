@@ -2,12 +2,12 @@ import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
 import { Icon, Marker } from 'leaflet';
-import { IconUrl, MapClassNamePrefix } from '../../const';
+import { IconUrl, MapType } from '../../const';
 import { Offer } from '../../types/offer';
 import { City } from '../../types/city';
 
 type MapProps = {
-  classNamePrefix: string,
+  mapType: string,
   offers: Offer[];
   activeCardId: number | null;
   city: City;
@@ -25,7 +25,7 @@ const ACTIVE_ICON = new Icon({
   iconAnchor: [20, 40]
 });
 
-function CityMap({ classNamePrefix, offers, activeCardId, city }: MapProps): JSX.Element {
+function CityMap({ mapType, offers, activeCardId, city }: MapProps): JSX.Element {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -51,8 +51,8 @@ function CityMap({ classNamePrefix, offers, activeCardId, city }: MapProps): JSX
 
   return (
     <section
-      className={`${classNamePrefix}__map map`}
-      style={classNamePrefix === MapClassNamePrefix.Property ? {height: '579px'} : { height: 'auto' }}
+      className={`${mapType}__map map`}
+      style={mapType === MapType.Property ? { height: '579px' } : { height: 'auto' }}
       ref={mapRef}
     >
     </section>
