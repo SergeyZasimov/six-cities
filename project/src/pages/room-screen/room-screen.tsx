@@ -1,9 +1,9 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { getRatingStyle, setFavoriteButtonClassName } from '../../components/utils';
 import { Offer } from '../../types/offer';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { CardType, MapType } from '../../const';
+import { AppRoute, CardType, MapType } from '../../const';
 import MapHocProps from '../../types/map-hoc';
 
 type RoomScreenProps = {
@@ -12,10 +12,17 @@ type RoomScreenProps = {
 
 function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & MapHocProps): JSX.Element {
 
-  const { id: paramId } = useParams();
+  const { id } = useParams();
 
-  const room = offers.find((offer: Offer) => offer.id === +paramId!) as Offer;
+  if (!id) {
+    return <Navigate to={AppRoute.NotFound} />;
+  }
 
+  const room = offers.find((offer: Offer) => offer.id === +id) as Offer;
+
+  if (!room) {
+    return <Navigate to={AppRoute.NotFound} />;
+  }
 
   return (
     <div className="page">
