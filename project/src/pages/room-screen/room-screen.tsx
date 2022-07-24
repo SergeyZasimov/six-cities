@@ -4,6 +4,9 @@ import { Offer } from '../../types/offer';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
 import NearPlaceList from '../../components/near-place-list/near-place-list';
+import CityMap from '../../components/city-map/city-map';
+import { MapClassNamePrefix } from '../../const';
+import { useState } from 'react';
 
 type RoomScreenProps = {
   offers: Offer[];
@@ -11,9 +14,14 @@ type RoomScreenProps = {
 
 function RoomScreen({ offers }: RoomScreenProps): JSX.Element {
 
-  const { id } = useParams();
+  const { id: paramId } = useParams();
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
 
-  const room = offers.find((offer: Offer) => offer.id === +id!) as Offer;
+  const handleCardHover = (id: number | null): void => {
+    setActiveCardId(id);
+  };
+
+  const room = offers.find((offer: Offer) => offer.id === +paramId!) as Offer;
 
 
   return (
@@ -173,10 +181,18 @@ function RoomScreen({ offers }: RoomScreenProps): JSX.Element {
           </div>
         </section>
         <div className="container">
-          <section className="property__map map"></section>
+          <CityMap
+            classNamePrefix={MapClassNamePrefix.Property}
+            offers={offers.slice(0, 3)}
+            activeCardId={activeCardId}
+            city={room.city}
+          />
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearPlaceList offers={offers.slice(0, 3)} />
+            <NearPlaceList
+              offers={offers.slice(0, 3)}
+              onHoverCard={handleCardHover}
+            />
           </section>
         </div>
       </main>

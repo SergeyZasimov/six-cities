@@ -2,7 +2,7 @@ import { useState } from 'react';
 import CityMap from '../../components/city-map/city-map';
 import LocationList from '../../components/location-list/location-list';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
-import { DEFAULT_CITY_NAME } from '../../const';
+import { DEFAULT_CITY_NAME, MapClassNamePrefix } from '../../const';
 import { City } from '../../types/city';
 import { Offer } from '../../types/offer';
 
@@ -138,6 +138,7 @@ function MainScreen({ cardsOnPage, offers, cities }: MainScreenProps): JSX.Eleme
             </section>
             <div className="cities__right-section">
               <CityMap
+                classNamePrefix={MapClassNamePrefix.Cities}
                 offers={offers}
                 activeCardId={activeCardId}
                 city={findLocation(selectedCityName)}

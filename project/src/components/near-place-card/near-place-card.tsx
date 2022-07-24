@@ -1,4 +1,4 @@
-import { ClassNamePrefix } from '../../const';
+import { CardClassNamePrefix } from '../../const';
 import { Offer } from '../../types/offer';
 import OfferCard from '../offer-card/offer-card';
 
@@ -11,7 +11,7 @@ type NearPlaceCardProps = {
 function NearPlaceCard(props: NearPlaceCardProps): JSX.Element {
 
   return (
-    <OfferCard classNamePrefix={ClassNamePrefix.NearPlaces} {...props} />
+    <OfferCard classNamePrefix={CardClassNamePrefix.NearPlaces} {...props} />
   );
 }
 

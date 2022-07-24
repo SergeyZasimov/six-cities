@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, ClassNamePrefix } from '../../const';
+import { AppRoute, CardClassNamePrefix } from '../../const';
 import { Offer } from '../../types/offer';
 import { getRatingStyle, setFavoriteButtonClassName } from '../utils';
 
@@ -13,7 +13,7 @@ type OfferCardProps = {
 function OfferCard({ classNamePrefix, offer, onHover, onLeave }: OfferCardProps): JSX.Element {
 
   const setImageSize = () => {
-    if (classNamePrefix === ClassNamePrefix.Favorites) {
+    if (classNamePrefix === CardClassNamePrefix.Favorites) {
       return {
         width: '150',
         height: '110',
@@ -49,7 +49,7 @@ function OfferCard({ classNamePrefix, offer, onHover, onLeave }: OfferCardProps)
       </div>
       <div className={
         `place-card__info
-        ${classNamePrefix === ClassNamePrefix.Favorites ? 'favorites__card-info' : ''}
+        ${classNamePrefix === CardClassNamePrefix.Favorites ? 'favorites__card-info' : ''}
         `
       }
       >

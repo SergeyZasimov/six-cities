@@ -29,10 +29,15 @@ enum IconUrl {
   Active = './img/pin-active.svg',
 }
 
-enum ClassNamePrefix {
+enum CardClassNamePrefix {
   Cities = 'cities',
   Favorites = 'favorites',
   NearPlaces = 'near-places',
+}
+
+enum MapClassNamePrefix {
+  Cities = 'cities',
+  Property = 'property',
 }
 
 const DEFAULT_CITY_NAME = 'Amsterdam';
@@ -43,6 +48,7 @@ export {
   HousingType,
   Setting,
   IconUrl,
-  ClassNamePrefix,
+  CardClassNamePrefix,
+  MapClassNamePrefix,
   DEFAULT_CITY_NAME,
 };
