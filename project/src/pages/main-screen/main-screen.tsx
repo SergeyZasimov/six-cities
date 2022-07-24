@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import CityMap from '../../components/city-map/city-map';
 import LocationList from '../../components/location-list/location-list';
-import PlaceCardList from '../../components/place-card-list/place-card-list';
 import { DEFAULT_CITY_NAME, MapClassNamePrefix } from '../../const';
 import { City } from '../../types/city';
 import { Offer } from '../../types/offer';
@@ -10,18 +8,15 @@ type MainScreenProps = {
   cardsOnPage: number;
   offers: Offer[];
   cities: City[];
+  renderMap: (classNamePrefix: string, offers: Offer[], city: City) => JSX.Element;
+  renderOfferList: (offers: Offer[]) => JSX.Element;
 };
 
-function MainScreen({ cardsOnPage, offers, cities }: MainScreenProps): JSX.Element {
+function MainScreen({ cardsOnPage, offers, cities, renderMap, renderOfferList }: MainScreenProps): JSX.Element {
 
-  const [activeCardId, setActiveCardId] = useState<number | null>(null);
   const [selectedCityName, setSelectedCityName] = useState<string>(DEFAULT_CITY_NAME);
 
   const findLocation = (name: string): City => cities.find((location) => location.name === name) as City;
-
-  const handleCardHover = (id: number | null): void => {
-    setActiveCardId(id);
-  };
 
   const handleLocationSelect = (name: string): void => {
     setSelectedCityName(name);
@@ -130,19 +125,17 @@ function MainScreen({ cardsOnPage, offers, cities }: MainScreenProps): JSX.Eleme
                 </ul>
               </form>
 
-              <PlaceCardList
-                offers={offers}
-                onHoverCard={handleCardHover}
-              />
+              { renderOfferList(offers) }
 
             </section>
             <div className="cities__right-section">
-              <CityMap
-                classNamePrefix={MapClassNamePrefix.Cities}
-                offers={offers}
-                activeCardId={activeCardId}
-                city={findLocation(selectedCityName)}
-              />
+              {
+                renderMap(
+                  MapClassNamePrefix.Cities,
+                  offers,
+                  findLocation(selectedCityName),
+                )
+              }
             </div>
           </div>
         </div>
