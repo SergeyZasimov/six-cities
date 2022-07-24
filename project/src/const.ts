@@ -20,7 +20,7 @@ enum HousingType {
 }
 
 enum Setting {
-  CardsOnPage = 5,
+  CardsOnPage = 4,
   MaxRating = 5,
 }
 
@@ -29,6 +29,26 @@ enum IconUrl {
   Active = './img/pin-active.svg',
 }
 
-const DefaultCityName = 'Amsterdam';
+enum CardType {
+  Cities = 'cities',
+  Favorites = 'favorites',
+  NearPlaces = 'near-places',
+}
 
-export { AppRoute, AuthorizationStatus, HousingType, Setting, IconUrl, DefaultCityName };
+enum MapType {
+  Cities = 'cities',
+  Property = 'property',
+}
+
+const DEFAULT_CITY_NAME = 'Amsterdam';
+
+export {
+  AppRoute,
+  AuthorizationStatus,
+  HousingType,
+  Setting,
+  IconUrl,
+  CardType,
+  MapType,
+  DEFAULT_CITY_NAME,
+};

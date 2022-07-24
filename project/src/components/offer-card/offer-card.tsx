@@ -1,29 +1,69 @@
+import { Link } from 'react-router-dom';
+import { AppRoute, CardType } from '../../const';
 import { Offer } from '../../types/offer';
 import { getRatingStyle, setFavoriteButtonClassName } from '../utils';
 
-type FavoriteCardProps = {
+type OfferCardProps = {
+  cardType: string;
   offer: Offer;
+  onHoverCard?: (id: number | null) => void;
 };
 
-function FavoroteCard({ offer }: FavoriteCardProps): JSX.Element {
+function OfferCard({ cardType, offer, onHoverCard }: OfferCardProps): JSX.Element {
+
+  const setImageSize = () => {
+    if (cardType === CardType.Favorites) {
+      return {
+        width: '150',
+        height: '110',
+      };
+    }
+    return {
+      width: '260',
+      height: '200',
+    };
+  };
+
+  const handleMouseOver = () => {
+    if (onHoverCard) {
+      return onHoverCard(offer.id);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (onHoverCard) {
+      return onHoverCard(null);
+    }
+  };
+
   return (
-    <article className="favorites__card place-card">
-      {offer.isPremium &&
+    <article
+      className={`${cardType}__card place-card`}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
+    >
+      {
+        offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
-        </div>}
-      <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#todo">
+        </div>
+      }
+      <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
+        <Link to={`${AppRoute.Room}/${offer.id}`}>
           <img
             className="place-card__image"
             src={offer.images[0]}
-            width="150"
-            height="110"
             alt={offer.title}
+            style={setImageSize()}
           />
-        </a>
+        </Link>
       </div>
-      <div className="favorites__card-info place-card__info">
+      <div className={
+        `place-card__info
+        ${cardType === CardType.Favorites ? 'favorites__card-info' : ''}
+        `
+      }
+      >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>
@@ -50,12 +90,12 @@ function FavoroteCard({ offer }: FavoriteCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#todo">{offer.title}</a>
+          <Link to={`${AppRoute.Room}/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
-    </article>
+    </article >
   );
 }
 
-export default FavoroteCard;
+export default OfferCard;

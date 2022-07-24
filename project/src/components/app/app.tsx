@@ -8,6 +8,7 @@ import RoomScreen from '../../pages/room-screen/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { Offer } from '../../types/offer';
 import { City } from '../../types/city';
+import withMap from '../../hocs/with-map';
 
 type AppProps = {
   cardsOnPage: number;
@@ -15,13 +16,16 @@ type AppProps = {
   cities: City[];
 };
 
+const MainScreenWithMap = withMap(MainScreen);
+const RoomScreenWithMap = withMap(RoomScreen);
+
 function App({ cardsOnPage, offers, cities }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen cardsOnPage={cardsOnPage} offers={offers} cities={cities} />}
+          element={<MainScreenWithMap cardsOnPage={cardsOnPage} offers={offers} cities={cities} />}
         />
         <Route
           path={AppRoute.Login}
@@ -37,7 +41,7 @@ function App({ cardsOnPage, offers, cities }: AppProps): JSX.Element {
         />
         <Route
           path={`${AppRoute.Room}/:id`}
-          element={<RoomScreen offers={offers} />}
+          element={<RoomScreenWithMap offers={offers} />}
         />
         <Route
           path={AppRoute.NotFound}
