@@ -1,37 +1,41 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AppRoute, CardType } from '../../const';
 import { Offer } from '../../types/offer';
-import { getRatingStyle, setFavoriteButtonClassName } from '../utils';
+import { getCardType, getRatingStyle, setFavoriteButtonClassName } from '../utils';
 
 type OfferCardProps = {
-  cardType: string;
   offer: Offer;
   onHoverCard?: (id: number | null) => void;
 };
 
-function OfferCard({ cardType, offer, onHoverCard }: OfferCardProps): JSX.Element {
-
-  const setImageSize = () => {
-    if (cardType === CardType.Favorites) {
-      return {
-        width: '150',
-        height: '110',
-      };
-    }
+const setImageSize = (cardType: string) => {
+  if (cardType === CardType.Favorites) {
     return {
-      width: '260',
-      height: '200',
+      width: 150,
+      height: 110,
     };
+  }
+  return {
+    width: 260,
+    height: 200,
   };
+};
+
+
+function OfferCard({ offer, onHoverCard }: OfferCardProps): JSX.Element {
+
+  const { pathname } = useLocation();
+  const cardType = getCardType(pathname);
+  const imageSize = setImageSize(cardType);
 
   const handleMouseOver = () => {
-    if (onHoverCard) {
+    if (onHoverCard !== undefined) {
       return onHoverCard(offer.id);
     }
   };
 
   const handleMouseLeave = () => {
-    if (onHoverCard) {
+    if (onHoverCard !== undefined) {
       return onHoverCard(null);
     }
   };
@@ -54,7 +58,7 @@ function OfferCard({ cardType, offer, onHoverCard }: OfferCardProps): JSX.Elemen
             className="place-card__image"
             src={offer.images[0]}
             alt={offer.title}
-            style={setImageSize()}
+            style={imageSize}
           />
         </Link>
       </div>
@@ -66,7 +70,7 @@ function OfferCard({ cardType, offer, onHoverCard }: OfferCardProps): JSX.Elemen
       >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{offer.price}</b>
+            <b className="place-card__price-value">&euro;{offer.price}</b>{' '}
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button

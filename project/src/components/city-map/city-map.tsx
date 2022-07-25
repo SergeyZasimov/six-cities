@@ -5,9 +5,10 @@ import { Icon, Marker } from 'leaflet';
 import { IconUrl, MapType } from '../../const';
 import { Offer } from '../../types/offer';
 import { City } from '../../types/city';
+import { useLocation } from 'react-router-dom';
+import { getMapType } from '../utils';
 
 type MapProps = {
-  mapType: string,
   offers: Offer[];
   activeCardId: number | null;
   city: City;
@@ -25,10 +26,12 @@ const ACTIVE_ICON = new Icon({
   iconAnchor: [20, 40]
 });
 
-function CityMap({ mapType, offers, activeCardId, city }: MapProps): JSX.Element {
+function CityMap({ offers, activeCardId, city }: MapProps): JSX.Element {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const { pathname } = useLocation();
+  const mapType = getMapType(pathname);
 
   useEffect(() => {
     if (map) {

@@ -22,17 +22,15 @@ function withMap<T>(Component: ComponentType<T>)
     return (
       <Component
         {...props as T}
-        renderMap={(mapType: string, offers: Offer[], city: City) => (
+        renderMap={(offers: Offer[], city: City) => (
           <CityMap
-            mapType={mapType}
             offers={offers}
             activeCardId={activeCardId}
             city={city}
           />
         )}
-        renderOfferList={(type: string, offers: Offer[]) => (
+        renderOfferList={(offers: Offer[]) => (
           <OfferList
-            type={type}
             offers={offers}
             onHoverCard={handleCardHover}
           />

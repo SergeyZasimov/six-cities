@@ -3,8 +3,9 @@ import { getRatingStyle, setFavoriteButtonClassName } from '../../components/uti
 import { Offer } from '../../types/offer';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { AppRoute, CardType, MapType } from '../../const';
+import { AppRoute } from '../../const';
 import MapHocProps from '../../types/map-hoc';
+import Header from '../../components/header/header';
 
 type RoomScreenProps = {
   offers: Offer[];
@@ -18,7 +19,8 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
     return <Navigate to={AppRoute.NotFound} />;
   }
 
-  const room = offers.find((offer: Offer) => offer.id === +id) as Offer;
+  const paramsId = +id;
+  const room = offers.find((offer: Offer) => offer.id === paramsId) as Offer;
 
   if (!room) {
     return <Navigate to={AppRoute.NotFound} />;
@@ -26,49 +28,7 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a
-                className="header__logo-link"
-                href="main.html"
-              >
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width="81"
-                  height="41"
-                />
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a
-                    className="header__nav-link"
-                    href="#"
-                  >
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--property">
         <section className="property">
@@ -132,7 +92,7 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{room.price}</b>
+                <b className="property__price-value">&euro;{room.price}</b>{' '}
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
@@ -183,7 +143,6 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
         <div className="container">
           {
             renderMap(
-              MapType.Property,
               offers.slice(0, 3),
               room.city
             )
@@ -192,7 +151,7 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             {
-              renderOfferList(CardType.NearPlaces, offers.slice(0, 3))
+              renderOfferList(offers.slice(0, 3))
             }
           </section>
         </div>

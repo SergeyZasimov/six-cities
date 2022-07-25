@@ -1,25 +1,30 @@
+import { useLocation } from 'react-router-dom';
 import { CardType } from '../../const';
 import { Offer } from '../../types/offer';
 import OfferCard from '../offer-card/offer-card';
+import { getCardType } from '../utils';
 
 type OfferListProps = {
-  type: string;
   offers: Offer[];
   onHoverCard?: (id: number | null) => void;
 };
 
-function OfferList({ type, offers, onHoverCard }: OfferListProps) {
+const getlistClassName = (type: string) => {
+  switch (type) {
+    case CardType.Cities:
+      return 'cities__places-list places__list tabs__content';
+    case CardType.NearPlaces:
+      return 'near-places__list places__list';
+    case CardType.Favorites:
+      return 'favorites__places';
+  }
+};
 
-  const getlistClassName = () => {
-    switch (type) {
-      case CardType.Cities:
-        return 'cities__places-list places__list tabs__content';
-      case CardType.NearPlaces:
-        return 'near-places__list places__list';
-      case CardType.Favorites:
-        return 'favorites__places';
-    }
-  };
+function OfferList({ offers, onHoverCard }: OfferListProps) {
+
+  const { pathname } = useLocation();
+  const type = getCardType(pathname);
+  const listClassName = getlistClassName(type);
 
   const getCardComponentByType = (offer: Offer) => {
     switch (type) {
@@ -28,7 +33,6 @@ function OfferList({ type, offers, onHoverCard }: OfferListProps) {
         return (
           <OfferCard
             key={offer.id}
-            cardType={type}
             offer={offer}
             onHoverCard={onHoverCard}
           />
@@ -37,7 +41,6 @@ function OfferList({ type, offers, onHoverCard }: OfferListProps) {
         return (
           <OfferCard
             key={offer.id}
-            cardType={type}
             offer={offer}
           />
         );
@@ -45,11 +48,9 @@ function OfferList({ type, offers, onHoverCard }: OfferListProps) {
   };
 
   return (
-    <div className={getlistClassName()}>
+    <div className={listClassName}>
       {
-        offers.map((offer) => (
-          getCardComponentByType(offer)
-        ))
+        offers.map(getCardComponentByType)
       }
     </div>
   );
