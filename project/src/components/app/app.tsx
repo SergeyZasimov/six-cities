@@ -11,7 +11,6 @@ import { City } from '../../types/city';
 import withMap from '../../hocs/with-map';
 
 type AppProps = {
-  cardsOnPage: number;
   offers: Offer[];
   cities: City[];
 };
@@ -19,13 +18,13 @@ type AppProps = {
 const MainScreenWithMap = withMap(MainScreen);
 const RoomScreenWithMap = withMap(RoomScreen);
 
-function App({ cardsOnPage, offers, cities }: AppProps): JSX.Element {
+function App({ offers, cities }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreenWithMap cardsOnPage={cardsOnPage} offers={offers} cities={cities} />}
+          element={<MainScreenWithMap offers={offers} cities={cities} />}
         />
         <Route
           path={AppRoute.Login}
