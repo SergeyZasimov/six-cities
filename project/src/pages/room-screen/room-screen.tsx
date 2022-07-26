@@ -26,7 +26,7 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
     return <Navigate to={AppRoute.NotFound} />;
   }
 
-  const nearOffers = offers.slice(0, Setting.NearPlaceseCount);
+  const nearOffers = offers.slice(0, Setting.NearPlacesCount);
 
   return (
     <div className="page">

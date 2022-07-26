@@ -21,7 +21,7 @@ enum HousingType {
 
 enum Setting {
   MaxRating = 5,
-  NearPlaceseCount = 3,
+  NearPlacesCount = 3,
 }
 
 enum IconUrl {
