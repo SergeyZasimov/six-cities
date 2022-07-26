@@ -3,7 +3,7 @@ import { AppRoute } from '../../const';
 
 const isActive = (pathname: string) => pathname === AppRoute.Main;
 
-function Header() {
+function Header(): JSX.Element {
 
   const { pathname } = useLocation();
 

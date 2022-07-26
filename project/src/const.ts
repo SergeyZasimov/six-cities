@@ -21,6 +21,7 @@ enum HousingType {
 
 enum Setting {
   MaxRating = 5,
+  NearPlaceseCount = 3,
 }
 
 enum IconUrl {
@@ -39,6 +40,15 @@ enum MapType {
   Property = 'property',
 }
 
+const StateAction = {
+  Location: {
+    ChangeLocation: 'location/changeLocation'
+  },
+  Offer: {
+    GetOffers: 'offer/getOffers'
+  }
+} as const;
+
 const DEFAULT_CITY_NAME = 'Paris';
 
 export {
@@ -49,5 +59,6 @@ export {
   IconUrl,
   CardType,
   MapType,
+  StateAction,
   DEFAULT_CITY_NAME,
 };
