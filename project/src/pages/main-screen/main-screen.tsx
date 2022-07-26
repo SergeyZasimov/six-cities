@@ -1,26 +1,21 @@
-import { useState } from 'react';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
-import { DEFAULT_CITY_NAME } from '../../const';
+import { useAppSelector } from '../../hooks/store';
 import { City } from '../../types/city';
 import MapHocProps from '../../types/map-hoc';
 import { Offer } from '../../types/offer';
 
 type MainScreenProps = {
-  cardsOnPage: number;
   offers: Offer[];
   cities: City[];
 };
 
-function MainScreen({ cardsOnPage, offers, cities, renderMap, renderOfferList }: MainScreenProps & MapHocProps): JSX.Element {
+function MainScreen({ offers, cities, renderMap, renderOfferList }: MainScreenProps & MapHocProps): JSX.Element {
 
-  const [selectedCityName, setSelectedCityName] = useState<string>(DEFAULT_CITY_NAME);
+  const currentLocation = useAppSelector((state) => state.location);
+  const cardsOnPage = offers.length;
 
   const findLocation = (name: string): City => cities.find((location) => location.name === name) as City;
-
-  const handleLocationSelect = (name: string): void => {
-    setSelectedCityName(name);
-  };
 
   return (
     <div className="page page--gray page--main">
@@ -32,8 +27,6 @@ function MainScreen({ cardsOnPage, offers, cities, renderMap, renderOfferList }:
           <section className="locations container">
             <LocationList
               cities={cities}
-              selectedLocation={selectedCityName}
-              onSelectLocation={handleLocationSelect}
             />
           </section>
         </div>
@@ -41,7 +34,7 @@ function MainScreen({ cardsOnPage, offers, cities, renderMap, renderOfferList }:
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{cardsOnPage} places to stay in Amsterdam</b>
+              <b className="places__found">{cardsOnPage} places to stay in {currentLocation}</b>
               <form
                 className="places__sorting"
                 action="#"
@@ -92,7 +85,7 @@ function MainScreen({ cardsOnPage, offers, cities, renderMap, renderOfferList }:
               {
                 renderMap(
                   offers,
-                  findLocation(selectedCityName),
+                  findLocation(currentLocation),
                 )
               }
             </div>

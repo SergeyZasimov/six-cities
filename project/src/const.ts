@@ -20,7 +20,6 @@ enum HousingType {
 }
 
 enum Setting {
-  CardsOnPage = 4,
   MaxRating = 5,
 }
 
@@ -40,7 +39,7 @@ enum MapType {
   Property = 'property',
 }
 
-const DEFAULT_CITY_NAME = 'Amsterdam';
+const DEFAULT_CITY_NAME = 'Paris';
 
 export {
   AppRoute,
