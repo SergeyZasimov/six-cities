@@ -33,6 +33,7 @@ function OfferList({ offers, onHoverCard }: OfferListProps) {
         return (
           <OfferCard
             key={offer.id}
+            cardType={type}
             offer={offer}
             onHoverCard={onHoverCard}
           />
@@ -41,6 +42,7 @@ function OfferList({ offers, onHoverCard }: OfferListProps) {
         return (
           <OfferCard
             key={offer.id}
+            cardType={type}
             offer={offer}
           />
         );

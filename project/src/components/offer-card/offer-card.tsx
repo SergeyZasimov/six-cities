@@ -1,9 +1,10 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppRoute, CardType } from '../../const';
 import { Offer } from '../../types/offer';
-import { getCardType, getRatingStyle, setFavoriteButtonClassName } from '../utils';
+import { getRatingStyle, setFavoriteButtonClassName } from '../utils';
 
 type OfferCardProps = {
+  cardType: string;
   offer: Offer;
   onHoverCard?: (id: number | null) => void;
 };
@@ -22,10 +23,8 @@ const setImageSize = (cardType: string) => {
 };
 
 
-function OfferCard({ offer, onHoverCard }: OfferCardProps): JSX.Element {
+function OfferCard({ cardType, offer, onHoverCard }: OfferCardProps): JSX.Element {
 
-  const { pathname } = useLocation();
-  const cardType = getCardType(pathname);
   const imageSize = setImageSize(cardType);
 
   const handleMouseOver = () => {
