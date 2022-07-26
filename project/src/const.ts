@@ -40,13 +40,20 @@ enum MapType {
   Property = 'property',
 }
 
+const SortType = {
+  Popular: 'Popular',
+  PriceLowToHigh: 'Price: low to high',
+  PriceHighToLow: 'Price: high to low',
+  TopRatedFirst: 'Top rated first',
+} as const;
+
 const StateAction = {
   Location: {
-    ChangeLocation: 'location/changeLocation'
+    ChangeLocation: 'location/changeLocation',
   },
   Offer: {
-    GetOffers: 'offer/getOffers'
-  }
+    GetOffers: 'offer/getOffers',
+  },
 } as const;
 
 const DEFAULT_CITY_NAME = 'Paris';
@@ -59,6 +66,7 @@ export {
   IconUrl,
   CardType,
   MapType,
+  SortType,
   StateAction,
   DEFAULT_CITY_NAME,
 };

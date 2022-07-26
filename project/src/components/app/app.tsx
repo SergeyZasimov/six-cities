@@ -24,7 +24,7 @@ function App({ offers, cities }: AppProps): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreenWithMap offers={offers} cities={cities} />}
+          element={<MainScreenWithMap cities={cities} />}
         />
         <Route
           path={AppRoute.Login}
