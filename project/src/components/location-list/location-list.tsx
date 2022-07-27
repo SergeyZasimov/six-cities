@@ -7,7 +7,7 @@ type LocationListProps = {
   cities: City[];
 };
 
-function LocationList({ cities }: LocationListProps) {
+function LocationList({ cities }: LocationListProps): JSX.Element {
 
   const selectedLocation = useAppSelector((state) => state.location);
   const dispatch = useAppDispatch();

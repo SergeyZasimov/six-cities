@@ -9,7 +9,7 @@ type OfferListProps = {
   onHoverCard?: (id: number | null) => void;
 };
 
-const getlistClassName = (type: string) => {
+const getListClassName = (type: string): string => {
   switch (type) {
     case CardType.Cities:
       return 'cities__places-list places__list tabs__content';
@@ -17,14 +17,16 @@ const getlistClassName = (type: string) => {
       return 'near-places__list places__list';
     case CardType.Favorites:
       return 'favorites__places';
+    default:
+      return '';
   }
 };
 
-function OfferList({ offers, onHoverCard }: OfferListProps) {
+function OfferList({ offers, onHoverCard }: OfferListProps): JSX.Element {
 
   const { pathname } = useLocation();
   const type = getCardType(pathname);
-  const listClassName = getlistClassName(type);
+  const listClassName = getListClassName(type);
 
   const getCardComponentByType = (offer: Offer) => {
     switch (type) {

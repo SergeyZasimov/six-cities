@@ -1,19 +1,40 @@
+import { useState } from 'react';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
+import SortForm from '../../components/sort-form/sort-form';
+import { SortType } from '../../const';
 import { useAppSelector } from '../../hooks/store';
 import { City } from '../../types/city';
 import MapHocProps from '../../types/map-hoc';
 import { Offer } from '../../types/offer';
 
 type MainScreenProps = {
-  offers: Offer[];
   cities: City[];
 };
 
-function MainScreen({ offers, cities, renderMap, renderOfferList }: MainScreenProps & MapHocProps): JSX.Element {
+function MainScreen({ cities, renderMap, renderOfferList }: MainScreenProps & MapHocProps): JSX.Element {
 
   const currentLocation = useAppSelector((state) => state.location);
+  const offers = useAppSelector((state) => state.offers);
   const cardsOnPage = offers.length;
+
+  const [sortOffers, setSortOffers] = useState(offers);
+
+  const handleChangeSortType = (sortType: string) => {
+    switch (sortType) {
+      case SortType.PriceHighToLow:
+        setSortOffers([...offers].sort((offerA: Offer, offerB: Offer) => offerB.price - offerA.price));
+        break;
+      case SortType.PriceLowToHigh:
+        setSortOffers([...offers].sort((offerA: Offer, offerB: Offer) => -(offerB.price - offerA.price)));
+        break;
+      case SortType.TopRatedFirst:
+        setSortOffers([...offers].sort((offerA: Offer, offerB: Offer) => offerB.rating - offerA.rating));
+        break;
+      default:
+        setSortOffers([...offers]);
+    }
+  };
 
   const findLocation = (name: string): City => cities.find((location) => location.name === name) as City;
 
@@ -35,56 +56,15 @@ function MainScreen({ offers, cities, renderMap, renderOfferList }: MainScreenPr
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{cardsOnPage} places to stay in {currentLocation}</b>
-              <form
-                className="places__sorting"
-                action="#"
-                method="get"
-              >
-                <span className="places__sorting-caption">Sort by</span>{' '}
-                <span
-                  className="places__sorting-type"
-                  tabIndex={0}
-                >
-                  Popular
-                  <svg
-                    className="places__sorting-arrow"
-                    width="7"
-                    height="4"
-                  >
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom">
-                  <li
-                    className="places__option places__option--active"
-                    tabIndex={0}
-                  >Popular
-                  </li>
-                  <li
-                    className="places__option"
-                    tabIndex={0}
-                  >Price: low to high
-                  </li>
-                  <li
-                    className="places__option"
-                    tabIndex={0}
-                  >Price: high to low
-                  </li>
-                  <li
-                    className="places__option"
-                    tabIndex={0}
-                  >Top rated first
-                  </li>
-                </ul>
-              </form>
+              <SortForm onChangeSortType={handleChangeSortType} />
 
-              {renderOfferList(offers)}
+              {renderOfferList(sortOffers)}
 
             </section>
             <div className="cities__right-section">
               {
                 renderMap(
-                  offers,
+                  sortOffers,
                   findLocation(currentLocation),
                 )
               }

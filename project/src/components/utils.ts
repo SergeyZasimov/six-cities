@@ -17,11 +17,11 @@ const setFavoriteButtonClassName = (
     : `${screen}__bookmark-button button`;
 
 const getCardType = (pathname: string): string => {
-  if (pathname.includes(`${AppRoute.Room}`)) {
+  if (pathname.includes(AppRoute.Room)) {
     return CardType.NearPlaces;
   }
 
-  if (pathname.includes(`${AppRoute.Favorites}`)) {
+  if (pathname.includes(AppRoute.Favorites)) {
     return CardType.Favorites;
   }
 
@@ -29,7 +29,7 @@ const getCardType = (pathname: string): string => {
 };
 
 const getMapType = (pathname: string): string => {
-  if (pathname.includes(`${AppRoute.Room}`)) {
+  if (pathname.includes(AppRoute.Room)) {
     return MapType.Property;
   }
 

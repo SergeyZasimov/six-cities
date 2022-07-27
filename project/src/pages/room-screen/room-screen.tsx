@@ -3,7 +3,7 @@ import { getRatingStyle, setFavoriteButtonClassName } from '../../components/uti
 import { Offer } from '../../types/offer';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { AppRoute } from '../../const';
+import { AppRoute, Setting } from '../../const';
 import MapHocProps from '../../types/map-hoc';
 import Header from '../../components/header/header';
 
@@ -25,6 +25,8 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
   if (!room) {
     return <Navigate to={AppRoute.NotFound} />;
   }
+
+  const nearOffers = offers.slice(0, Setting.NearPlacesCount);
 
   return (
     <div className="page">
@@ -143,7 +145,7 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
         <div className="container">
           {
             renderMap(
-              offers.slice(0, 3),
+              nearOffers,
               room.city
             )
           }
@@ -151,7 +153,7 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             {
-              renderOfferList(offers.slice(0, 3))
+              renderOfferList(nearOffers)
             }
           </section>
         </div>

@@ -21,6 +21,7 @@ enum HousingType {
 
 enum Setting {
   MaxRating = 5,
+  NearPlacesCount = 3,
 }
 
 enum IconUrl {
@@ -39,6 +40,22 @@ enum MapType {
   Property = 'property',
 }
 
+const SortType = {
+  Popular: 'Popular',
+  PriceLowToHigh: 'Price: low to high',
+  PriceHighToLow: 'Price: high to low',
+  TopRatedFirst: 'Top rated first',
+} as const;
+
+const StateAction = {
+  Location: {
+    ChangeLocation: 'location/changeLocation',
+  },
+  Offer: {
+    GetOffers: 'offer/getOffers',
+  },
+} as const;
+
 const DEFAULT_CITY_NAME = 'Paris';
 
 export {
@@ -49,5 +66,7 @@ export {
   IconUrl,
   CardType,
   MapType,
+  SortType,
+  StateAction,
   DEFAULT_CITY_NAME,
 };
