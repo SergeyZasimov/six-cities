@@ -6,25 +6,34 @@ import PrivateRoute from '../private-route/private-route';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import { Offer } from '../../types/offer';
 import { City } from '../../types/city';
 import withMap from '../../hocs/with-map';
+import { useAppSelector } from '../../hooks/store';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 type AppProps = {
-  offers: Offer[];
   cities: City[];
 };
 
 const MainScreenWithMap = withMap(MainScreen);
 const RoomScreenWithMap = withMap(RoomScreen);
 
-function App({ offers, cities }: AppProps): JSX.Element {
+function App({ cities }: AppProps): JSX.Element {
+
+  const {isDataLoaded, offers, location} = useAppSelector((state) => state);
+
+  if (isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreenWithMap cities={cities} />}
+          element={<MainScreenWithMap offers={offers} location={location} cities={cities} />}
         />
         <Route
           path={AppRoute.Login}

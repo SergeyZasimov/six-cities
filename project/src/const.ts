@@ -57,6 +57,7 @@ const StateAction = {
   },
   Offer: {
     LoadOffers: 'offer/loadOffers',
+    LoadStatus: 'offer/loadStatus',
   },
 } as const;
 

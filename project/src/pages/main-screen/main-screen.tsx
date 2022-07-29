@@ -3,28 +3,30 @@ import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import SortForm from '../../components/sort-form/sort-form';
 import { getSortOffers } from '../../components/utils';
-import { useAppSelector } from '../../hooks/store';
 import { City } from '../../types/city';
 import MapHocProps from '../../types/map-hoc';
+import { Offer } from '../../types/offer';
 
 type MainScreenProps = {
+  offers: Offer[],
+  location: string,
   cities: City[];
 };
 
-function MainScreen({ cities, renderMap, renderOfferList }: MainScreenProps & MapHocProps): JSX.Element {
+function MainScreen({ offers, location, cities, renderMap, renderOfferList }: MainScreenProps & MapHocProps): JSX.Element {
 
-  const currentLocation = useAppSelector((state) => state.location);
-  const offers = useAppSelector((state) => state.offers);
-  const cardsOnPage = offers.length;
+  const locationOffers = offers.filter((offer) => offer.city.name === location);
+  const city = locationOffers[0].city;
 
-  const [sortOffers, setSortOffers] = useState(offers);
+  const [sortOffers, setSortOffers] = useState<Offer[]>(locationOffers);
+
+  const cardsOnPage = sortOffers.length;
 
   const handleChangeSortType = (sortType: string) => {
-    const newSortOffers = getSortOffers(sortType, [...offers]);
+    const newSortOffers = getSortOffers(sortType, [...locationOffers]);
     setSortOffers(newSortOffers);
   };
 
-  const findLocation = (name: string): City => cities.find((location) => location.name === name) as City;
 
   return (
     <div className="page page--gray page--main">
@@ -43,7 +45,7 @@ function MainScreen({ cities, renderMap, renderOfferList }: MainScreenProps & Ma
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{cardsOnPage} places to stay in {currentLocation}</b>
+              <b className="places__found">{cardsOnPage} places to stay in {location}</b>
               <SortForm onChangeSortType={handleChangeSortType} />
 
               {renderOfferList(sortOffers)}
@@ -52,8 +54,8 @@ function MainScreen({ cities, renderMap, renderOfferList }: MainScreenProps & Ma
             <div className="cities__right-section">
               {
                 renderMap(
-                  sortOffers,
-                  findLocation(currentLocation),
+                  locationOffers,
+                  city,
                 )
               }
             </div>

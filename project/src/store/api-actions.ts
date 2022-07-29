@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios';
 import { ApiRoute, StateAction } from '../const';
 import { Offer } from '../types/offer';
 import { AppDispatch, State } from '../types/state';
-import { loadOffers } from './actions';
+import { loadOffers, setLoadOffersStatus } from './actions';
 
 export const fetchOffersAction = createAsyncThunk<
   void,
@@ -16,4 +16,5 @@ export const fetchOffersAction = createAsyncThunk<
 >(StateAction.Offer.LoadOffers, async (_arg, { dispatch, extra: api }) => {
   const { data } = await api.get<Offer[]>(ApiRoute.Offers);
   dispatch(loadOffers(data));
+  dispatch(setLoadOffersStatus(false));
 });
