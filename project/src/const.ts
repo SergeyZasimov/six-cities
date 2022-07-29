@@ -57,6 +57,9 @@ const StateAction = {
 } as const;
 
 const DEFAULT_CITY_NAME = 'Paris';
+const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
+const REQUEST_TIMEOUT = 5000;
+
 
 export {
   AppRoute,
@@ -69,4 +72,6 @@ export {
   SortType,
   StateAction,
   DEFAULT_CITY_NAME,
+  BACKEND_URL,
+  REQUEST_TIMEOUT,
 };
