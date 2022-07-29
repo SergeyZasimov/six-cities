@@ -2,11 +2,10 @@ import { useState } from 'react';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import SortForm from '../../components/sort-form/sort-form';
-import { SortType } from '../../const';
+import { getSortOffers } from '../../components/utils';
 import { useAppSelector } from '../../hooks/store';
 import { City } from '../../types/city';
 import MapHocProps from '../../types/map-hoc';
-import { Offer } from '../../types/offer';
 
 type MainScreenProps = {
   cities: City[];
@@ -21,19 +20,8 @@ function MainScreen({ cities, renderMap, renderOfferList }: MainScreenProps & Ma
   const [sortOffers, setSortOffers] = useState(offers);
 
   const handleChangeSortType = (sortType: string) => {
-    switch (sortType) {
-      case SortType.PriceHighToLow:
-        setSortOffers([...offers].sort((offerA: Offer, offerB: Offer) => offerB.price - offerA.price));
-        break;
-      case SortType.PriceLowToHigh:
-        setSortOffers([...offers].sort((offerA: Offer, offerB: Offer) => -(offerB.price - offerA.price)));
-        break;
-      case SortType.TopRatedFirst:
-        setSortOffers([...offers].sort((offerA: Offer, offerB: Offer) => offerB.rating - offerA.rating));
-        break;
-      default:
-        setSortOffers([...offers]);
-    }
+    const newSortOffers = getSortOffers(sortType, [...offers]);
+    setSortOffers(newSortOffers);
   };
 
   const findLocation = (name: string): City => cities.find((location) => location.name === name) as City;
