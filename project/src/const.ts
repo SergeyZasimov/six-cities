@@ -40,6 +40,10 @@ enum MapType {
   Property = 'property',
 }
 
+enum ApiRoute {
+  Offers = '/hotels',
+}
+
 const SortType = {
   Popular: 'Popular',
   PriceLowToHigh: 'Price: low to high',
@@ -52,7 +56,7 @@ const StateAction = {
     ChangeLocation: 'location/changeLocation',
   },
   Offer: {
-    GetOffers: 'offer/getOffers',
+    LoadOffers: 'offer/loadOffers',
   },
 } as const;
 
@@ -69,6 +73,7 @@ export {
   IconUrl,
   CardType,
   MapType,
+  ApiRoute,
   SortType,
   StateAction,
   DEFAULT_CITY_NAME,

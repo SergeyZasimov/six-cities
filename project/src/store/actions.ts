@@ -6,6 +6,6 @@ export const changeLocation = createAction<{ location: string }>(
   StateAction.Location.ChangeLocation,
 );
 
-export const getOffers = createAction<{ locationOffers: Offer[] }>(
-  StateAction.Offer.GetOffers,
+export const loadOffers = createAction<Offer[]>(
+  StateAction.Offer.LoadOffers,
 );

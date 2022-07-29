@@ -1,11 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DEFAULT_CITY_NAME } from '../const';
-import { offers } from '../mock/offers';
-import { changeLocation, getOffers } from './actions';
+import { Offer } from '../types/offer';
+import { changeLocation, loadOffers } from './actions';
 
 const initialState = {
   location: DEFAULT_CITY_NAME,
-  offers: offers,
+  offers: [] as Offer[],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -14,9 +14,8 @@ const reducer = createReducer(initialState, (builder) => {
       const { location } = action.payload;
       state.location = location;
     })
-    .addCase(getOffers, (state, action) => {
-      const { locationOffers } = action.payload;
-      state.offers = locationOffers;
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
     });
 });
 

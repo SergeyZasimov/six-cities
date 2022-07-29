@@ -5,6 +5,9 @@ import App from './components/app/app';
 import { cities } from './mock/cities';
 import { offers } from './mock/offers';
 import { store } from './store';
+import { fetchOffersAction } from './store/api-actions';
+
+store.dispatch(fetchOffersAction());
 
 
 const root = ReactDOM.createRoot(
