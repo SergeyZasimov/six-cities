@@ -28,6 +28,8 @@ const ACTIVE_ICON = new Icon({
 
 function CityMap({ offers, activeCardId, city }: MapProps): JSX.Element {
 
+  const { latitude, longitude, zoom } = city.location;
+
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
   const { pathname } = useLocation();
@@ -35,7 +37,7 @@ function CityMap({ offers, activeCardId, city }: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
-      map.setView({ lat: city.location.latitude, lng: city.location.longitude }, city.location.zoom, { animate: true });
+      map.setView({ lat: latitude, lng: longitude }, zoom, { animate: true });
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -51,7 +53,7 @@ function CityMap({ offers, activeCardId, city }: MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offers, activeCardId, city.location.latitude, city.location.longitude, city.location.zoom]);
+  }, [map, offers, activeCardId, latitude, longitude, zoom]);
 
   return (
     <section
