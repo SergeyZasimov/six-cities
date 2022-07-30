@@ -59,6 +59,9 @@ const StateAction = {
     LoadOffers: 'offer/loadOffers',
     LoadStatus: 'offer/loadStatus',
   },
+  User: {
+    RequireAuthorization: 'user/requireAuthorization'
+  }
 } as const;
 
 const Location = {
