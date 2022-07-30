@@ -61,6 +61,15 @@ const StateAction = {
   },
 } as const;
 
+const Location = {
+  Paris: 'Paris',
+  Cologne: 'Cologne',
+  Brussels: 'Brussels',
+  Amsterdam: 'Amsterdam',
+  Hamburg: 'Hamburg',
+  Dusseldorf: 'Dusseldorf'
+} as const;
+
 const DEFAULT_CITY_NAME = 'Paris';
 const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
@@ -77,6 +86,7 @@ export {
   ApiRoute,
   SortType,
   StateAction,
+  Location,
   DEFAULT_CITY_NAME,
   BACKEND_URL,
   REQUEST_TIMEOUT,

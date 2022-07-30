@@ -1,22 +1,21 @@
-import { City } from '../../types/city';
 
 type LocationItemProps = {
-  city: City;
+  city: string;
   selectedLocation: string;
   onSelectLocation: (name: string) => void;
 };
 
 function LocationItem({ city, selectedLocation, onSelectLocation }: LocationItemProps): JSX.Element {
 
-  const isSelected = selectedLocation === city.name;
+  const isSelected = selectedLocation === city;
 
   return (
-    <li className="locations__item" onClick={() => onSelectLocation(city.name)}>
+    <li className="locations__item" onClick={() => onSelectLocation(city)}>
       <a
         className={`locations__item-link tabs__item ${isSelected && 'tabs__item--active'}`}
-        href={`#${city.name}`}
+        href={`#${city}`}
       >
-        <span>{city.name}</span>
+        <span>{city}</span>
       </a>
     </li>
   );
