@@ -1,6 +1,10 @@
+import './loading-screen.css';
+
 function LoadingScreen(): JSX.Element {
   return (
-    <p>Loading...</p>
+    <div className='lds-container'>
+      <div className="lds-hourglass"></div>
+    </div>
   );
 }
 
