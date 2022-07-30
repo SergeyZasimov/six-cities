@@ -6,7 +6,7 @@ type LocationItemProps = {
   onSelectLocation: (name: string) => void;
 };
 
-function LocationItem({ city, selectedLocation, onSelectLocation }: LocationItemProps) {
+function LocationItem({ city, selectedLocation, onSelectLocation }: LocationItemProps): JSX.Element {
 
   const isSelected = selectedLocation === city.name;
 
