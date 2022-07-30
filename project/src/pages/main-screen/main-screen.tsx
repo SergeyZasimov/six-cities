@@ -2,41 +2,28 @@ import { useState } from 'react';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import SortForm from '../../components/sort-form/sort-form';
-import { SortType } from '../../const';
-import { useAppSelector } from '../../hooks/store';
+import { getSortOffers } from '../../components/utils';
 import { City } from '../../types/city';
 import MapHocProps from '../../types/map-hoc';
 import { Offer } from '../../types/offer';
 
 type MainScreenProps = {
+  offers: Offer[],
+  location: string,
   cities: City[];
 };
 
-function MainScreen({ cities, renderMap, renderOfferList }: MainScreenProps & MapHocProps): JSX.Element {
+function MainScreen({ offers, location, cities, renderMap, renderOfferList }: MainScreenProps & MapHocProps): JSX.Element {
 
-  const currentLocation = useAppSelector((state) => state.location);
-  const offers = useAppSelector((state) => state.offers);
-  const cardsOnPage = offers.length;
+  const locationOffers = offers.filter((offer) => offer.city.name === location);
+  const city = locationOffers[0].city;
+  const cardsOnPage = locationOffers.length;
 
-  const [sortOffers, setSortOffers] = useState(offers);
+  const [sortType, setSortType] = useState<string>('');
 
-  const handleChangeSortType = (sortType: string) => {
-    switch (sortType) {
-      case SortType.PriceHighToLow:
-        setSortOffers([...offers].sort((offerA: Offer, offerB: Offer) => offerB.price - offerA.price));
-        break;
-      case SortType.PriceLowToHigh:
-        setSortOffers([...offers].sort((offerA: Offer, offerB: Offer) => -(offerB.price - offerA.price)));
-        break;
-      case SortType.TopRatedFirst:
-        setSortOffers([...offers].sort((offerA: Offer, offerB: Offer) => offerB.rating - offerA.rating));
-        break;
-      default:
-        setSortOffers([...offers]);
-    }
+  const handleChangeSortType = (type: string) => {
+    setSortType(type);
   };
-
-  const findLocation = (name: string): City => cities.find((location) => location.name === name) as City;
 
   return (
     <div className="page page--gray page--main">
@@ -55,17 +42,17 @@ function MainScreen({ cities, renderMap, renderOfferList }: MainScreenProps & Ma
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{cardsOnPage} places to stay in {currentLocation}</b>
+              <b className="places__found">{cardsOnPage} places to stay in {location}</b>
               <SortForm onChangeSortType={handleChangeSortType} />
 
-              {renderOfferList(sortOffers)}
+              {renderOfferList(getSortOffers(sortType, [...locationOffers]))}
 
             </section>
             <div className="cities__right-section">
               {
                 renderMap(
-                  sortOffers,
-                  findLocation(currentLocation),
+                  locationOffers,
+                  city,
                 )
               }
             </div>

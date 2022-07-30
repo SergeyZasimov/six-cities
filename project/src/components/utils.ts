@@ -1,4 +1,5 @@
-import { AppRoute, CardType, MapType, Setting } from '../const';
+import { AppRoute, CardType, MapType, Setting, SortType } from '../const';
+import { Offer } from '../types/offer';
 
 const getRatingStyle = (
   rating: number,
@@ -36,4 +37,32 @@ const getMapType = (pathname: string): string => {
   return MapType.Cities;
 };
 
-export { getRatingStyle, setFavoriteButtonClassName, getCardType, getMapType };
+const getSortOffers = (sortType: string, offers: Offer[]) => {
+  switch (sortType) {
+    case SortType.PriceHighToLow:
+      return offers.sort(
+        (offerA: Offer, offerB: Offer) => offerB.price - offerA.price,
+      );
+      break;
+    case SortType.PriceLowToHigh:
+      return offers.sort(
+        (offerA: Offer, offerB: Offer) => offerA.price - offerB.price,
+      );
+      break;
+    case SortType.TopRatedFirst:
+      return offers.sort(
+        (offerA: Offer, offerB: Offer) => offerB.rating - offerA.rating,
+      );
+      break;
+    default:
+      return offers;
+  }
+};
+
+export {
+  getRatingStyle,
+  setFavoriteButtonClassName,
+  getCardType,
+  getMapType,
+  getSortOffers,
+};

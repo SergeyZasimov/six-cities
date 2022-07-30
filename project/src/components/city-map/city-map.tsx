@@ -35,6 +35,7 @@ function CityMap({ offers, activeCardId, city }: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
+      map.setView({ lat: city.location.latitude, lng: city.location.longitude }, city.location.zoom, { animate: true });
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -50,7 +51,7 @@ function CityMap({ offers, activeCardId, city }: MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offers, activeCardId]);
+  }, [map, offers, activeCardId, city.location.latitude, city.location.longitude, city.location.zoom]);
 
   return (
     <section
