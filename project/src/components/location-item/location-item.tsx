@@ -14,7 +14,7 @@ function LocationItem({ city, selectedLocation, onSelectLocation }: LocationItem
     <li className="locations__item" onClick={() => onSelectLocation(city.name)}>
       <a
         className={`locations__item-link tabs__item ${isSelected && 'tabs__item--active'}`}
-        href="#todo"
+        href={`#${city.name}`}
       >
         <span>{city.name}</span>
       </a>

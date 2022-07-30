@@ -17,16 +17,13 @@ function MainScreen({ offers, location, cities, renderMap, renderOfferList }: Ma
 
   const locationOffers = offers.filter((offer) => offer.city.name === location);
   const city = locationOffers[0].city;
+  const cardsOnPage = locationOffers.length;
 
-  const [sortOffers, setSortOffers] = useState<Offer[]>(locationOffers);
+  const [sortType, setSortType] = useState<string>('');
 
-  const cardsOnPage = sortOffers.length;
-
-  const handleChangeSortType = (sortType: string) => {
-    const newSortOffers = getSortOffers(sortType, [...locationOffers]);
-    setSortOffers(newSortOffers);
+  const handleChangeSortType = (type: string) => {
+    setSortType(type);
   };
-
 
   return (
     <div className="page page--gray page--main">
@@ -48,7 +45,7 @@ function MainScreen({ offers, location, cities, renderMap, renderOfferList }: Ma
               <b className="places__found">{cardsOnPage} places to stay in {location}</b>
               <SortForm onChangeSortType={handleChangeSortType} />
 
-              {renderOfferList(sortOffers)}
+              {renderOfferList(getSortOffers(sortType, [...locationOffers]))}
 
             </section>
             <div className="cities__right-section">
