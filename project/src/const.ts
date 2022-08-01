@@ -66,6 +66,7 @@ const StateAction = {
     CheckAuth: 'user/checkAuth',
     Login: 'user/login',
     Logout: 'user/logout',
+    RedirectToRoute: 'user/redirectToRoute',
   },
   Error: {
     ServerError: 'error/serverError',

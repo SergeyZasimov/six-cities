@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import PrivateRoute from '../private-route/private-route';
@@ -10,6 +10,8 @@ import withMap from '../../hocs/with-map';
 import { useAppSelector } from '../../hooks/store';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { isAuthStatusChecked } from '../utils';
+import HistoryRouter from '../history-router/history-router';
+import { browserHistory } from '../../browser-history';
 
 type AppProps = {
   cities: string[];
@@ -18,9 +20,9 @@ type AppProps = {
 const MainScreenWithMap = withMap(MainScreen);
 const RoomScreenWithMap = withMap(RoomScreen);
 
-function App({ cities }: AppProps): JSX.Element {
+function App( { cities }: AppProps ): JSX.Element {
 
-  const {isDataLoaded, offers, location, authorizationStatus} = useAppSelector((state) => state);
+  const { isDataLoaded, offers, location, authorizationStatus } = useAppSelector(( state ) => state);
 
   if (isAuthStatusChecked(authorizationStatus) || isDataLoaded) {
     return (
@@ -29,11 +31,17 @@ function App({ cities }: AppProps): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreenWithMap offers={offers} location={location} cities={cities} />}
+          element={
+            <MainScreenWithMap
+              offers={offers}
+              location={location}
+              cities={cities}
+            />
+          }
         />
         <Route
           path={AppRoute.Login}
@@ -56,7 +64,7 @@ function App({ cities }: AppProps): JSX.Element {
           element={<NotFoundScreen />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

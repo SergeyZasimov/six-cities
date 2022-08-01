@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus, StateAction } from '../const';
+import { AppRoute, AuthorizationStatus, StateAction } from '../const';
 import { Offer } from '../types/offer';
 
 export const changeLocation = createAction<{ location: string }>(
@@ -17,3 +17,5 @@ export const requireAuthorization = createAction<AuthorizationStatus>(
 );
 
 export const setServerError = createAction<string | null>(StateAction.Error.ServerError);
+
+export const redirectToRoute = createAction<AppRoute>(StateAction.User.RedirectToRoute);
