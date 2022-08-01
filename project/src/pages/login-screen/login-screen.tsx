@@ -1,27 +1,36 @@
+import Header from '../../components/header/header';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { AuthData } from '../../types/auth-data';
+import { useAppDispatch } from '../../hooks/store';
+import { loginAction } from '../../store/api-actions';
+
 function LoginScreen(): JSX.Element {
+
+  const dispatch = useAppDispatch();
+
+  const [authData, setAuthData] = useState<AuthData>({ login: '', password: '' });
+
+  const handleLoginChange = ( evt: ChangeEvent<HTMLInputElement> ): void => {
+    evt.preventDefault();
+    setAuthData({ ...authData, login: evt.target.value });
+  };
+
+  const handlePasswordChange = ( evt: ChangeEvent<HTMLInputElement> ): void => {
+    evt.preventDefault();
+    setAuthData({ ...authData, password: evt.target.value });
+  };
+
+  const handleSubmit = ( evt: FormEvent<HTMLFormElement> ): void => {
+    evt.preventDefault();
+
+    if (authData.login !== '' && authData.password !== '') {
+      dispatch(loginAction(authData));
+    }
+  };
+
   return (
     <div className="page page--gray page--login">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a
-                className="header__logo-link"
-                href="main.html"
-              >
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width="81"
-                  height="41"
-                />
-              </a>
-            </div>
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -30,6 +39,7 @@ function LoginScreen(): JSX.Element {
               className="login__form form"
               action="#"
               method="post"
+              onSubmit={handleSubmit}
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
@@ -38,6 +48,8 @@ function LoginScreen(): JSX.Element {
                   type="email"
                   name="email"
                   placeholder="Email"
+                  value={authData.login}
+                  onChange={handleLoginChange}
                   required
                 />
               </div>
@@ -48,6 +60,8 @@ function LoginScreen(): JSX.Element {
                   type="password"
                   name="password"
                   placeholder="Password"
+                  value={authData.password}
+                  onChange={handlePasswordChange}
                   required
                 />
               </div>
