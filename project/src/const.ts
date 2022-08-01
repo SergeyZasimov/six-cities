@@ -86,7 +86,6 @@ const Location = {
 const DEFAULT_CITY_NAME = 'Paris';
 const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
-const SHOW_ERROR_TIMEOUT = 2000;
 const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 
 export {
@@ -104,6 +103,5 @@ export {
   DEFAULT_CITY_NAME,
   BACKEND_URL,
   REQUEST_TIMEOUT,
-  SHOW_ERROR_TIMEOUT,
   AUTH_TOKEN_KEY_NAME,
 };
