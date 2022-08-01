@@ -15,3 +15,5 @@ export const setLoadOffersStatus = createAction<boolean>(
 export const requireAuthorization = createAction<AuthorizationStatus>(
   StateAction.User.RequireAuthorization,
 );
+
+export const setServerError = createAction<string | null>(StateAction.Error.ServerError);

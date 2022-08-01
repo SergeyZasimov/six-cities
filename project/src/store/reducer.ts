@@ -5,7 +5,7 @@ import {
   changeLocation,
   loadOffers,
   requireAuthorization,
-  setLoadOffersStatus,
+  setLoadOffersStatus, setServerError,
 } from './actions';
 
 type InitState = {
@@ -13,29 +13,34 @@ type InitState = {
   offers: Offer[];
   isDataLoaded: boolean;
   authorizationStatus: AuthorizationStatus;
+  serverError: string | null;
 };
 
 const initialState: InitState = {
   location: DEFAULT_CITY_NAME,
   offers: [],
-  isDataLoaded: false,
+  isDataLoaded: true,
   authorizationStatus: AuthorizationStatus.Unknown,
+  serverError: null,
 };
 
-const reducer = createReducer(initialState, (builder) => {
+const reducer = createReducer(initialState, ( builder ) => {
   builder
-    .addCase(changeLocation, (state, action) => {
+    .addCase(changeLocation, ( state, action ) => {
       const { location } = action.payload;
       state.location = location;
     })
-    .addCase(loadOffers, (state, action) => {
+    .addCase(loadOffers, ( state, action ) => {
       state.offers = action.payload;
     })
-    .addCase(setLoadOffersStatus, (state, action) => {
+    .addCase(setLoadOffersStatus, ( state, action ) => {
       state.isDataLoaded = action.payload;
     })
-    .addCase(requireAuthorization, (state, action) => {
+    .addCase(requireAuthorization, ( state, action ) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setServerError, ( state, action ) => {
+      state.serverError = action.payload;
     });
 });
 
