@@ -9,6 +9,7 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import withMap from '../../hocs/with-map';
 import { useAppSelector } from '../../hooks/store';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { isAuthStatusChecked } from '../utils';
 
 type AppProps = {
   cities: string[];
@@ -19,9 +20,9 @@ const RoomScreenWithMap = withMap(RoomScreen);
 
 function App({ cities }: AppProps): JSX.Element {
 
-  const {isDataLoaded, offers, location} = useAppSelector((state) => state);
+  const {isDataLoaded, offers, location, authorizationStatus} = useAppSelector((state) => state);
 
-  if (isDataLoaded) {
+  if (isAuthStatusChecked(authorizationStatus) || isDataLoaded) {
     return (
       <LoadingScreen />
     );

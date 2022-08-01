@@ -1,4 +1,4 @@
-import { AppRoute, CardType, MapType, Setting, SortType } from '../const';
+import { AppRoute, AuthorizationStatus, CardType, MapType, Setting, SortType } from '../const';
 import { Offer } from '../types/offer';
 
 const getRatingStyle = (
@@ -17,7 +17,7 @@ const setFavoriteButtonClassName = (
     ? `${screen}__bookmark-button ${screen}__bookmark-button--active button`
     : `${screen}__bookmark-button button`;
 
-const getCardType = (pathname: string): string => {
+const getCardType = ( pathname: string ): string => {
   if (pathname.includes(AppRoute.Room)) {
     return CardType.NearPlaces;
   }
@@ -29,7 +29,7 @@ const getCardType = (pathname: string): string => {
   return CardType.Cities;
 };
 
-const getMapType = (pathname: string): string => {
+const getMapType = ( pathname: string ): string => {
   if (pathname.includes(AppRoute.Room)) {
     return MapType.Property;
   }
@@ -37,21 +37,21 @@ const getMapType = (pathname: string): string => {
   return MapType.Cities;
 };
 
-const getSortOffers = (sortType: string, offers: Offer[]) => {
+const getSortOffers = ( sortType: string, offers: Offer[] ) => {
   switch (sortType) {
     case SortType.PriceHighToLow:
       return offers.sort(
-        (offerA: Offer, offerB: Offer) => offerB.price - offerA.price,
+        ( offerA: Offer, offerB: Offer ) => offerB.price - offerA.price,
       );
       break;
     case SortType.PriceLowToHigh:
       return offers.sort(
-        (offerA: Offer, offerB: Offer) => offerA.price - offerB.price,
+        ( offerA: Offer, offerB: Offer ) => offerA.price - offerB.price,
       );
       break;
     case SortType.TopRatedFirst:
       return offers.sort(
-        (offerA: Offer, offerB: Offer) => offerB.rating - offerA.rating,
+        ( offerA: Offer, offerB: Offer ) => offerB.rating - offerA.rating,
       );
       break;
     default:
@@ -59,10 +59,14 @@ const getSortOffers = (sortType: string, offers: Offer[]) => {
   }
 };
 
+const isAuthStatusChecked = ( authStatus: AuthorizationStatus ): boolean =>
+  authStatus === AuthorizationStatus.Unknown;
+
 export {
   getRatingStyle,
   setFavoriteButtonClassName,
   getCardType,
   getMapType,
   getSortOffers,
+  isAuthStatusChecked,
 };

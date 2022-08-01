@@ -18,7 +18,7 @@ type InitState = {
 const initialState: InitState = {
   location: DEFAULT_CITY_NAME,
   offers: [],
-  isDataLoaded: true,
+  isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
 };
 
