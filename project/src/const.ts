@@ -42,6 +42,8 @@ enum MapType {
 
 enum ApiRoute {
   Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 const SortType = {
@@ -59,12 +61,32 @@ const StateAction = {
     LoadOffers: 'offer/loadOffers',
     LoadStatus: 'offer/loadStatus',
   },
+  User: {
+    RequireAuthorization: 'user/requireAuthorization',
+    CheckAuth: 'user/checkAuth',
+    Login: 'user/login',
+    Logout: 'user/logout',
+    RedirectToRoute: 'user/redirectToRoute',
+  },
+  Error: {
+    ServerError: 'error/serverError',
+    ClearServerError: 'error/clearServerError',
+  }
+} as const;
+
+const Location = {
+  Paris: 'Paris',
+  Cologne: 'Cologne',
+  Brussels: 'Brussels',
+  Amsterdam: 'Amsterdam',
+  Hamburg: 'Hamburg',
+  Dusseldorf: 'Dusseldorf',
 } as const;
 
 const DEFAULT_CITY_NAME = 'Paris';
 const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
-
+const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 
 export {
   AppRoute,
@@ -77,7 +99,9 @@ export {
   ApiRoute,
   SortType,
   StateAction,
+  Location,
   DEFAULT_CITY_NAME,
   BACKEND_URL,
   REQUEST_TIMEOUT,
+  AUTH_TOKEN_KEY_NAME,
 };

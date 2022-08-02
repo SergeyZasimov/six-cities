@@ -1,7 +1,7 @@
 import Header from '../../components/header/header';
 import './not-found-screen.css';
 
-function NotFoundScreen() {
+function NotFoundScreen(): JSX.Element {
   return (
     <div className="page page--gray">
       <Header />

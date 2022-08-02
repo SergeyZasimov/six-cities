@@ -2,10 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { cities } from './mock/cities';
+import { Location } from './const';
 import { store } from './store';
-import { fetchOffersAction } from './store/api-actions';
+import { checkAuthAction, fetchOffersAction } from './store/api-actions';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+store.dispatch(checkAuthAction());
 store.dispatch(fetchOffersAction());
 
 
@@ -16,7 +19,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App cities={Object.values(cities)} />
+      <ToastContainer />
+      <App cities={Object.values(Location)} />
     </Provider>
   </React.StrictMode>,
 );

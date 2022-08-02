@@ -1,10 +1,9 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { changeLocation } from '../../store/actions';
-import { City } from '../../types/city';
 import LocationItem from '../location-item/location-item';
 
 type LocationListProps = {
-  cities: City[];
+  cities: string[];
 };
 
 function LocationList({ cities }: LocationListProps): JSX.Element {
@@ -20,7 +19,7 @@ function LocationList({ cities }: LocationListProps): JSX.Element {
     <ul className="locations__list tabs__list">
       {cities.map((city) => (
         <LocationItem
-          key={city.name}
+          key={city}
           city={city}
           selectedLocation={selectedLocation}
           onSelectLocation={handleSelectLocation}
