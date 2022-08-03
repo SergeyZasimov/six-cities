@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { Location } from './const';
+import { CITIES } from './const';
 import { store } from './store';
 import { checkAuthAction, fetchOffersAction } from './store/api-actions';
 import { ToastContainer } from 'react-toastify';
@@ -20,7 +20,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer />
-      <App cities={Object.values(Location)} />
+      <App cities={CITIES} />
     </Provider>
   </React.StrictMode>,
 );

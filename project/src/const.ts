@@ -71,17 +71,17 @@ const StateAction = {
   Error: {
     ServerError: 'error/serverError',
     ClearServerError: 'error/clearServerError',
-  }
+  },
 } as const;
 
-const Location = {
-  Paris: 'Paris',
-  Cologne: 'Cologne',
-  Brussels: 'Brussels',
-  Amsterdam: 'Amsterdam',
-  Hamburg: 'Hamburg',
-  Dusseldorf: 'Dusseldorf',
-} as const;
+const CITIES = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+] as const;
 
 const DEFAULT_CITY_NAME = 'Paris';
 const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
@@ -99,7 +99,7 @@ export {
   ApiRoute,
   SortType,
   StateAction,
-  Location,
+  CITIES,
   DEFAULT_CITY_NAME,
   BACKEND_URL,
   REQUEST_TIMEOUT,

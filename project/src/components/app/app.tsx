@@ -12,9 +12,10 @@ import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { checkAuthStatus } from '../utils';
 import HistoryRouter from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
+import { Cities } from '../../types/city';
 
 type AppProps = {
-  cities: string[];
+  cities: Cities;
 };
 
 const MainScreenWithMap = withMap(MainScreen);
