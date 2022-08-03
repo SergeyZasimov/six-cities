@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom';
 import { getRatingStyle, setFavoriteButtonClassName } from '../../components/utils';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import MapHocProps from '../../types/map-hoc';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks/store';
@@ -10,10 +10,13 @@ import LoadingScreen from '../loading-screen/loading-screen';
 
 function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
 
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const room = useAppSelector((state) => state.offer);
   const comments = useAppSelector((state) => state.commentsList);
   const nearOffers = useAppSelector((state) => state.nearbyOffers);
   const isLoadData = useAppSelector((state) => state.isDataLoaded);
+
+  const isCommentFormAvailable = authorizationStatus === AuthorizationStatus.Auth;
 
   if (isLoadData) {
     return <LoadingScreen />;
@@ -132,7 +135,9 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
                 <CommentList comments={comments} />
-                <CommentForm />
+                {
+                  isCommentFormAvailable && <CommentForm />
+                }
               </section>
             </div>
           </div>
