@@ -1,17 +1,22 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from 'axios';
 import { BACKEND_URL, REQUEST_TIMEOUT } from '../const';
 import { getToken } from './token';
 import { StatusCodes } from 'http-status-codes';
 import { toast } from 'react-toastify';
 
-const ErrorStatusCodeMapping: Record<number, boolean> = {
-  [StatusCodes.BAD_REQUEST]: true,
-  [StatusCodes.UNAUTHORIZED]: true,
-  [StatusCodes.NOT_FOUND]: true,
-};
+const errorStatusCodeSet = new Set([
+  StatusCodes.BAD_REQUEST,
+  StatusCodes.UNAUTHORIZED,
+  StatusCodes.NOT_FOUND,
+]);
 
-const isDisplayError = ( response: AxiosResponse ) => ErrorStatusCodeMapping[response.status];
-
+const displayError = (response: AxiosResponse) =>
+  errorStatusCodeSet.has(response.status);
 
 export const createApi = (): AxiosInstance => {
   const api = axios.create({
@@ -19,7 +24,7 @@ export const createApi = (): AxiosInstance => {
     timeout: REQUEST_TIMEOUT,
   });
 
-  api.interceptors.request.use(( config: AxiosRequestConfig ) => {
+  api.interceptors.request.use((config: AxiosRequestConfig) => {
     const token = getToken();
 
     if (token) {
@@ -30,13 +35,12 @@ export const createApi = (): AxiosInstance => {
   });
 
   api.interceptors.response.use(
-    ( response ) => response,
-    ( error: AxiosError ) => {
-      if (error.response && isDisplayError(error.response)) {
-        toast.error(error.response.data.error);
+    (response) => response,
+    (error: AxiosError) => {
+      if (error.response && displayError(error.response)) {
+        toast.warn(error.response.data.error);
       }
-      throw error;
-    }
+    },
   );
 
   return api;
