@@ -1,11 +1,16 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, DEFAULT_CITY_NAME } from '../const';
+import { Comment } from '../types/comment';
 import { Offer } from '../types/offer';
 import {
   changeLocation,
+  loadComments,
+  loadNearbyOffers,
+  loadOffer,
   loadOffers,
   requireAuthorization,
-  setLoadOffersStatus, setServerError,
+  setLoadOffersStatus,
+  setServerError,
 } from './actions';
 
 type InitState = {
@@ -14,6 +19,9 @@ type InitState = {
   isDataLoaded: boolean;
   authorizationStatus: AuthorizationStatus;
   serverError: string | null;
+  commentsList: Comment[];
+  offer: Offer | null;
+  nearbyOffers: Offer[];
 };
 
 const initialState: InitState = {
@@ -22,25 +30,38 @@ const initialState: InitState = {
   isDataLoaded: true,
   authorizationStatus: AuthorizationStatus.Unknown,
   serverError: null,
+  commentsList: [],
+  offer: null,
+  nearbyOffers: [],
 };
 
-const reducer = createReducer(initialState, ( builder ) => {
+// todo: оптимизировать код редьюсера после изучения раздела 8
+const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeLocation, ( state, action ) => {
+    .addCase(changeLocation, (state, action) => {
       const { location } = action.payload;
       state.location = location;
     })
-    .addCase(loadOffers, ( state, action ) => {
+    .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
     })
-    .addCase(setLoadOffersStatus, ( state, action ) => {
+    .addCase(setLoadOffersStatus, (state, action) => {
       state.isDataLoaded = action.payload;
     })
-    .addCase(requireAuthorization, ( state, action ) => {
+    .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
-    .addCase(setServerError, ( state, action ) => {
+    .addCase(setServerError, (state, action) => {
       state.serverError = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.commentsList = action.payload;
+    })
+    .addCase(loadOffer, (state, action) => {
+      state.offer = action.payload;
+    })
+    .addCase(loadNearbyOffers, (state, action) => {
+      state.nearbyOffers = action.payload;
     });
 });
 

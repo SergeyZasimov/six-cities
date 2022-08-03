@@ -44,6 +44,7 @@ enum ApiRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments',
 }
 
 const SortType = {
@@ -60,6 +61,12 @@ const StateAction = {
   Offer: {
     LoadOffers: 'offer/loadOffers',
     LoadStatus: 'offer/loadStatus',
+    LoadOffer: 'offer/loadOffer',
+    LoadNearbyOffers: 'offer/loadNearbyOffers',
+  },
+  Comment: {
+    LoadComments: 'comment/loadComments',
+    LoadStatus: 'comment/loadStatus',
   },
   User: {
     RequireAuthorization: 'user/requireAuthorization',

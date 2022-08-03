@@ -1,32 +1,27 @@
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { getRatingStyle, setFavoriteButtonClassName } from '../../components/utils';
-import { Offer } from '../../types/offer';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { AppRoute, Setting } from '../../const';
+import { AppRoute } from '../../const';
 import MapHocProps from '../../types/map-hoc';
 import Header from '../../components/header/header';
+import { useAppSelector } from '../../hooks/store';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-type RoomScreenProps = {
-  offers: Offer[];
-};
+function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
 
-function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & MapHocProps): JSX.Element {
+  const room = useAppSelector((state) => state.offer);
+  const comments = useAppSelector((state) => state.commentsList);
+  const nearOffers = useAppSelector((state) => state.nearbyOffers);
+  const isLoadData = useAppSelector((state) => state.isDataLoaded);
 
-  const { id } = useParams();
-
-  if (!id) {
-    return <Navigate to={AppRoute.NotFound} />;
+  if (isLoadData) {
+    return <LoadingScreen />;
   }
-
-  const paramsId = +id;
-  const room = offers.find((offer: Offer) => offer.id === paramsId) as Offer;
 
   if (!room) {
     return <Navigate to={AppRoute.NotFound} />;
   }
-
-  const nearOffers = offers.slice(0, Setting.NearPlacesCount);
 
   return (
     <div className="page">
@@ -135,8 +130,8 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">reviews &middot; <span className="reviews__amount">{room.comments.length}</span></h2>
-                <CommentList comments={room.comments} />
+                <h2 className="reviews__title">reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
+                <CommentList comments={comments} />
                 <CommentForm />
               </section>
             </div>

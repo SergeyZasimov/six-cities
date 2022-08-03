@@ -58,7 +58,7 @@ function App({ cities }: AppProps): JSX.Element {
         />
         <Route
           path={`${AppRoute.Room}/:id`}
-          element={<RoomScreenWithMap offers={offers} />}
+          element={<RoomScreenWithMap />}
         />
         <Route
           path={AppRoute.NotFound}
