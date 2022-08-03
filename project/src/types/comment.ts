@@ -8,3 +8,9 @@ export type Comment = {
   comment: string;
   user: User;
 };
+
+export type CommentData = {
+  roomId: number;
+  comment: string;
+  rating: number;
+};

@@ -1,14 +1,21 @@
-import { ChangeEvent, Fragment, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { Setting } from '../../const';
+import { useAppDispatch } from '../../hooks/store';
+import { sendNewPost } from '../../store/api-actions';
 
 type NewComment = {
   rating: number;
   comment: string;
 };
 
-function CommentForm(): JSX.Element {
+type CommentFormProps = {
+  roomId: number;
+};
+
+function CommentForm({ roomId }: CommentFormProps): JSX.Element {
 
   const [comment, setComment] = useState({ rating: 0, comment: '' } as NewComment);
+  const dispatch = useAppDispatch();
 
   const handleChangeRating = (evt: ChangeEvent<HTMLInputElement>): void => {
     evt.preventDefault();
@@ -20,11 +27,17 @@ function CommentForm(): JSX.Element {
     setComment({ ...comment, comment: evt.target.value });
   };
 
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>): void => {
+    evt.preventDefault();
+    dispatch(sendNewPost({ roomId, rating: comment.rating, comment: comment.comment }));
+  };
+
   return (
     <form
       className="reviews__form form"
       action="#"
       method="post"
+      onSubmit={handleSubmit}
     >
       <label
         className="reviews__label form__label"

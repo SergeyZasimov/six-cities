@@ -136,7 +136,7 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
                 <h2 className="reviews__title">reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
                 <CommentList comments={comments} />
                 {
-                  isCommentFormAvailable && <CommentForm />
+                  isCommentFormAvailable && <CommentForm roomId={room.id} />
                 }
               </section>
             </div>

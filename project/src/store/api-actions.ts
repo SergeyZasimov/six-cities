@@ -16,7 +16,7 @@ import {
   setLoadOffersStatus,
 } from './actions';
 import { toast } from 'react-toastify';
-import { Comment } from '../types/comment';
+import { Comment, CommentData } from '../types/comment';
 
 type ThunkApiConfigType = {
   dispatch: AppDispatch;
@@ -96,3 +96,18 @@ export const logoutAction = createAsyncThunk<
   dropToken();
   dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
 });
+
+export const sendNewPost = createAsyncThunk<
+  void,
+  CommentData,
+  ThunkApiConfigType
+>(
+  StateAction.Comment.SendNewComment,
+  async ({ roomId, rating, comment }, { dispatch, extra: api }) => {
+    const { data } = await api.post(`${ApiRoute.Comments}/${roomId}`, {
+      rating,
+      comment,
+    });
+    dispatch(loadComments(data));
+  },
+);

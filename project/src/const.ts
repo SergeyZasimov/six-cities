@@ -67,6 +67,7 @@ const StateAction = {
   Comment: {
     LoadComments: 'comment/loadComments',
     LoadStatus: 'comment/loadStatus',
+    SendNewComment: 'comment/sendNewComment',
   },
   User: {
     RequireAuthorization: 'user/requireAuthorization',
