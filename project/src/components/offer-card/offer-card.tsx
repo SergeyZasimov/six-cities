@@ -3,8 +3,7 @@ import { AppRoute, CardType } from '../../const';
 import { useAppDispatch } from '../../hooks/store';
 import { Offer } from '../../types/offer';
 import { getRatingStyle, setFavoriteButtonClassName } from '../utils';
-import { fetchCommentsAction, fetchNearbyOffers, fetchOneOfferAction } from '../../store/api-actions';
-import { setLoadOffersStatus } from '../../store/actions';
+import { fetchOneOfferAction } from '../../store/api-actions';
 
 type OfferCardProps = {
   cardType: string;
@@ -44,11 +43,7 @@ function OfferCard({ cardType, offer, onHoverCard }: OfferCardProps): JSX.Elemen
   };
 
   const handleLinkClick = () => {
-    dispatch(setLoadOffersStatus(true));
     dispatch(fetchOneOfferAction(offer.id));
-    dispatch(fetchCommentsAction(offer.id));
-    dispatch(fetchNearbyOffers(offer.id));
-    dispatch(setLoadOffersStatus(false));
   };
 
   return (

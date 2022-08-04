@@ -40,8 +40,14 @@ export const fetchOneOfferAction = createAsyncThunk<
   number,
   ThunkApiConfigType
 >(StateAction.Offer.LoadOffer, async (id, { dispatch, extra: api }) => {
-  const { data } = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
-  dispatch(loadOffer(data));
+  dispatch(setLoadOffersStatus(true));
+  const { data: offer } = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
+  const {data: comments} = await api.get<Comment[]>(`${ApiRoute.Comments}/${id}`);
+  const { data: nearbyOffers } = await api.get<Offer[]>(`${ApiRoute.Offers}/${id}/nearby`);
+  dispatch(loadOffer(offer));
+  dispatch(loadComments(comments));
+  dispatch(loadNearbyOffers(nearbyOffers));
+  dispatch(setLoadOffersStatus(false));
 });
 
 export const fetchNearbyOffers = createAsyncThunk<

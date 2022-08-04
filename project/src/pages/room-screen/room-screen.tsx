@@ -1,17 +1,17 @@
-import { Navigate } from 'react-router-dom';
 import { getRatingStyle, setFavoriteButtonClassName } from '../../components/utils';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AuthorizationStatus } from '../../const';
 import MapHocProps from '../../types/map-hoc';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks/store';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { Offer } from '../../types/offer';
 
 function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
 
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const room = useAppSelector((state) => state.offer);
+  const room = useAppSelector((state) => state.offer) as Offer;
   const comments = useAppSelector((state) => state.commentsList);
   const nearOffers = useAppSelector((state) => state.nearbyOffers);
   const isLoadData = useAppSelector((state) => state.isDataLoaded);
@@ -20,10 +20,6 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
 
   if (isLoadData) {
     return <LoadingScreen />;
-  }
-
-  if (!room) {
-    return <Navigate to={AppRoute.NotFound} />;
   }
 
   return (
