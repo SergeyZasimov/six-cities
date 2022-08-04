@@ -75,6 +75,7 @@ const StateAction = {
     Login: 'user/login',
     Logout: 'user/logout',
     RedirectToRoute: 'user/redirectToRoute',
+    SetUserName: 'user/setUserName',
   },
   Error: {
     ServerError: 'error/serverError',

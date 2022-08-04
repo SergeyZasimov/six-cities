@@ -34,3 +34,5 @@ export const loadOffer = createAction<Offer>(StateAction.Offer.LoadOffer);
 export const loadNearbyOffers = createAction<Offer[]>(
   StateAction.Offer.LoadNearbyOffers,
 );
+
+export const setUserName = createAction<string>(StateAction.User.SetUserName);

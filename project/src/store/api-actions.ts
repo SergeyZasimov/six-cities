@@ -14,6 +14,7 @@ import {
   redirectToRoute,
   requireAuthorization,
   setLoadOffersStatus,
+  setUserName,
 } from './actions';
 import { toast } from 'react-toastify';
 import { Comment, CommentData } from '../types/comment';
@@ -67,8 +68,11 @@ export const checkAuthAction = createAsyncThunk<
   ThunkApiConfigType
 >(StateAction.User.CheckAuth, async (_arg, { dispatch, extra: api }) => {
   try {
-    await api.get(ApiRoute.Login);
+    const {
+      data: { email: userName },
+    } = await api.get(ApiRoute.Login);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(setUserName(userName));
   } catch {
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   }
@@ -78,10 +82,11 @@ export const loginAction = createAsyncThunk<void, AuthData, ThunkApiConfigType>(
   StateAction.User.Login,
   async ({ login: email, password }, { dispatch, extra: api }) => {
     const {
-      data: { token },
+      data: { email: userName, token },
     } = await api.post<UserData>(ApiRoute.Login, { email, password });
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(setUserName(userName));
     dispatch(redirectToRoute(AppRoute.Main));
     toast.success('You successfully login');
   },

@@ -11,6 +11,7 @@ import {
   requireAuthorization,
   setLoadOffersStatus,
   setServerError,
+  setUserName,
 } from './actions';
 
 type InitState = {
@@ -22,6 +23,7 @@ type InitState = {
   commentsList: Comment[];
   offer: Offer | null;
   nearbyOffers: Offer[];
+  userName: string;
 };
 
 const initialState: InitState = {
@@ -33,6 +35,7 @@ const initialState: InitState = {
   commentsList: [],
   offer: null,
   nearbyOffers: [],
+  userName: '',
 };
 
 // todo: оптимизировать код редьюсера после изучения раздела 8
@@ -62,6 +65,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadNearbyOffers, (state, action) => {
       state.nearbyOffers = action.payload;
+    })
+    .addCase(setUserName, (state, action) => {
+      state.userName = action.payload;
     });
 });
 
