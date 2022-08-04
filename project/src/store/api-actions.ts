@@ -42,30 +42,16 @@ export const fetchOneOfferAction = createAsyncThunk<
 >(StateAction.Offer.LoadOffer, async (id, { dispatch, extra: api }) => {
   dispatch(setLoadOffersStatus(true));
   const { data: offer } = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
-  const {data: comments} = await api.get<Comment[]>(`${ApiRoute.Comments}/${id}`);
-  const { data: nearbyOffers } = await api.get<Offer[]>(`${ApiRoute.Offers}/${id}/nearby`);
+  const { data: comments } = await api.get<Comment[]>(
+    `${ApiRoute.Comments}/${id}`,
+  );
+  const { data: nearbyOffers } = await api.get<Offer[]>(
+    `${ApiRoute.Offers}/${id}/nearby`,
+  );
   dispatch(loadOffer(offer));
   dispatch(loadComments(comments));
   dispatch(loadNearbyOffers(nearbyOffers));
   dispatch(setLoadOffersStatus(false));
-});
-
-export const fetchNearbyOffers = createAsyncThunk<
-  void,
-  number,
-  ThunkApiConfigType
->(StateAction.Offer.LoadNearbyOffers, async (id, { dispatch, extra: api }) => {
-  const { data } = await api.get<Offer[]>(`${ApiRoute.Offers}/${id}/nearby`);
-  dispatch(loadNearbyOffers(data));
-});
-
-export const fetchCommentsAction = createAsyncThunk<
-  void,
-  number,
-  ThunkApiConfigType
->(StateAction.Comment.LoadComments, async (id, { dispatch, extra: api }) => {
-  const { data } = await api.get<Comment[]>(`${ApiRoute.Comments}/${id}`);
-  dispatch(loadComments(data));
 });
 
 export const checkAuthAction = createAsyncThunk<
@@ -108,7 +94,7 @@ export const logoutAction = createAsyncThunk<
   dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
 });
 
-export const sendNewPost = createAsyncThunk<
+export const sendNewComment = createAsyncThunk<
   void,
   CommentData,
   ThunkApiConfigType

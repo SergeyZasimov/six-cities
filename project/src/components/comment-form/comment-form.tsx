@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { Setting } from '../../const';
 import { useAppDispatch } from '../../hooks/store';
-import { sendNewPost } from '../../store/api-actions';
+import { sendNewComment } from '../../store/api-actions';
 
 type NewComment = {
   rating: number;
@@ -29,7 +29,7 @@ function CommentForm({ roomId }: CommentFormProps): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
-    dispatch(sendNewPost({ roomId, rating: comment.rating, comment: comment.comment }));
+    dispatch(sendNewComment({ roomId, rating: comment.rating, comment: comment.comment }));
   };
 
   return (

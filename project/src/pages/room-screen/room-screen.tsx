@@ -10,15 +10,13 @@ import { Offer } from '../../types/offer';
 
 function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const { authorizationStatus, commentsList, nearbyOffers, isDataLoaded } = useAppSelector((state) => state);
+
   const room = useAppSelector((state) => state.offer) as Offer;
-  const comments = useAppSelector((state) => state.commentsList);
-  const nearOffers = useAppSelector((state) => state.nearbyOffers);
-  const isLoadData = useAppSelector((state) => state.isDataLoaded);
 
   const isCommentFormAvailable = authorizationStatus === AuthorizationStatus.Auth;
 
-  if (isLoadData) {
+  if (isDataLoaded) {
     return <LoadingScreen />;
   }
 
@@ -129,8 +127,8 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
-                <CommentList comments={comments} />
+                <h2 className="reviews__title">reviews &middot; <span className="reviews__amount">{commentsList.length}</span></h2>
+                <CommentList comments={commentsList} />
                 {
                   isCommentFormAvailable && <CommentForm roomId={room.id} />
                 }
@@ -141,7 +139,7 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
         <div className="container">
           {
             renderMap(
-              nearOffers,
+              nearbyOffers,
               room.city
             )
           }
@@ -149,7 +147,7 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             {
-              renderOfferList(nearOffers)
+              renderOfferList(nearbyOffers)
             }
           </section>
         </div>
