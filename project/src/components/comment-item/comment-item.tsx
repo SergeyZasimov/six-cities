@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Comment } from '../../types/comment';
 import { getRatingStyle } from '../utils';
 
@@ -26,7 +27,7 @@ function CommentItem({ comment }: CommentItemProps): JSX.Element {
         <p className="reviews__text">
           { comment.comment }
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{comment.date}</time>
+        <time className="reviews__time" dateTime="2019-04-24">{dayjs(comment.date).format('MMMM YYYY')}</time>
       </div>
     </li>
 
