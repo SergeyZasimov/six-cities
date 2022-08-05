@@ -14,22 +14,22 @@ type CommentFormProps = {
 
 function CommentForm({ roomId }: CommentFormProps): JSX.Element {
 
-  const [comment, setComment] = useState({ rating: 0, comment: '' } as NewComment);
+  const [newComment, setNewComment] = useState({ rating: 0, comment: '' } as NewComment);
   const dispatch = useAppDispatch();
 
   const handleChangeRating = (evt: ChangeEvent<HTMLInputElement>): void => {
     evt.preventDefault();
-    setComment({ ...comment, rating: +evt.target.value });
+    setNewComment({ ...newComment, rating: +evt.target.value });
   };
 
   const handleChangeText = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
     evt.preventDefault();
-    setComment({ ...comment, comment: evt.target.value });
+    setNewComment({ ...newComment, comment: evt.target.value });
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
-    dispatch(sendNewComment({ roomId, rating: comment.rating, comment: comment.comment }));
+    dispatch(sendNewComment({ roomId, rating: newComment.rating, comment: newComment.comment }));
   };
 
   return (
