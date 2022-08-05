@@ -12,6 +12,8 @@ type CommentFormProps = {
   roomId: number;
 };
 
+const MAX_COMMENT_LENGTH = 50;
+
 function CommentForm({ roomId }: CommentFormProps): JSX.Element {
 
   const [newComment, setNewComment] = useState({ rating: 0, comment: '' } as NewComment);
@@ -82,12 +84,13 @@ function CommentForm({ roomId }: CommentFormProps): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleChangeText}
+        maxLength={MAX_COMMENT_LENGTH}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and
-          describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          describe your stay with at least <b className="reviews__text-amount">{MAX_COMMENT_LENGTH} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"
