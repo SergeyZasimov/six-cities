@@ -1,22 +1,51 @@
 import { getRatingStyle, setFavoriteButtonClassName } from '../../components/utils';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { AuthorizationStatus } from '../../const';
+import { ApiRoute, AuthorizationStatus } from '../../const';
 import MapHocProps from '../../types/map-hoc';
 import Header from '../../components/header/header';
-import { useAppSelector } from '../../hooks/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { Offer } from '../../types/offer';
+import { Comment } from '../../types/comment';
+import { useEffect, useState } from 'react';
+import { api } from '../../store';
+import { setLoadDataStatus } from '../../store/actions';
+import { useParams } from 'react-router-dom';
 
 function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
 
-  const { authorizationStatus, commentsList, nearbyOffers, isDataLoaded } = useAppSelector((state) => state);
+  const { authorizationStatus, isDataLoaded } = useAppSelector((state) => state);
+  const [room, setRoom] = useState<Offer | null>(null);
+  const [commentsList, setCommentsList] = useState<Comment[] | null>(null);
+  const [nearbyOffers, setNearbyOffers] = useState<Offer[] | null>(null);
 
-  const room = useAppSelector((state) => state.offer) as Offer;
+  const dispatch = useAppDispatch();
+
+  const { id } = useParams();
+
+
+  useEffect(() => {
+    dispatch(setLoadDataStatus(true));
+    api.get(`${ApiRoute.Offers}/${id}`)
+      .then((response) => setRoom(response.data));
+
+    api.get(`${ApiRoute.Comments}/${id}`)
+      .then((response) => setCommentsList(response.data));
+
+    api.get(`${ApiRoute.Offers}/${id}/nearby`)
+      .then((response) => setNearbyOffers(response.data));
+
+    dispatch(setLoadDataStatus(false));
+
+    return () => {
+      window.scrollTo(0, 0);
+    };
+  }, [dispatch, id]);
 
   const isCommentFormAvailable = authorizationStatus === AuthorizationStatus.Auth;
 
-  if (isDataLoaded) {
+  if (isDataLoaded || room === null || commentsList === null || nearbyOffers === null) {
     return <LoadingScreen />;
   }
 

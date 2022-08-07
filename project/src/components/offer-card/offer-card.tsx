@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, CardType } from '../../const';
-import { useAppDispatch } from '../../hooks/store';
 import { Offer } from '../../types/offer';
 import { getRatingStyle, setFavoriteButtonClassName } from '../utils';
-import { fetchOneOfferAction } from '../../store/api-actions';
 
 type OfferCardProps = {
   cardType: string;
@@ -28,7 +26,6 @@ const setImageSize = (cardType: string) => {
 function OfferCard({ cardType, offer, onHoverCard }: OfferCardProps): JSX.Element {
 
   const imageSize = setImageSize(cardType);
-  const dispatch = useAppDispatch();
 
   const handleMouseOver = () => {
     if (onHoverCard !== undefined) {
@@ -40,10 +37,6 @@ function OfferCard({ cardType, offer, onHoverCard }: OfferCardProps): JSX.Elemen
     if (onHoverCard !== undefined) {
       return onHoverCard(null);
     }
-  };
-
-  const handleLinkClick = () => {
-    dispatch(fetchOneOfferAction(offer.id));
   };
 
   return (
@@ -59,7 +52,7 @@ function OfferCard({ cardType, offer, onHoverCard }: OfferCardProps): JSX.Elemen
         </div>
       }
       <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`${AppRoute.Room}/${offer.id}`} onClick={handleLinkClick}>
+        <Link to={`${AppRoute.Room}/${offer.id}`}>
           <img
             className="place-card__image"
             src={offer.images[0]}

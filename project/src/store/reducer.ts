@@ -9,7 +9,7 @@ import {
   loadOffer,
   loadOffers,
   requireAuthorization,
-  setLoadOffersStatus,
+  setLoadDataStatus,
   setServerError,
   setUserName,
 } from './actions';
@@ -48,7 +48,7 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
     })
-    .addCase(setLoadOffersStatus, (state, action) => {
+    .addCase(setLoadDataStatus, (state, action) => {
       state.isDataLoaded = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {

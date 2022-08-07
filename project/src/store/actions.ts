@@ -9,7 +9,7 @@ export const changeLocation = createAction<{ location: string }>(
 
 export const loadOffers = createAction<Offer[]>(StateAction.Offer.LoadOffers);
 
-export const setLoadOffersStatus = createAction<boolean>(
+export const setLoadDataStatus = createAction<boolean>(
   StateAction.Offer.LoadStatus,
 );
 

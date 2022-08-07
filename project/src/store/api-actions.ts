@@ -13,7 +13,7 @@ import {
   loadOffers,
   redirectToRoute,
   requireAuthorization,
-  setLoadOffersStatus,
+  setLoadDataStatus,
   setUserName,
 } from './actions';
 import { toast } from 'react-toastify';
@@ -32,15 +32,15 @@ export const fetchOffersAction = createAsyncThunk<
 >(StateAction.Offer.LoadOffers, async (_arg, { dispatch, extra: api }) => {
   const { data } = await api.get<Offer[]>(ApiRoute.Offers);
   dispatch(loadOffers(data));
-  dispatch(setLoadOffersStatus(false));
+  dispatch(setLoadDataStatus(false));
 });
 
 export const fetchOneOfferAction = createAsyncThunk<
   void,
-  number,
+  string,
   ThunkApiConfigType
 >(StateAction.Offer.LoadOffer, async (id, { dispatch, extra: api }) => {
-  dispatch(setLoadOffersStatus(true));
+  dispatch(setLoadDataStatus(true));
   const { data: offer } = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
   const { data: comments } = await api.get<Comment[]>(
     `${ApiRoute.Comments}/${id}`,
@@ -51,7 +51,7 @@ export const fetchOneOfferAction = createAsyncThunk<
   dispatch(loadOffer(offer));
   dispatch(loadComments(comments));
   dispatch(loadNearbyOffers(nearbyOffers));
-  dispatch(setLoadOffersStatus(false));
+  dispatch(setLoadDataStatus(false));
 });
 
 export const checkAuthAction = createAsyncThunk<
