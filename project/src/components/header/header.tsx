@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { logoutAction } from '../../store/api-actions';
-import { SyntheticEvent } from 'react';
+import { memo, SyntheticEvent } from 'react';
 import { getAuthorizationStatus, getUserName } from '../../store/selectors';
 
 
@@ -88,4 +88,4 @@ function Header(): JSX.Element {
   );
 }
 
-export default Header;
+export default memo(Header);
