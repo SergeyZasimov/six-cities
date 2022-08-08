@@ -15,7 +15,7 @@ const errorStatusCodeSet = new Set([
   StatusCodes.NOT_FOUND,
 ]);
 
-const displayError = (response: AxiosResponse) =>
+const shouldDisplayError = (response: AxiosResponse) =>
   errorStatusCodeSet.has(response.status);
 
 export const createApi = (): AxiosInstance => {
@@ -37,7 +37,7 @@ export const createApi = (): AxiosInstance => {
   api.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
-      if (error.response && displayError(error.response)) {
+      if (error.response && shouldDisplayError(error.response)) {
         toast.warn(error.response.data.error);
       }
     },

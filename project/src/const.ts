@@ -71,7 +71,7 @@ const StateAction = {
   },
 } as const;
 
-const CITIES = [
+const DEFAULT_CITIES = [
   'Paris',
   'Cologne',
   'Brussels',
@@ -97,7 +97,7 @@ export {
   ApiRoute,
   SortType,
   StateAction,
-  CITIES,
+  DEFAULT_CITIES,
   DEFAULT_CITY_NAME,
   BACKEND_URL,
   REQUEST_TIMEOUT,

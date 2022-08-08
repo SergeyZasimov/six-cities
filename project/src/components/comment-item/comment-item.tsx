@@ -6,12 +6,18 @@ type CommentItemProps = {
   comment: Comment;
 };
 
-function CommentItem({ comment }: CommentItemProps): JSX.Element {
+function CommentItem( { comment }: CommentItemProps ): JSX.Element {
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
+          <img
+            className="reviews__avatar user__avatar"
+            src="img/avatar-max.jpg"
+            width="54"
+            height="54"
+            alt="Reviews avatar"
+          />
         </div>
         <span className="reviews__user-name">
           {comment.user.name}
@@ -25,9 +31,14 @@ function CommentItem({ comment }: CommentItemProps): JSX.Element {
           </div>
         </div>
         <p className="reviews__text">
-          { comment.comment }
+          {comment.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{dayjs(comment.date).format('MMMM YYYY')}</time>
+        <time
+          className="reviews__time"
+          dateTime={dayjs(comment.date).format('YYYY-MM-DD')}
+        >
+          {dayjs(comment.date).format('MMMM YYYY')}
+        </time>
       </div>
     </li>
 

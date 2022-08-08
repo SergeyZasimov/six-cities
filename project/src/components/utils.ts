@@ -12,7 +12,7 @@ const getRatingStyle = (
   rating: number,
   maxRating: number = MAX_RATING,
 ): { width: string } => {
-  const width = ((rating / maxRating) * 100).toString();
+  const width = ((rating / maxRating) * 100);
   return { width: `${width}%` };
 };
 
