@@ -3,14 +3,14 @@ import {
   AuthorizationStatus,
   CardType,
   MapType,
-  Setting,
+  MAX_RATING,
   SortType,
 } from '../const';
 import { Offer } from '../types/offer';
 
 const getRatingStyle = (
   rating: number,
-  maxRating: number = Setting.MaxRating,
+  maxRating: number = MAX_RATING,
 ): { width: string } => {
   const width = ((rating / maxRating) * 100).toString();
   return { width: `${width}%` };
@@ -24,7 +24,7 @@ const setFavoriteButtonClassName = (
     ? `${screen}__bookmark-button ${screen}__bookmark-button--active button`
     : `${screen}__bookmark-button button`;
 
-const getCardType = (pathname: string): string => {
+const getCardType = ( pathname: string ): string => {
   if (pathname.includes(AppRoute.Room)) {
     return CardType.NearPlaces;
   }
@@ -36,7 +36,7 @@ const getCardType = (pathname: string): string => {
   return CardType.Cities;
 };
 
-const getMapType = (pathname: string): string => {
+const getMapType = ( pathname: string ): string => {
   if (pathname.includes(AppRoute.Room)) {
     return MapType.Property;
   }
@@ -44,21 +44,21 @@ const getMapType = (pathname: string): string => {
   return MapType.Cities;
 };
 
-const getSortOffers = (sortType: string, offers: Offer[]) => {
+const getSortOffers = ( sortType: string, offers: Offer[] ) => {
   switch (sortType) {
     case SortType.PriceHighToLow:
       return offers.sort(
-        (offerA: Offer, offerB: Offer) => offerB.price - offerA.price,
+        ( offerA: Offer, offerB: Offer ) => offerB.price - offerA.price,
       );
       break;
     case SortType.PriceLowToHigh:
       return offers.sort(
-        (offerA: Offer, offerB: Offer) => offerA.price - offerB.price,
+        ( offerA: Offer, offerB: Offer ) => offerA.price - offerB.price,
       );
       break;
     case SortType.TopRatedFirst:
       return offers.sort(
-        (offerA: Offer, offerB: Offer) => offerB.rating - offerA.rating,
+        ( offerA: Offer, offerB: Offer ) => offerB.rating - offerA.rating,
       );
       break;
     default:
@@ -66,7 +66,7 @@ const getSortOffers = (sortType: string, offers: Offer[]) => {
   }
 };
 
-const checkAuthStatus = (authStatus: AuthorizationStatus): boolean =>
+const checkAuthStatus = ( authStatus: AuthorizationStatus ): boolean =>
   authStatus === AuthorizationStatus.Unknown;
 
 export {

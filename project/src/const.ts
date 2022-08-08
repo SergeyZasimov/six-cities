@@ -12,18 +12,6 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-enum HousingType {
-  Apartment = 'Apartment',
-  Room = 'Private room',
-  House = 'House',
-  Hotel = 'Hotel',
-}
-
-enum Setting {
-  MaxRating = 5,
-  NearPlacesCount = 3,
-}
-
 enum IconUrl {
   Default = './img/pin.svg',
   Active = './img/pin-active.svg',
@@ -96,12 +84,13 @@ const DEFAULT_CITY_NAME = 'Paris';
 const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
 const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
+const MAX_RATING = 5;
+const MAX_COMMENT_LENGTH = 50;
+
 
 export {
   AppRoute,
   AuthorizationStatus,
-  HousingType,
-  Setting,
   IconUrl,
   CardType,
   MapType,
@@ -113,4 +102,6 @@ export {
   BACKEND_URL,
   REQUEST_TIMEOUT,
   AUTH_TOKEN_KEY_NAME,
+  MAX_RATING,
+  MAX_COMMENT_LENGTH,
 };

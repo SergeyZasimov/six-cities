@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
-import { Setting } from '../../const';
+import { MAX_COMMENT_LENGTH, MAX_RATING } from '../../const';
 import { useAppDispatch } from '../../hooks/store';
 import { sendNewComment } from '../../store/api-actions';
 
@@ -12,24 +12,54 @@ type CommentFormProps = {
   roomId: number;
 };
 
-const MAX_COMMENT_LENGTH = 50;
+const createStarRating = ( handleChangeRating: ( evt: ChangeEvent<HTMLInputElement> ) => void, rating: number ) => (
+  Array.from({ length: MAX_RATING }, (( _, index ) => {
+    const starQuantity: number = MAX_RATING - index;
+    return (
+      <Fragment key={starQuantity}>
+        <input
+          className="form__rating-input visually-hidden"
+          name="rating"
+          value={starQuantity}
+          id={`${starQuantity}-star`}
+          type="radio"
+          onChange={handleChangeRating}
+        />
+        <label
+          htmlFor={`${starQuantity}-star`}
+          className="reviews__rating-label form__rating-label"
+          title="perfect"
+        >
+          <svg
+            className="form__star-image"
+            width="37"
+            height="33"
+            style={starQuantity <= rating ? { fill: '#ff9000' } : {}}
+          >
+            <use xlinkHref="#icon-star"></use>
+          </svg>
+        </label>
+      </Fragment>
+    );
+  }))
+);
 
-function CommentForm({ roomId }: CommentFormProps): JSX.Element {
+function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
 
   const [newComment, setNewComment] = useState({ rating: 0, comment: '' } as NewComment);
   const dispatch = useAppDispatch();
 
-  const handleChangeRating = (evt: ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeRating = ( evt: ChangeEvent<HTMLInputElement> ): void => {
     evt.preventDefault();
     setNewComment({ ...newComment, rating: +evt.target.value });
   };
 
-  const handleChangeText = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
+  const handleChangeText = ( evt: ChangeEvent<HTMLTextAreaElement> ): void => {
     evt.preventDefault();
     setNewComment({ ...newComment, comment: evt.target.value });
   };
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = ( evt: FormEvent<HTMLFormElement> ): void => {
     evt.preventDefault();
     dispatch(sendNewComment({ roomId, rating: newComment.rating, comment: newComment.comment }));
   };
@@ -48,34 +78,7 @@ function CommentForm({ roomId }: CommentFormProps): JSX.Element {
       </label>
       <div className="reviews__rating-form form__rating">
         {
-          [...Array(Setting.MaxRating)].map((_, index) => {
-            const starNumber: number = Setting.MaxRating - index;
-            return (
-              <Fragment key={starNumber}>
-                <input
-                  className="form__rating-input visually-hidden"
-                  name="rating"
-                  value={starNumber}
-                  id={`${starNumber}-star`}
-                  type="radio"
-                  onChange={handleChangeRating}
-                />
-                <label
-                  htmlFor={`${starNumber}-star`}
-                  className="reviews__rating-label form__rating-label"
-                  title="perfect"
-                >
-                  <svg
-                    className="form__star-image"
-                    width="37"
-                    height="33"
-                  >
-                    <use xlinkHref="#icon-star"></use>
-                  </svg>
-                </label>
-              </Fragment>
-            );
-          })
+          createStarRating(handleChangeRating, newComment.rating)
         }
       </div>
       <textarea
