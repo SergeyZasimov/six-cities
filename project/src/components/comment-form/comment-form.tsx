@@ -12,42 +12,16 @@ type CommentFormProps = {
   roomId: number;
 };
 
-const createStarRating = ( handleChangeRating: ( evt: ChangeEvent<HTMLInputElement> ) => void, rating: number ) => (
-  Array.from({ length: MAX_RATING }, (( _, index ) => {
-    const starQuantity: number = MAX_RATING - index;
-    return (
-      <Fragment key={starQuantity}>
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value={starQuantity}
-          id={`${starQuantity}-star`}
-          type="radio"
-          onChange={handleChangeRating}
-        />
-        <label
-          htmlFor={`${starQuantity}-star`}
-          className="reviews__rating-label form__rating-label"
-          title="perfect"
-        >
-          <svg
-            className="form__star-image"
-            width="37"
-            height="33"
-            style={starQuantity <= rating ? { fill: '#ff9000' } : {}}
-          >
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-      </Fragment>
-    );
-  }))
-);
+const RATING_VALUES = Array.from({ length: MAX_RATING }, ( _, index ) => MAX_RATING - index);
+
+const INITIAL_NEW_COMMENT = { rating: 0, comment: '' };
 
 function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
 
-  const [newComment, setNewComment] = useState({ rating: 0, comment: '' } as NewComment);
+  const [newComment, setNewComment] = useState<NewComment>(INITIAL_NEW_COMMENT);
   const dispatch = useAppDispatch();
+
+  const isSubmitAvailable = newComment.rating && newComment.comment;
 
   const handleChangeRating = ( evt: ChangeEvent<HTMLInputElement> ): void => {
     evt.preventDefault();
@@ -62,6 +36,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
   const handleSubmit = ( evt: FormEvent<HTMLFormElement> ): void => {
     evt.preventDefault();
     dispatch(sendNewComment({ roomId, rating: newComment.rating, comment: newComment.comment }));
+    setNewComment(INITIAL_NEW_COMMENT);
   };
 
   return (
@@ -78,7 +53,33 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
       </label>
       <div className="reviews__rating-form form__rating">
         {
-          createStarRating(handleChangeRating, newComment.rating)
+          RATING_VALUES.map(( ratingValue ) => (
+            <Fragment key={ratingValue}>
+              <input
+                className="form__rating-input visually-hidden"
+                name="rating"
+                value={ratingValue}
+                id={`${ratingValue}-star`}
+                type="radio"
+                onChange={handleChangeRating}
+              />
+              <label
+                htmlFor={`${ratingValue}-star`}
+                className="reviews__rating-label form__rating-label"
+                title="perfect"
+              >
+                <svg
+                  className="form__star-image"
+                  width="37"
+                  height="33"
+                  style={ratingValue <= newComment.rating ? { fill: '#ff9000' } : {}}
+                >
+                  <use xlinkHref="#icon-star"></use>
+                </svg>
+              </label>
+            </Fragment>
+
+          ))
         }
       </div>
       <textarea
@@ -87,6 +88,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleChangeText}
+        value={newComment.comment}
         maxLength={MAX_COMMENT_LENGTH}
       >
       </textarea>
@@ -98,6 +100,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
+          disabled={!isSubmitAvailable}
         >Submit
         </button>
       </div>
