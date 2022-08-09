@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
-import { MAX_COMMENT_LENGTH, MAX_RATING } from '../../const';
+import { MAX_COMMENT_LENGTH, MAX_RATING, MIN_COMMENT_LENGTH } from '../../const';
 import { useAppDispatch } from '../../hooks/store';
 import { sendNewComment } from '../../store/api-actions';
 
@@ -21,7 +21,6 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
   const [newComment, setNewComment] = useState<NewComment>(INITIAL_NEW_COMMENT);
   const dispatch = useAppDispatch();
 
-  const isSubmitAvailable = newComment.rating && newComment.comment;
 
   const handleChangeRating = ( evt: ChangeEvent<HTMLInputElement> ): void => {
     evt.preventDefault();
@@ -38,6 +37,11 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
     dispatch(sendNewComment({ roomId, rating: newComment.rating, comment: newComment.comment }));
     setNewComment(INITIAL_NEW_COMMENT);
   };
+
+  const checkNewCommentLength = () =>
+    newComment.comment.length >= MIN_COMMENT_LENGTH && newComment.comment.length <= MAX_COMMENT_LENGTH;
+
+  const isSubmitAvailable = newComment.rating && checkNewCommentLength();
 
   return (
     <form
@@ -95,7 +99,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and
-          describe your stay with at least <b className="reviews__text-amount">{MAX_COMMENT_LENGTH} characters</b>.
+          describe your stay with at least <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"
