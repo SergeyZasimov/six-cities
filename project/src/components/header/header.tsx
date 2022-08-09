@@ -9,11 +9,11 @@ function Header(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-  const { authorizationStatus, userName } = useAppSelector((state) => state);
+  const { authorizationStatus, userName } = useAppSelector(( state ) => state);
   const isLogoLinkActive = pathname === AppRoute.Main;
-  const isSignInNotAvailable = pathname === AppRoute.Login;
+  const isSignInAvailable = pathname !== AppRoute.Login;
 
-  const handleLogOutClick = (evt: SyntheticEvent): void => {
+  const handleLogOutClick = ( evt: SyntheticEvent ): void => {
     evt.preventDefault();
     dispatch(logoutAction());
   };
@@ -37,56 +37,46 @@ function Header(): JSX.Element {
             </Link>
           </div>
           {
-            (() => {
-              if (isSignInNotAvailable) {
-                return '';
-              }
-              if (authorizationStatus === AuthorizationStatus.Auth) {
-                return (
-                  <nav className="header__nav">
-                    <ul className="header__nav-list">
-                      <li className="header__nav-item user">
-                        <Link
-                          className="header__nav-link header__nav-link--profile"
-                          to={AppRoute.Favorites}
-                        >
-                          <div className="header__avatar-wrapper user__avatar-wrapper">
-                          </div>
-                          <span className="header__user-name user__name">{userName}</span>
-                          <span className="header__favorite-count">3</span>
-                        </Link>
-                      </li>
-                      <li className="header__nav-item">
-                        <Link
-                          className="header__nav-link"
-                          to={AppRoute.Main}
-                          onClick={handleLogOutClick}
-                        >
-                          <span className="header__signout">Sign out</span>
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
-                );
-              } else {
-                return (
-                  <nav className="header__nav">
-                    <ul className="header__nav-list">
-                      <li className="header__nav-item user">
-                        <Link
-                          className="header__nav-link header__nav-link--profile"
-                          to={AppRoute.Login}
-                        >
-                          <div className="header__avatar-wrapper user__avatar-wrapper">
-                          </div>
-                          <span className="header__login">Sign in</span>
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
-                );
-              }
-            })()
+            isSignInAvailable &&
+            (authorizationStatus === AuthorizationStatus.Auth ?
+              <nav className="header__nav">
+                <ul className="header__nav-list">
+                  <li className="header__nav-item user">
+                    <Link
+                      className="header__nav-link header__nav-link--profile"
+                      to={AppRoute.Favorites}
+                    >
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      </div>
+                      <span className="header__user-name user__name">{userName}</span>
+                      <span className="header__favorite-count">3</span>
+                    </Link>
+                  </li>
+                  <li className="header__nav-item">
+                    <Link
+                      className="header__nav-link"
+                      to={AppRoute.Main}
+                      onClick={handleLogOutClick}
+                    >
+                      <span className="header__signout">Sign out</span>
+                    </Link>
+                  </li>
+                </ul>
+              </nav> :
+              <nav className="header__nav">
+                <ul className="header__nav-list">
+                  <li className="header__nav-item user">
+                    <Link
+                      className="header__nav-link header__nav-link--profile"
+                      to={AppRoute.Login}
+                    >
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      </div>
+                      <span className="header__login">Sign in</span>
+                    </Link>
+                  </li>
+                </ul>
+              </nav>)
           }
         </div>
       </div>
