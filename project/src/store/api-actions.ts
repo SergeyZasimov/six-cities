@@ -25,52 +25,46 @@ type ThunkApiConfigType = {
   extra: AxiosInstance;
 };
 
-export const fetchOffersAction = createAsyncThunk<
-  void,
+export const fetchOffersAction = createAsyncThunk<void,
   undefined,
-  ThunkApiConfigType
->(StateAction.Offer.LoadOffers, async (_arg, { dispatch, extra: api }) => {
-  const { data } = await api.get<Offer[]>(ApiRoute.Offers);
-  dispatch(setOffers(data));
-  dispatch(setLoadDataStatus(false));
-});
+  ThunkApiConfigType>(StateAction.Offer.LoadOffers, async ( _arg, { dispatch, extra: api } ) => {
+    const { data } = await api.get<Offer[]>(ApiRoute.Offers);
+    dispatch(setOffers(data));
+    dispatch(setLoadDataStatus(false));
+  });
 
-export const fetchRoomAction = createAsyncThunk<
-  void,
+export const fetchRoomAction = createAsyncThunk<void,
   string,
-  ThunkApiConfigType
->(StateAction.Offer.LoadOffer, async (id, { dispatch, extra: api }) => {
-  const { data: room } = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
-  const { data: comments } = await api.get<Comment[]>(
-    `${ApiRoute.Comments}/${id}`,
-  );
-  const { data: nearbyOffers } = await api.get<Offer[]>(
-    `${ApiRoute.Offers}/${id}/nearby`,
-  );
-  dispatch(setRoom(room));
-  dispatch(setCommentList(comments));
-  dispatch(setNearbyOffers(nearbyOffers));
-});
+  ThunkApiConfigType>(StateAction.Offer.LoadOffer, async ( id, { dispatch, extra: api } ) => {
+    const { data: room } = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
+    const { data: comments } = await api.get<Comment[]>(
+      `${ApiRoute.Comments}/${id}`,
+    );
+    const { data: nearbyOffers } = await api.get<Offer[]>(
+      `${ApiRoute.Offers}/${id}/nearby`,
+    );
+    dispatch(setRoom(room));
+    dispatch(setCommentList(comments));
+    dispatch(setNearbyOffers(nearbyOffers));
+  });
 
-export const checkAuthAction = createAsyncThunk<
-  void,
+export const checkAuthAction = createAsyncThunk<void,
   undefined,
-  ThunkApiConfigType
->(StateAction.User.CheckAuth, async (_arg, { dispatch, extra: api }) => {
-  try {
-    const {
-      data: { email: userName },
-    } = await api.get(ApiRoute.Login);
-    dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
-    dispatch(setUserName(userName));
-  } catch {
-    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
-  }
-});
+  ThunkApiConfigType>(StateAction.User.CheckAuth, async ( _arg, { dispatch, extra: api } ) => {
+    try {
+      const {
+        data: { email: userName },
+      } = await api.get(ApiRoute.Login);
+      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+      dispatch(setUserName(userName));
+    } catch {
+      dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    }
+  });
 
 export const loginAction = createAsyncThunk<void, AuthData, ThunkApiConfigType>(
   StateAction.User.Login,
-  async ({ login: email, password }, { dispatch, extra: api }) => {
+  async ( { login: email, password }, { dispatch, extra: api } ) => {
     const {
       data: { email: userName, token },
     } = await api.post<UserData>(ApiRoute.Login, { email, password });
@@ -82,27 +76,23 @@ export const loginAction = createAsyncThunk<void, AuthData, ThunkApiConfigType>(
   },
 );
 
-export const logoutAction = createAsyncThunk<
-  void,
+export const logoutAction = createAsyncThunk<void,
   undefined,
-  ThunkApiConfigType
->(StateAction.User.Logout, async (_arg, { dispatch, extra: api }) => {
-  await api.delete(ApiRoute.Logout);
-  dropToken();
-  dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
-});
+  ThunkApiConfigType>(StateAction.User.Logout, async ( _arg, { dispatch, extra: api } ) => {
+    await api.delete(ApiRoute.Logout);
+    dropToken();
+    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+  });
 
-export const sendNewComment = createAsyncThunk<
-  void,
+export const sendNewComment = createAsyncThunk<Comment[],
   CommentData,
-  ThunkApiConfigType
->(
-  StateAction.Comment.SendNewComment,
-  async ({ roomId, rating, comment }, { dispatch, extra: api }) => {
-    const { data } = await api.post(`${ApiRoute.Comments}/${roomId}`, {
-      rating,
-      comment,
-    });
-    dispatch(setCommentList(data));
-  },
-);
+  ThunkApiConfigType>(
+    StateAction.Comment.SendNewComment,
+    async ( { roomId, rating, comment }, { dispatch, extra: api } ) => {
+      const { data } = await api.post(`${ApiRoute.Comments}/${roomId}`, {
+        rating,
+        comment,
+      });
+      return data;
+    },
+  );

@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { MAX_COMMENT_LENGTH, MAX_RATING, MIN_COMMENT_LENGTH } from '../../const';
-import { useAppDispatch } from '../../hooks/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { sendNewComment } from '../../store/api-actions';
 
 type NewComment = {
@@ -21,6 +21,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
   const [newComment, setNewComment] = useState<NewComment>(INITIAL_NEW_COMMENT);
   const dispatch = useAppDispatch();
 
+  const { isDataSending } = useAppSelector(( state ) => state);
 
   const handleChangeRating = ( evt: ChangeEvent<HTMLInputElement> ): void => {
     evt.preventDefault();
@@ -104,7 +105,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isSubmitAvailable}
+          disabled={!isSubmitAvailable || isDataSending}
         >Submit
         </button>
       </div>

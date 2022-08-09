@@ -15,7 +15,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
 
   const {
     authorizationStatus,
-    isDataLoaded,
+    isDataLoading,
     room,
     commentsList,
     nearbyOffers
@@ -40,7 +40,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
 
   const isCommentFormAvailable = authorizationStatus === AuthorizationStatus.Auth;
 
-  if (isDataLoaded || room === null) {
+  if (isDataLoading || room === null) {
     return <LoadingScreen />;
   }
 

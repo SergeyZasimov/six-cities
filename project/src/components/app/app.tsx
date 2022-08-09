@@ -23,9 +23,9 @@ const RoomScreenWithMap = withMap(RoomScreen);
 
 function App({ cities }: AppProps): JSX.Element {
 
-  const { isDataLoaded, offers, location, authorizationStatus } = useAppSelector((state) => state);
+  const { isDataLoading, offers, location, authorizationStatus } = useAppSelector(( state) => state);
 
-  if (checkAuthStatus(authorizationStatus) || isDataLoaded) {
+  if (checkAuthStatus(authorizationStatus) || isDataLoading) {
     return (
       <LoadingScreen />
     );
