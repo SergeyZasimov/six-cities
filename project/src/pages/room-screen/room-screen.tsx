@@ -1,24 +1,25 @@
 import { getRatingStyle, setFavoriteButtonClassName } from '../../components/utils';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { ApiRoute, AuthorizationStatus } from '../../const';
+import { AuthorizationStatus } from '../../const';
 import MapHocProps from '../../types/map-hoc';
 import Header from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { Offer } from '../../types/offer';
-import { Comment } from '../../types/comment';
-import { useEffect, useState } from 'react';
-import { api } from '../../store';
-import { setLoadDataStatus } from '../../store/actions';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { fetchRoomAction } from '../../store/api-actions';
+import { setLoadDataStatus } from '../../store/actions';
 
-function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
+function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element {
 
-  const { authorizationStatus, isDataLoaded } = useAppSelector((state) => state);
-  const [room, setRoom] = useState<Offer | null>(null);
-  const [commentsList, setCommentsList] = useState<Comment[] | null>(null);
-  const [nearbyOffers, setNearbyOffers] = useState<Offer[] | null>(null);
+  const {
+    authorizationStatus,
+    isDataLoaded,
+    room,
+    commentsList,
+    nearbyOffers
+  } = useAppSelector(( state ) => state);
 
   const dispatch = useAppDispatch();
 
@@ -26,17 +27,11 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
 
 
   useEffect(() => {
-    dispatch(setLoadDataStatus(true));
-    api.get(`${ApiRoute.Offers}/${id}`)
-      .then((response) => setRoom(response.data));
-
-    api.get(`${ApiRoute.Comments}/${id}`)
-      .then((response) => setCommentsList(response.data));
-
-    api.get(`${ApiRoute.Offers}/${id}/nearby`)
-      .then((response) => setNearbyOffers(response.data));
-
-    dispatch(setLoadDataStatus(false));
+    if (id) {
+      dispatch(setLoadDataStatus(true));
+      dispatch(fetchRoomAction(id));
+      dispatch(setLoadDataStatus(false));
+    }
 
     return () => {
       window.scrollTo(0, 0);
@@ -45,7 +40,7 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
 
   const isCommentFormAvailable = authorizationStatus === AuthorizationStatus.Auth;
 
-  if (isDataLoaded || room === null || commentsList === null || nearbyOffers === null) {
+  if (isDataLoaded || room === null) {
     return <LoadingScreen />;
   }
 
@@ -58,8 +53,11 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {
-                room.images.map((img, index) => (
-                  <div className="property__image-wrapper" key={img}>
+                room.images.map(( img, index ) => (
+                  <div
+                    className="property__image-wrapper"
+                    key={img}
+                  >
                     <img
                       className="property__image"
                       src={img}
@@ -122,8 +120,11 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {
-                    room.goods.map((good: string) => (
-                      <li key={good} className="property__inside-item">
+                    room.goods.map(( good: string ) => (
+                      <li
+                        key={good}
+                        className="property__inside-item"
+                      >
                         {good}
                       </li>
                     ))
@@ -156,7 +157,9 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">reviews &middot; <span className="reviews__amount">{commentsList.length}</span></h2>
+                <h2 className="reviews__title">reviews &middot;
+                  <span className="reviews__amount">{commentsList.length}</span>
+                </h2>
                 <CommentList comments={commentsList} />
                 {
                   isCommentFormAvailable && <CommentForm roomId={room.id} />
@@ -182,7 +185,6 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
         </div>
       </main>
     </div>
-
   );
 }
 

@@ -7,13 +7,13 @@ export const changeLocation = createAction<{ location: string }>(
   StateAction.Location.ChangeLocation,
 );
 
-export const loadOffers = createAction<Offer[]>(StateAction.Offer.LoadOffers);
+export const setOffers = createAction<Offer[]>(StateAction.Offer.LoadOffers);
 
 export const setLoadDataStatus = createAction<boolean>(
   StateAction.Offer.LoadStatus,
 );
 
-export const requireAuthorization = createAction<AuthorizationStatus>(
+export const setAuthorizationStatus = createAction<AuthorizationStatus>(
   StateAction.User.RequireAuthorization,
 );
 
@@ -25,13 +25,13 @@ export const redirectToRoute = createAction<AppRoute>(
   StateAction.User.RedirectToRoute,
 );
 
-export const loadComments = createAction<Comment[]>(
+export const setCommentList = createAction<Comment[]>(
   StateAction.Comment.LoadComments,
 );
 
-export const loadOffer = createAction<Offer>(StateAction.Offer.LoadOffer);
+export const setRoom = createAction<Offer>(StateAction.Offer.LoadOffer);
 
-export const loadNearbyOffers = createAction<Offer[]>(
+export const setNearbyOffers = createAction<Offer[]>(
   StateAction.Offer.LoadNearbyOffers,
 );
 

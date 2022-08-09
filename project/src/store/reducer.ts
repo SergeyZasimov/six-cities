@@ -4,11 +4,11 @@ import { Comment } from '../types/comment';
 import { Offer } from '../types/offer';
 import {
   changeLocation,
-  loadComments,
-  loadNearbyOffers,
-  loadOffer,
-  loadOffers,
-  requireAuthorization,
+  setCommentList,
+  setNearbyOffers,
+  setRoom,
+  setOffers,
+  setAuthorizationStatus,
   setLoadDataStatus,
   setServerError,
   setUserName,
@@ -21,7 +21,7 @@ type InitState = {
   authorizationStatus: AuthorizationStatus;
   serverError: string | null;
   commentsList: Comment[];
-  offer: Offer | null;
+  room: Offer | null;
   nearbyOffers: Offer[];
   userName: string;
 };
@@ -33,7 +33,7 @@ const initialState: InitState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   serverError: null,
   commentsList: [],
-  offer: null,
+  room: null,
   nearbyOffers: [],
   userName: '',
 };
@@ -45,25 +45,25 @@ const reducer = createReducer(initialState, (builder) => {
       const { location } = action.payload;
       state.location = location;
     })
-    .addCase(loadOffers, (state, action) => {
+    .addCase(setOffers, ( state, action) => {
       state.offers = action.payload;
     })
     .addCase(setLoadDataStatus, (state, action) => {
       state.isDataLoaded = action.payload;
     })
-    .addCase(requireAuthorization, (state, action) => {
+    .addCase(setAuthorizationStatus, ( state, action) => {
       state.authorizationStatus = action.payload;
     })
     .addCase(setServerError, (state, action) => {
       state.serverError = action.payload;
     })
-    .addCase(loadComments, (state, action) => {
+    .addCase(setCommentList, ( state, action) => {
       state.commentsList = action.payload;
     })
-    .addCase(loadOffer, (state, action) => {
-      state.offer = action.payload;
+    .addCase(setRoom, ( state, action) => {
+      state.room = action.payload;
     })
-    .addCase(loadNearbyOffers, (state, action) => {
+    .addCase(setNearbyOffers, ( state, action) => {
       state.nearbyOffers = action.payload;
     })
     .addCase(setUserName, (state, action) => {

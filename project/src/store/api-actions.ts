@@ -7,12 +7,12 @@ import { Offer } from '../types/offer';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
 import {
-  loadComments,
-  loadNearbyOffers,
-  loadOffer,
-  loadOffers,
+  setCommentList,
+  setNearbyOffers,
+  setRoom,
+  setOffers,
   redirectToRoute,
-  requireAuthorization,
+  setAuthorizationStatus,
   setLoadDataStatus,
   setUserName,
 } from './actions';
@@ -31,27 +31,25 @@ export const fetchOffersAction = createAsyncThunk<
   ThunkApiConfigType
 >(StateAction.Offer.LoadOffers, async (_arg, { dispatch, extra: api }) => {
   const { data } = await api.get<Offer[]>(ApiRoute.Offers);
-  dispatch(loadOffers(data));
+  dispatch(setOffers(data));
   dispatch(setLoadDataStatus(false));
 });
 
-export const fetchOneOfferAction = createAsyncThunk<
+export const fetchRoomAction = createAsyncThunk<
   void,
   string,
   ThunkApiConfigType
 >(StateAction.Offer.LoadOffer, async (id, { dispatch, extra: api }) => {
-  dispatch(setLoadDataStatus(true));
-  const { data: offer } = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
+  const { data: room } = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
   const { data: comments } = await api.get<Comment[]>(
     `${ApiRoute.Comments}/${id}`,
   );
   const { data: nearbyOffers } = await api.get<Offer[]>(
     `${ApiRoute.Offers}/${id}/nearby`,
   );
-  dispatch(loadOffer(offer));
-  dispatch(loadComments(comments));
-  dispatch(loadNearbyOffers(nearbyOffers));
-  dispatch(setLoadDataStatus(false));
+  dispatch(setRoom(room));
+  dispatch(setCommentList(comments));
+  dispatch(setNearbyOffers(nearbyOffers));
 });
 
 export const checkAuthAction = createAsyncThunk<
@@ -63,10 +61,10 @@ export const checkAuthAction = createAsyncThunk<
     const {
       data: { email: userName },
     } = await api.get(ApiRoute.Login);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     dispatch(setUserName(userName));
   } catch {
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
   }
 });
 
@@ -77,7 +75,7 @@ export const loginAction = createAsyncThunk<void, AuthData, ThunkApiConfigType>(
       data: { email: userName, token },
     } = await api.post<UserData>(ApiRoute.Login, { email, password });
     saveToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     dispatch(setUserName(userName));
     dispatch(redirectToRoute(AppRoute.Main));
     toast.success('You successfully login');
@@ -91,7 +89,7 @@ export const logoutAction = createAsyncThunk<
 >(StateAction.User.Logout, async (_arg, { dispatch, extra: api }) => {
   await api.delete(ApiRoute.Logout);
   dropToken();
-  dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+  dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
 });
 
 export const sendNewComment = createAsyncThunk<
@@ -105,6 +103,6 @@ export const sendNewComment = createAsyncThunk<
       rating,
       comment,
     });
-    dispatch(loadComments(data));
+    dispatch(setCommentList(data));
   },
 );
