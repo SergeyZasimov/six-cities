@@ -1,11 +1,18 @@
-import { AppRoute, AuthorizationStatus, CardType, MapType, Setting, SortType } from '../const';
+import {
+  AppRoute,
+  AuthorizationStatus,
+  CardType,
+  MapType,
+  MAX_RATING,
+  SortType,
+} from '../const';
 import { Offer } from '../types/offer';
 
 const getRatingStyle = (
   rating: number,
-  maxRating: number = Setting.MaxRating,
+  maxRating: number = MAX_RATING,
 ): { width: string } => {
-  const width = ((rating / maxRating) * 100).toString();
+  const width = ((rating / maxRating) * 100);
   return { width: `${width}%` };
 };
 
@@ -59,7 +66,7 @@ const getSortOffers = ( sortType: string, offers: Offer[] ) => {
   }
 };
 
-const isAuthStatusChecked = ( authStatus: AuthorizationStatus ): boolean =>
+const checkAuthStatus = ( authStatus: AuthorizationStatus ): boolean =>
   authStatus === AuthorizationStatus.Unknown;
 
 export {
@@ -68,5 +75,5 @@ export {
   getCardType,
   getMapType,
   getSortOffers,
-  isAuthStatusChecked,
+  checkAuthStatus,
 };

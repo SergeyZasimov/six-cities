@@ -1,30 +1,55 @@
-import { ChangeEvent, Fragment, useState } from 'react';
-import { Setting } from '../../const';
+import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { MAX_COMMENT_LENGTH, MAX_RATING, MIN_COMMENT_LENGTH } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
+import { sendNewComment } from '../../store/api-actions';
+import { getIsDataSending } from '../../store/selectors';
 
 type NewComment = {
   rating: number;
   comment: string;
 };
 
-function CommentForm(): JSX.Element {
+type CommentFormProps = {
+  roomId: number;
+};
 
-  const [comment, setComment] = useState({ rating: 0, comment: '' } as NewComment);
+const RATING_VALUES = Array.from({ length: MAX_RATING }, ( _, index ) => MAX_RATING - index);
 
-  const handleChangeRating = (evt: ChangeEvent<HTMLInputElement>): void => {
+const INITIAL_NEW_COMMENT = { rating: 0, comment: '' };
+
+function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
+
+  const [newComment, setNewComment] = useState<NewComment>(INITIAL_NEW_COMMENT);
+  const dispatch = useAppDispatch();
+
+  const isDataSending = useAppSelector(getIsDataSending);
+
+  const handleChangeRating = ( evt: ChangeEvent<HTMLInputElement> ): void => {
     evt.preventDefault();
-    setComment({ ...comment, rating: +evt.target.value });
+    setNewComment({ ...newComment, rating: +evt.target.value });
   };
 
-  const handleChangeText = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
+  const handleChangeText = ( evt: ChangeEvent<HTMLTextAreaElement> ): void => {
     evt.preventDefault();
-    setComment({ ...comment, comment: evt.target.value });
+    setNewComment({ ...newComment, comment: evt.target.value });
   };
+
+  const handleSubmit = ( evt: FormEvent<HTMLFormElement> ): void => {
+    evt.preventDefault();
+    dispatch(sendNewComment({ roomId, rating: newComment.rating, comment: newComment.comment }));
+  };
+
+  const checkNewCommentLength = () =>
+    newComment.comment.length >= MIN_COMMENT_LENGTH && newComment.comment.length <= MAX_COMMENT_LENGTH;
+
+  const isSubmitAvailable = newComment.rating && checkNewCommentLength();
 
   return (
     <form
       className="reviews__form form"
       action="#"
       method="post"
+      onSubmit={handleSubmit}
     >
       <label
         className="reviews__label form__label"
@@ -33,34 +58,34 @@ function CommentForm(): JSX.Element {
       </label>
       <div className="reviews__rating-form form__rating">
         {
-          [...Array(Setting.MaxRating)].map((_, index) => {
-            const starNumber: number = Setting.MaxRating - index;
-            return (
-              <Fragment key={starNumber}>
-                <input
-                  className="form__rating-input visually-hidden"
-                  name="rating"
-                  value={starNumber}
-                  id={`${starNumber}-star`}
-                  type="radio"
-                  onChange={handleChangeRating}
-                />
-                <label
-                  htmlFor={`${starNumber}-star`}
-                  className="reviews__rating-label form__rating-label"
-                  title="perfect"
+          RATING_VALUES.map(( ratingValue ) => (
+            <Fragment key={ratingValue}>
+              <input
+                className="form__rating-input visually-hidden"
+                name="rating"
+                value={ratingValue}
+                id={`${ratingValue}-star`}
+                type="radio"
+                onChange={handleChangeRating}
+                disabled={isDataSending}
+              />
+              <label
+                htmlFor={`${ratingValue}-star`}
+                className="reviews__rating-label form__rating-label"
+                title="perfect"
+              >
+                <svg
+                  className="form__star-image"
+                  width="37"
+                  height="33"
+                  style={ratingValue <= newComment.rating ? { fill: '#ff9000' } : {}}
                 >
-                  <svg
-                    className="form__star-image"
-                    width="37"
-                    height="33"
-                  >
-                    <use xlinkHref="#icon-star"></use>
-                  </svg>
-                </label>
-              </Fragment>
-            );
-          })
+                  <use xlinkHref="#icon-star"></use>
+                </svg>
+              </label>
+            </Fragment>
+
+          ))
         }
       </div>
       <textarea
@@ -69,17 +94,20 @@ function CommentForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleChangeText}
+        value={newComment.comment}
+        maxLength={MAX_COMMENT_LENGTH}
+        disabled={isDataSending}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and
-          describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          describe your stay with at least <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={!isSubmitAvailable || isDataSending}
         >Submit
         </button>
       </div>

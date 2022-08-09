@@ -1,9 +1,10 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { changeLocation } from '../../store/actions';
+import { Cities } from '../../types/city';
 import LocationItem from '../location-item/location-item';
 
 type LocationListProps = {
-  cities: string[];
+  cities: Cities;
 };
 
 function LocationList({ cities }: LocationListProps): JSX.Element {

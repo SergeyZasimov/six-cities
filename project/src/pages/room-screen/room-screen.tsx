@@ -1,32 +1,52 @@
-import { Navigate, useParams } from 'react-router-dom';
 import { getRatingStyle, setFavoriteButtonClassName } from '../../components/utils';
-import { Offer } from '../../types/offer';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { AppRoute, Setting } from '../../const';
+import { AuthorizationStatus } from '../../const';
 import MapHocProps from '../../types/map-hoc';
 import Header from '../../components/header/header';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { fetchRoomAction } from '../../store/api-actions';
+import { setLoadDataStatus } from '../../store/actions';
+import {
+  getAuthorizationStatus,
+  getCommentList,
+  getIsDataLoading,
+  getNearbyOffers,
+  getRoom
+} from '../../store/selectors';
 
-type RoomScreenProps = {
-  offers: Offer[];
-};
+function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element {
 
-function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & MapHocProps): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoading = useAppSelector(getIsDataLoading);
+  const room = useAppSelector(getRoom);
+  const commentsList = useAppSelector(getCommentList);
+  const nearbyOffers = useAppSelector(getNearbyOffers);
+
+  const dispatch = useAppDispatch();
 
   const { id } = useParams();
 
-  if (!id) {
-    return <Navigate to={AppRoute.NotFound} />;
+  useEffect(() => {
+    if (id) {
+      dispatch(setLoadDataStatus(true));
+      dispatch(fetchRoomAction(id));
+      dispatch(setLoadDataStatus(false));
+    }
+
+    return () => {
+      window.scrollTo(0, 0);
+    };
+  }, [dispatch, id]);
+
+  const isCommentFormAvailable = authorizationStatus === AuthorizationStatus.Auth;
+
+  if (isDataLoading || room === null) {
+    return <LoadingScreen />;
   }
-
-  const paramsId = +id;
-  const room = offers.find((offer: Offer) => offer.id === paramsId) as Offer;
-
-  if (!room) {
-    return <Navigate to={AppRoute.NotFound} />;
-  }
-
-  const nearOffers = offers.slice(0, Setting.NearPlacesCount);
 
   return (
     <div className="page">
@@ -37,8 +57,11 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {
-                room.images.map((img, index) => (
-                  <div className="property__image-wrapper" key={img}>
+                room.images.map(( img, index ) => (
+                  <div
+                    className="property__image-wrapper"
+                    key={img}
+                  >
                     <img
                       className="property__image"
                       src={img}
@@ -101,8 +124,11 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {
-                    room.goods.map((good: string) => (
-                      <li key={good} className="property__inside-item">
+                    room.goods.map(( good: string ) => (
+                      <li
+                        key={good}
+                        className="property__inside-item"
+                      >
                         {good}
                       </li>
                     ))
@@ -135,9 +161,13 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">reviews &middot; <span className="reviews__amount">{room.comments.length}</span></h2>
-                <CommentList comments={room.comments} />
-                <CommentForm />
+                <h2 className="reviews__title">reviews &middot;
+                  <span className="reviews__amount">{commentsList.length}</span>
+                </h2>
+                <CommentList comments={commentsList} />
+                {
+                  isCommentFormAvailable && <CommentForm roomId={room.id} />
+                }
               </section>
             </div>
           </div>
@@ -145,7 +175,7 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
         <div className="container">
           {
             renderMap(
-              nearOffers,
+              nearbyOffers,
               room.city
             )
           }
@@ -153,13 +183,12 @@ function RoomScreen({ offers, renderMap, renderOfferList }: RoomScreenProps & Ma
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             {
-              renderOfferList(nearOffers)
+              renderOfferList(nearbyOffers)
             }
           </section>
         </div>
       </main>
     </div>
-
   );
 }
 

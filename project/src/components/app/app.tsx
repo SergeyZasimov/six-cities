@@ -9,22 +9,23 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import withMap from '../../hocs/with-map';
 import { useAppSelector } from '../../hooks/store';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import { isAuthStatusChecked } from '../utils';
+import { checkAuthStatus } from '../utils';
 import HistoryRouter from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
+import { Cities } from '../../types/city';
 
 type AppProps = {
-  cities: string[];
+  cities: Cities;
 };
 
 const MainScreenWithMap = withMap(MainScreen);
 const RoomScreenWithMap = withMap(RoomScreen);
 
-function App( { cities }: AppProps ): JSX.Element {
+function App({ cities }: AppProps): JSX.Element {
 
-  const { isDataLoaded, offers, location, authorizationStatus } = useAppSelector(( state ) => state);
+  const { isDataLoading, offers, location, authorizationStatus } = useAppSelector(( state) => state);
 
-  if (isAuthStatusChecked(authorizationStatus) || isDataLoaded) {
+  if (checkAuthStatus(authorizationStatus) || isDataLoading) {
     return (
       <LoadingScreen />
     );
@@ -57,7 +58,7 @@ function App( { cities }: AppProps ): JSX.Element {
         />
         <Route
           path={`${AppRoute.Room}/:id`}
-          element={<RoomScreenWithMap offers={offers} />}
+          element={<RoomScreenWithMap />}
         />
         <Route
           path={AppRoute.NotFound}

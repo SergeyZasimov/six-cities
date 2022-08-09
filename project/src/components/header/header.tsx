@@ -3,14 +3,19 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { logoutAction } from '../../store/api-actions';
 import { SyntheticEvent } from 'react';
+import { getAuthorizationStatus, getUserName } from '../../store/selectors';
 
-const isActive = ( pathname: string ) => pathname === AppRoute.Main;
 
 function Header(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-  const { authorizationStatus } = useAppSelector(( state ) => state);
+
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userName = useAppSelector(getUserName);
+
+  const isLogoLinkActive = pathname === AppRoute.Main;
+  const isSignInAvailable = pathname !== AppRoute.Login;
 
   const handleLogOutClick = ( evt: SyntheticEvent ): void => {
     evt.preventDefault();
@@ -24,7 +29,7 @@ function Header(): JSX.Element {
           <div className="header__left">
             <Link
               to={AppRoute.Main}
-              className={`header__logo-link ${isActive(pathname) && 'header__logo-link--active'} `}
+              className={`header__logo-link ${isLogoLinkActive && 'header__logo-link--active'} `}
             >
               <img
                 className="header__logo"
@@ -36,19 +41,20 @@ function Header(): JSX.Element {
             </Link>
           </div>
           {
-            authorizationStatus === AuthorizationStatus.Auth ?
+            isSignInAvailable &&
+            (authorizationStatus === AuthorizationStatus.Auth ?
               <nav className="header__nav">
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
-                    <a
+                    <Link
                       className="header__nav-link header__nav-link--profile"
-                      href="#"
+                      to={AppRoute.Favorites}
                     >
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                      <span className="header__user-name user__name">{userName}</span>
                       <span className="header__favorite-count">3</span>
-                    </a>
+                    </Link>
                   </li>
                   <li className="header__nav-item">
                     <Link
@@ -74,7 +80,7 @@ function Header(): JSX.Element {
                     </Link>
                   </li>
                 </ul>
-              </nav>
+              </nav>)
           }
         </div>
       </div>

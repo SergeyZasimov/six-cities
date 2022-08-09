@@ -1,12 +1,11 @@
 import { City } from './city';
 import { User } from './user';
-import { Comment } from './comment';
 import { Location } from './location';
 
 export type Offer = {
   id: number;
   images: string[];
-  previewImage?: string;
+  previewImage: string;
   title: string;
   description: string;
   isPremium: boolean;
@@ -18,7 +17,6 @@ export type Offer = {
   goods: string[];
   host: User;
   isFavorite: boolean;
-  comments: Comment[];
   city: City;
   location: Location;
 };

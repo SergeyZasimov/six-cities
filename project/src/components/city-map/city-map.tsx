@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
-import { Icon, Marker } from 'leaflet';
+import { Icon, LayerGroup, Marker } from 'leaflet';
 import { IconUrl, MapType } from '../../const';
 import { Offer } from '../../types/offer';
 import { City } from '../../types/city';
@@ -38,6 +38,7 @@ function CityMap({ offers, activeCardId, city }: MapProps): JSX.Element {
   useEffect(() => {
     if (map) {
       map.setView({ lat: latitude, lng: longitude }, zoom, { animate: true });
+      const markerGroup = new LayerGroup();
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -50,8 +51,12 @@ function CityMap({ offers, activeCardId, city }: MapProps): JSX.Element {
               ? ACTIVE_ICON
               : DEFAULT_ICON
           )
-          .addTo(map);
+          .addTo(markerGroup);
       });
+      markerGroup.addTo(map);
+      return () => {
+        map.removeLayer(markerGroup);
+      };
     }
   }, [map, offers, activeCardId, latitude, longitude, zoom]);
 
