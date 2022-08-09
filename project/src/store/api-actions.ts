@@ -7,13 +7,13 @@ import { Offer } from '../types/offer';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
 import {
-  setCommentList,
-  setNearbyOffers,
-  setRoom,
-  setOffers,
   redirectToRoute,
   setAuthorizationStatus,
+  setCommentList,
   setLoadDataStatus,
+  setNearbyOffers,
+  setOffers,
+  setRoom,
   setUserName,
 } from './actions';
 import { toast } from 'react-toastify';
@@ -28,24 +28,36 @@ type ThunkApiConfigType = {
 export const fetchOffersAction = createAsyncThunk<void,
   undefined,
   ThunkApiConfigType>(StateAction.Offer.LoadOffers, async ( _arg, { dispatch, extra: api } ) => {
-    const { data } = await api.get<Offer[]>(ApiRoute.Offers);
-    dispatch(setOffers(data));
-    dispatch(setLoadDataStatus(false));
+    try {
+      const { data } = await api.get<Offer[]>(ApiRoute.Offers);
+      dispatch(setLoadDataStatus(true));
+      dispatch(setOffers(data));
+      dispatch(setLoadDataStatus(false));
+    } catch (err) {
+      dispatch(setLoadDataStatus(false));
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
+    }
   });
 
 export const fetchRoomAction = createAsyncThunk<void,
   string,
   ThunkApiConfigType>(StateAction.Offer.LoadOffer, async ( id, { dispatch, extra: api } ) => {
-    const { data: room } = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
-    const { data: comments } = await api.get<Comment[]>(
-      `${ApiRoute.Comments}/${id}`,
-    );
-    const { data: nearbyOffers } = await api.get<Offer[]>(
-      `${ApiRoute.Offers}/${id}/nearby`,
-    );
-    dispatch(setRoom(room));
-    dispatch(setCommentList(comments));
-    dispatch(setNearbyOffers(nearbyOffers));
+    try {
+      const { data: room } = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
+      const { data: comments } = await api.get<Comment[]>(
+        `${ApiRoute.Comments}/${id}`,
+      );
+      const { data: nearbyOffers } = await api.get<Offer[]>(
+        `${ApiRoute.Offers}/${id}/nearby`,
+      );
+      dispatch(setRoom(room));
+      dispatch(setCommentList(comments));
+      dispatch(setNearbyOffers(nearbyOffers));
+    } catch {
+      dispatch(redirectToRoute(AppRoute.NotFound));
+    }
   });
 
 export const checkAuthAction = createAsyncThunk<void,
