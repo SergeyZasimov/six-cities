@@ -3,13 +3,17 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { logoutAction } from '../../store/api-actions';
 import { SyntheticEvent } from 'react';
+import { getAuthorizationStatus, getUserName } from '../../store/selectors';
 
 
 function Header(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-  const { authorizationStatus, userName } = useAppSelector(( state ) => state);
+
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userName = useAppSelector(getUserName);
+
   const isLogoLinkActive = pathname === AppRoute.Main;
   const isSignInAvailable = pathname !== AppRoute.Login;
 

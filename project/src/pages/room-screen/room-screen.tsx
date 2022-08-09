@@ -10,21 +10,25 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchRoomAction } from '../../store/api-actions';
 import { setLoadDataStatus } from '../../store/actions';
+import {
+  getAuthorizationStatus,
+  getCommentList,
+  getIsDataLoading,
+  getNearbyOffers,
+  getRoom
+} from '../../store/selectors';
 
 function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element {
 
-  const {
-    authorizationStatus,
-    isDataLoading,
-    room,
-    commentsList,
-    nearbyOffers
-  } = useAppSelector(( state ) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoading = useAppSelector(getIsDataLoading);
+  const room = useAppSelector(getRoom);
+  const commentsList = useAppSelector(getCommentList);
+  const nearbyOffers = useAppSelector(getNearbyOffers);
 
   const dispatch = useAppDispatch();
 
   const { id } = useParams();
-
 
   useEffect(() => {
     if (id) {

@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { MAX_COMMENT_LENGTH, MAX_RATING, MIN_COMMENT_LENGTH } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { sendNewComment } from '../../store/api-actions';
+import { getIsDataSending } from '../../store/selectors';
 
 type NewComment = {
   rating: number;
@@ -21,7 +22,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
   const [newComment, setNewComment] = useState<NewComment>(INITIAL_NEW_COMMENT);
   const dispatch = useAppDispatch();
 
-  const { isDataSending } = useAppSelector(( state ) => state);
+  const isDataSending = useAppSelector(getIsDataSending);
 
   const handleChangeRating = ( evt: ChangeEvent<HTMLInputElement> ): void => {
     evt.preventDefault();

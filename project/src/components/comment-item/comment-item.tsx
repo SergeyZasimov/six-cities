@@ -35,7 +35,7 @@ function CommentItem( { comment }: CommentItemProps ): JSX.Element {
         </p>
         <time
           className="reviews__time"
-          dateTime={dayjs(comment.date).format('YYYY-MM-DD')}
+          dateTime={dayjs(comment.date).toISOString()}
         >
           {dayjs(comment.date).format('MMMM YYYY')}
         </time>
