@@ -78,6 +78,9 @@ const reducer = createReducer(initialState, ( builder ) => {
     .addCase(sendNewComment.fulfilled, ( state, action ) => {
       state.commentsList = action.payload;
       state.isDataSending = false;
+    })
+    .addCase(sendNewComment.rejected, ( state ) => {
+      state.isDataSending = false;
     });
 });
 

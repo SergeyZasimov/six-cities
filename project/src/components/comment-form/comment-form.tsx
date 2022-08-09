@@ -36,7 +36,6 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
   const handleSubmit = ( evt: FormEvent<HTMLFormElement> ): void => {
     evt.preventDefault();
     dispatch(sendNewComment({ roomId, rating: newComment.rating, comment: newComment.comment }));
-    setNewComment(INITIAL_NEW_COMMENT);
   };
 
   const checkNewCommentLength = () =>
@@ -67,6 +66,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
                 id={`${ratingValue}-star`}
                 type="radio"
                 onChange={handleChangeRating}
+                disabled={isDataSending}
               />
               <label
                 htmlFor={`${ratingValue}-star`}
@@ -95,6 +95,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
         onChange={handleChangeText}
         value={newComment.comment}
         maxLength={MAX_COMMENT_LENGTH}
+        disabled={isDataSending}
       >
       </textarea>
       <div className="reviews__button-wrapper">
