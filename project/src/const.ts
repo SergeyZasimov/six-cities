@@ -35,6 +35,12 @@ enum ApiRoute {
   Comments = '/comments',
 }
 
+enum DomainNameSpace {
+  User = 'User',
+  Data = 'Data',
+  Location = 'Location',
+}
+
 const SortType = {
   Popular: 'Popular',
   PriceLowToHigh: 'Price: low to high',
@@ -46,28 +52,16 @@ const StateAction = {
   Location: {
     ChangeLocation: 'location/changeLocation',
   },
-  Offer: {
-    LoadOffers: 'offer/loadOffers',
-    LoadStatus: 'offer/loadStatus',
-    LoadOffer: 'offer/loadOffer',
-    LoadNearbyOffers: 'offer/loadNearbyOffers',
-  },
-  Comment: {
-    LoadComments: 'comment/loadComments',
-    LoadStatus: 'comment/loadStatus',
-    SendNewComment: 'comment/sendNewComment',
+  Data: {
+    LoadOffers: 'data/loadOffers',
+    LoadRoom: 'data/loadRoom',
+    SendNewComment: 'data/sendNewComment',
   },
   User: {
-    RequireAuthorization: 'user/requireAuthorization',
     CheckAuth: 'user/checkAuth',
     Login: 'user/login',
     Logout: 'user/logout',
     RedirectToRoute: 'user/redirectToRoute',
-    SetUserName: 'user/setUserName',
-  },
-  Error: {
-    ServerError: 'error/serverError',
-    ClearServerError: 'error/clearServerError',
   },
 } as const;
 
@@ -96,6 +90,7 @@ export {
   CardType,
   MapType,
   ApiRoute,
+  DomainNameSpace,
   SortType,
   StateAction,
   DEFAULT_CITIES,
