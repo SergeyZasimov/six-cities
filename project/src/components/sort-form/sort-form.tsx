@@ -1,17 +1,16 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { SortType } from '../../const';
 
 type SortFormProps = {
+  sortType: string;
   onChangeSortType: (sortType: string) => void;
 };
 
-function SortForm({ onChangeSortType }: SortFormProps): JSX.Element {
+function SortForm({ sortType, onChangeSortType }: SortFormProps): JSX.Element {
 
   const [isOpened, setIsOpened] = useState<boolean>(false);
-  const [activeSortType, setActiveSortType] = useState<string>(SortType.Popular);
 
   const handleSelectSortType = (type: string): void => {
-    setActiveSortType(type);
     setIsOpened(false);
     onChangeSortType(type);
   };
@@ -28,7 +27,7 @@ function SortForm({ onChangeSortType }: SortFormProps): JSX.Element {
         tabIndex={0}
         onClick={() => setIsOpened(!isOpened)}
       >
-        {activeSortType}
+        {sortType}
         <svg
           className="places__sorting-arrow"
           width="7"
@@ -42,7 +41,7 @@ function SortForm({ onChangeSortType }: SortFormProps): JSX.Element {
           Object.values(SortType).map((type) => (
             <li
               key={type}
-              className={`places__option ${activeSortType === type ? 'places__option--active' : ''}`}
+              className={`places__option ${sortType === type ? 'places__option--active' : ''}`}
               tabIndex={0}
               onClick={() => handleSelectSortType(type)}
             >{type}
@@ -54,4 +53,4 @@ function SortForm({ onChangeSortType }: SortFormProps): JSX.Element {
   );
 }
 
-export default SortForm;
+export default memo(SortForm);

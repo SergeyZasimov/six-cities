@@ -13,6 +13,7 @@ import { checkAuthStatus } from '../utils';
 import HistoryRouter from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
 import { Cities } from '../../types/city';
+import { getAuthorizationStatus, getIsDataLoading, getOffers } from '../../store/selectors';
 
 type AppProps = {
   cities: Cities;
@@ -21,9 +22,11 @@ type AppProps = {
 const MainScreenWithMap = withMap(MainScreen);
 const RoomScreenWithMap = withMap(RoomScreen);
 
-function App({ cities }: AppProps): JSX.Element {
+function App( { cities }: AppProps ): JSX.Element {
 
-  const { isDataLoading, offers, location, authorizationStatus } = useAppSelector(( state) => state);
+  const isDataLoading = useAppSelector(getIsDataLoading);
+  const offers = useAppSelector(getOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (checkAuthStatus(authorizationStatus) || isDataLoading) {
     return (
@@ -38,8 +41,6 @@ function App({ cities }: AppProps): JSX.Element {
           path={AppRoute.Main}
           element={
             <MainScreenWithMap
-              offers={offers}
-              location={location}
               cities={cities}
             />
           }
