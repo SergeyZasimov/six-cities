@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { DomainNameSpace } from '../../const';
 import { DataProcess } from '../../types/state';
-import { fetchOffersAction, fetchRoomAction } from '../api-actions';
+import { fetchOffersAction, fetchRoomAction, sendNewComment } from '../api-actions';
 
 const initialState: DataProcess = {
   offers: [],
@@ -22,8 +22,8 @@ export const dataProcess = createSlice({
         state.isDataLoading = true;
       })
       .addCase(fetchOffersAction.fulfilled, ( state, action ) => {
-        state.isDataLoading = false;
         state.offers = action.payload;
+        state.isDataLoading = false;
       })
       .addCase(fetchOffersAction.rejected, ( state ) => {
         state.isDataLoading = false;
@@ -39,6 +39,16 @@ export const dataProcess = createSlice({
       })
       .addCase(fetchRoomAction.rejected, ( state ) => {
         state.isDataLoading = false;
+      })
+      .addCase(sendNewComment.pending, ( state ) => {
+        state.isDataSending = true;
+      })
+      .addCase(sendNewComment.fulfilled, (state, action) => {
+        state.commentList = action.payload.data;
+        state.isDataSending = false;
+      })
+      .addCase(sendNewComment.rejected, (state) => {
+        state.isDataSending = false;
       });
   }
 });

@@ -74,13 +74,16 @@ const DEFAULT_CITIES = [
   'Dusseldorf',
 ] as const;
 
+enum NewCommentLength {
+  MaxLength = 300,
+  MinLength = 50,
+}
+
 const DEFAULT_CITY_NAME = 'Paris';
 const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
 const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 const MAX_RATING = 5;
-const MAX_COMMENT_LENGTH = 300;
-const MIN_COMMENT_LENGTH = 50;
 
 
 export {
@@ -99,6 +102,5 @@ export {
   REQUEST_TIMEOUT,
   AUTH_TOKEN_KEY_NAME,
   MAX_RATING,
-  MAX_COMMENT_LENGTH,
-  MIN_COMMENT_LENGTH,
+  NewCommentLength,
 };

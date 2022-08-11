@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
-import { MAX_COMMENT_LENGTH, MAX_RATING, MIN_COMMENT_LENGTH } from '../../const';
+import { MAX_RATING, NewCommentLength } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { sendNewComment } from '../../store/api-actions';
 import { getIsDataSending } from '../../store/selectors';
@@ -24,12 +24,12 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
 
   const isDataSending = useAppSelector(getIsDataSending);
 
-  const handleChangeRating = ( evt: ChangeEvent<HTMLInputElement> ): void => {
+  const handleRatingChange = ( evt: ChangeEvent<HTMLInputElement> ): void => {
     evt.preventDefault();
     setNewComment({ ...newComment, rating: +evt.target.value });
   };
 
-  const handleChangeText = ( evt: ChangeEvent<HTMLTextAreaElement> ): void => {
+  const handleTextChange = ( evt: ChangeEvent<HTMLTextAreaElement> ): void => {
     evt.preventDefault();
     setNewComment({ ...newComment, comment: evt.target.value });
   };
@@ -37,12 +37,13 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
   const handleSubmit = ( evt: FormEvent<HTMLFormElement> ): void => {
     evt.preventDefault();
     dispatch(sendNewComment({ roomId, rating: newComment.rating, comment: newComment.comment }));
+    setNewComment(INITIAL_NEW_COMMENT);
   };
 
-  const checkNewCommentLength = () =>
-    newComment.comment.length >= MIN_COMMENT_LENGTH && newComment.comment.length <= MAX_COMMENT_LENGTH;
+  const checkNewCommentLength =
+    newComment.comment.length >= NewCommentLength.MinLength && newComment.comment.length <= NewCommentLength.MaxLength;
 
-  const isSubmitAvailable = newComment.rating && checkNewCommentLength();
+  const isSubmitAvailable = newComment.rating && checkNewCommentLength;
 
   return (
     <form
@@ -66,7 +67,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
                 value={ratingValue}
                 id={`${ratingValue}-star`}
                 type="radio"
-                onChange={handleChangeRating}
+                onChange={handleRatingChange}
                 disabled={isDataSending}
               />
               <label
@@ -93,16 +94,16 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={handleChangeText}
+        onChange={handleTextChange}
         value={newComment.comment}
-        maxLength={MAX_COMMENT_LENGTH}
+        maxLength={NewCommentLength.MaxLength}
         disabled={isDataSending}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and
-          describe your stay with at least <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
+          describe your stay with at least <b className="reviews__text-amount">{NewCommentLength.MinLength} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"

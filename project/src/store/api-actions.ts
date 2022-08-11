@@ -86,15 +86,15 @@ export const logoutAction = createAsyncThunk<void, undefined, ThunkApiConfigType
     dropToken();
   });
 
-export const sendNewComment = createAsyncThunk<Comment[], CommentData, ThunkApiConfigType>(
+export const sendNewComment = createAsyncThunk<{ data: Comment[], status: number }, CommentData, ThunkApiConfigType>(
   StateAction.Data.SendNewComment,
   async ( { roomId, rating, comment }, { dispatch, extra: api } ) => {
-    const { data } = await api.post(
+    const { data, status } = await api.post(
       `${ApiRoute.Comments}/${roomId}`,
       {
         rating,
         comment,
       });
-    return data;
+    return {data, status};
   },
 );
