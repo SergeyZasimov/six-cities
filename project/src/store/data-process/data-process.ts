@@ -44,7 +44,7 @@ export const dataProcess = createSlice({
         state.isDataSending = true;
       })
       .addCase(sendNewComment.fulfilled, (state, action) => {
-        state.commentList = action.payload.data;
+        state.commentList = action.payload;
         state.isDataSending = false;
       })
       .addCase(sendNewComment.rejected, (state) => {
