@@ -75,8 +75,8 @@ const DEFAULT_CITIES = [
 ] as const;
 
 enum NewCommentLength {
-  MaxLength = 300,
-  MinLength = 50,
+  Max = 300,
+  Min = 50,
 }
 
 const DEFAULT_CITY_NAME = 'Paris';
