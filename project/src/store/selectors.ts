@@ -1,6 +1,5 @@
 import { State } from '../types/state';
-import { AuthorizationStatus, DomainNameSpace } from '../const';
-import { Offer } from '../types/offer';
+import { DomainNameSpace } from '../const';
 
 export const getAuthorizationStatus = ( state: State ) =>
   state[DomainNameSpace.User].authorizationStatus;
@@ -9,7 +8,7 @@ export const getLocation = ( state: State ) =>
   state[DomainNameSpace.Location].currentLocation;
 
 export const getOffers = ( state: State ) =>
-  state[DomainNameSpace.Data].offers;
+  state[DomainNameSpace.Data].offers.filter(( offer ) => offer.city.name === state[DomainNameSpace.Location].currentLocation);
 
 export const getCommentList = ( state: State ) =>
   state[DomainNameSpace.Data].commentList;

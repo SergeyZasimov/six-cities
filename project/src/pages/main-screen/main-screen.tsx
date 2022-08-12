@@ -8,7 +8,6 @@ import MapHocProps from '../../types/map-hoc';
 import { useAppSelector } from '../../hooks/store';
 import { getLocation, getOffers } from '../../store/selectors';
 import { SortType } from '../../const';
-import { Offer } from '../../types/offer';
 
 type MainScreenProps = {
   cities: Cities;
@@ -17,9 +16,8 @@ type MainScreenProps = {
 function MainScreen( { cities, renderMap, renderOfferList }: MainScreenProps & MapHocProps ): JSX.Element {
 
   const location = useAppSelector(getLocation);
-  const offers = useAppSelector(getOffers);
+  const locationOffers = useAppSelector(getOffers);
 
-  const locationOffers = offers.filter(( offer: Offer ) => offer.city.name === location);
   const city = locationOffers[0].city;
   const cardsOnPage = locationOffers.length;
 
