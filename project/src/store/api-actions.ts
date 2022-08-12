@@ -49,16 +49,10 @@ export const fetchRoomAction = createAsyncThunk<{ room: Offer, comments: Comment
 export const checkAuthAction = createAsyncThunk<string, undefined, ThunkApiConfigType>(
   StateAction.User.CheckAuth,
   async ( _arg, { dispatch, extra: api } ) => {
-    try {
-      const {
-        data: { email: userName },
-      } = await api.get(ApiRoute.Login);
-      return userName;
-    } catch (err) {
-      if (err instanceof Error) {
-        toast.error(err.message);
-      }
-    }
+    const {
+      data: { email: userName },
+    } = await api.get(ApiRoute.Login);
+    return userName;
   });
 
 export const loginAction = createAsyncThunk<string, AuthData, ThunkApiConfigType>(
