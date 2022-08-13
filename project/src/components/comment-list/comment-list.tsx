@@ -1,5 +1,6 @@
 import { Comment } from '../../types/comment';
 import CommentItem from '../comment-item/comment-item';
+import { memo } from 'react';
 
 type CommentListProps = {
   comments: Comment[];
@@ -17,4 +18,4 @@ function CommentList({ comments }: CommentListProps): JSX.Element {
   );
 }
 
-export default CommentList;
+export default memo(CommentList);

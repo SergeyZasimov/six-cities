@@ -1,28 +1,30 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { changeLocation } from '../../store/actions';
 import { Cities } from '../../types/city';
 import LocationItem from '../location-item/location-item';
+import { memo } from 'react';
+import { getLocation } from '../../store/selectors';
+import { changeLocation } from '../../store/location-process/location-process';
 
 type LocationListProps = {
   cities: Cities;
 };
 
-function LocationList({ cities }: LocationListProps): JSX.Element {
+function LocationList( { cities }: LocationListProps ): JSX.Element {
 
-  const selectedLocation = useAppSelector((state) => state.location);
+  const currentLocation = useAppSelector(getLocation);
   const dispatch = useAppDispatch();
 
-  const handleSelectLocation = (name: string) => {
-    dispatch(changeLocation({ location: name }));
+  const handleSelectLocation = ( name: string ) => {
+    dispatch(changeLocation(name));
   };
 
   return (
     <ul className="locations__list tabs__list">
-      {cities.map((city) => (
+      {cities.map(( city ) => (
         <LocationItem
           key={city}
           city={city}
-          selectedLocation={selectedLocation}
+          selectedLocation={currentLocation}
           onSelectLocation={handleSelectLocation}
         />
       ))}
@@ -31,4 +33,4 @@ function LocationList({ cities }: LocationListProps): JSX.Element {
   );
 }
 
-export default LocationList;
+export default memo(LocationList);

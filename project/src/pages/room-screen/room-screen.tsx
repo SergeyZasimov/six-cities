@@ -9,7 +9,6 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchRoomAction } from '../../store/api-actions';
-import { setLoadDataStatus } from '../../store/actions';
 import {
   getAuthorizationStatus,
   getCommentList,
@@ -17,12 +16,13 @@ import {
   getNearbyOffers,
   getRoom
 } from '../../store/selectors';
+import { Offer } from '../../types/offer';
 
 function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoading = useAppSelector(getIsDataLoading);
-  const room = useAppSelector(getRoom);
+  const room = useAppSelector(getRoom) as Offer;
   const commentsList = useAppSelector(getCommentList);
   const nearbyOffers = useAppSelector(getNearbyOffers);
 
@@ -31,15 +31,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
   const { id } = useParams();
 
   useEffect(() => {
-    if (id) {
-      dispatch(setLoadDataStatus(true));
-      dispatch(fetchRoomAction(id));
-      dispatch(setLoadDataStatus(false));
-    }
-
-    return () => {
-      window.scrollTo(0, 0);
-    };
+    dispatch(fetchRoomAction(id as string));
   }, [dispatch, id]);
 
   const isCommentFormAvailable = authorizationStatus === AuthorizationStatus.Auth;
@@ -176,7 +168,6 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
           {
             renderMap(
               nearbyOffers,
-              room.city
             )
           }
 

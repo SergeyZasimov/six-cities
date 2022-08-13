@@ -35,6 +35,12 @@ enum ApiRoute {
   Comments = '/comments',
 }
 
+enum DomainNameSpace {
+  User = 'User',
+  Data = 'Data',
+  Location = 'Location',
+}
+
 const SortType = {
   Popular: 'Popular',
   PriceLowToHigh: 'Price: low to high',
@@ -46,28 +52,16 @@ const StateAction = {
   Location: {
     ChangeLocation: 'location/changeLocation',
   },
-  Offer: {
-    LoadOffers: 'offer/loadOffers',
-    LoadStatus: 'offer/loadStatus',
-    LoadOffer: 'offer/loadOffer',
-    LoadNearbyOffers: 'offer/loadNearbyOffers',
-  },
-  Comment: {
-    LoadComments: 'comment/loadComments',
-    LoadStatus: 'comment/loadStatus',
-    SendNewComment: 'comment/sendNewComment',
+  Data: {
+    LoadOffers: 'data/loadOffers',
+    LoadRoom: 'data/loadRoom',
+    SendNewComment: 'data/sendNewComment',
   },
   User: {
-    RequireAuthorization: 'user/requireAuthorization',
     CheckAuth: 'user/checkAuth',
     Login: 'user/login',
     Logout: 'user/logout',
     RedirectToRoute: 'user/redirectToRoute',
-    SetUserName: 'user/setUserName',
-  },
-  Error: {
-    ServerError: 'error/serverError',
-    ClearServerError: 'error/clearServerError',
   },
 } as const;
 
@@ -80,13 +74,16 @@ const DEFAULT_CITIES = [
   'Dusseldorf',
 ] as const;
 
+enum NewCommentLength {
+  Max = 300,
+  Min = 50,
+}
+
 const DEFAULT_CITY_NAME = 'Paris';
 const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
 const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 const MAX_RATING = 5;
-const MAX_COMMENT_LENGTH = 300;
-const MIN_COMMENT_LENGTH = 50;
 
 
 export {
@@ -96,6 +93,7 @@ export {
   CardType,
   MapType,
   ApiRoute,
+  DomainNameSpace,
   SortType,
   StateAction,
   DEFAULT_CITIES,
@@ -104,6 +102,5 @@ export {
   REQUEST_TIMEOUT,
   AUTH_TOKEN_KEY_NAME,
   MAX_RATING,
-  MAX_COMMENT_LENGTH,
-  MIN_COMMENT_LENGTH,
+  NewCommentLength,
 };

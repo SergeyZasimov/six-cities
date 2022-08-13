@@ -8,11 +8,10 @@ import RoomScreen from '../../pages/room-screen/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import withMap from '../../hocs/with-map';
 import { useAppSelector } from '../../hooks/store';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import { checkAuthStatus } from '../utils';
 import HistoryRouter from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
 import { Cities } from '../../types/city';
+import { getAuthorizationStatus, getOffers } from '../../store/selectors';
 
 type AppProps = {
   cities: Cities;
@@ -21,15 +20,10 @@ type AppProps = {
 const MainScreenWithMap = withMap(MainScreen);
 const RoomScreenWithMap = withMap(RoomScreen);
 
-function App({ cities }: AppProps): JSX.Element {
+function App( { cities }: AppProps ): JSX.Element {
 
-  const { isDataLoading, offers, location, authorizationStatus } = useAppSelector(( state) => state);
-
-  if (checkAuthStatus(authorizationStatus) || isDataLoading) {
-    return (
-      <LoadingScreen />
-    );
-  }
+  const offers = useAppSelector(getOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <HistoryRouter history={browserHistory}>
@@ -38,8 +32,6 @@ function App({ cities }: AppProps): JSX.Element {
           path={AppRoute.Main}
           element={
             <MainScreenWithMap
-              offers={offers}
-              location={location}
               cities={cities}
             />
           }
