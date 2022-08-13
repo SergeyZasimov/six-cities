@@ -13,7 +13,7 @@ import { checkAuthStatus } from '../utils';
 import HistoryRouter from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
 import { Cities } from '../../types/city';
-import { getAuthorizationStatus, getIsDataLoading, getOffers } from '../../store/selectors';
+import { getAuthorizationStatus, getOffers } from '../../store/selectors';
 
 type AppProps = {
   cities: Cities;
@@ -24,15 +24,8 @@ const RoomScreenWithMap = withMap(RoomScreen);
 
 function App( { cities }: AppProps ): JSX.Element {
 
-  const isDataLoading = useAppSelector(getIsDataLoading);
   const offers = useAppSelector(getOffers);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
-  if (checkAuthStatus(authorizationStatus) || isDataLoading) {
-    return (
-      <LoadingScreen />
-    );
-  }
 
   return (
     <HistoryRouter history={browserHistory}>

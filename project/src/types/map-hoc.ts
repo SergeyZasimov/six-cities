@@ -2,7 +2,7 @@ import { City } from './city';
 import { Offer } from './offer';
 
 type MapHocProps = {
-  renderMap: (offers: Offer[], city: City) => JSX.Element;
+  renderMap: (offers: Offer[]) => JSX.Element;
   renderOfferList: (offers: Offer[]) => JSX.Element;
 };
 

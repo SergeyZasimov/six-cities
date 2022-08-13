@@ -27,3 +27,6 @@ export const getIsDataLoading = ( state: State ) =>
 
 export const getIsDataSending = ( state: State ) =>
   state[DomainNameSpace.Data].isDataSending;
+
+export const getCity = ( state: State ) =>
+  getOffers(state)[0].city;

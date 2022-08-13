@@ -6,8 +6,9 @@ import { getSortOffers } from '../../components/utils';
 import { Cities } from '../../types/city';
 import MapHocProps from '../../types/map-hoc';
 import { useAppSelector } from '../../hooks/store';
-import { getLocation, getOffers } from '../../store/selectors';
+import { getIsDataLoading, getLocation, getOffers } from '../../store/selectors';
 import { SortType } from '../../const';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 type MainScreenProps = {
   cities: Cities;
@@ -17,8 +18,7 @@ function MainScreen( { cities, renderMap, renderOfferList }: MainScreenProps & M
 
   const location = useAppSelector(getLocation);
   const locationOffers = useAppSelector(getOffers);
-
-  const city = locationOffers[0].city;
+  const isDataLoading = useAppSelector(getIsDataLoading);
   const cardsOnPage = locationOffers.length;
 
   const [sortType, setSortType] = useState<string>(SortType.Popular);
@@ -26,6 +26,10 @@ function MainScreen( { cities, renderMap, renderOfferList }: MainScreenProps & M
   const handleChangeSortType = useCallback(( type: string ) => {
     setSortType(type);
   }, []);
+
+  if (isDataLoading) {
+    return <LoadingScreen/>;
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -57,7 +61,6 @@ function MainScreen( { cities, renderMap, renderOfferList }: MainScreenProps & M
               {
                 renderMap(
                   locationOffers,
-                  city,
                 )
               }
             </div>

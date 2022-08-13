@@ -31,13 +31,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
   const { id } = useParams();
 
   useEffect(() => {
-    if (id && room === null) {
-      dispatch(fetchRoomAction(id));
-    }
-
-    return () => {
-      window.scrollTo(0, 0);
-    };
+    dispatch(fetchRoomAction(id as string));
   }, [dispatch, id]);
 
   const isCommentFormAvailable = authorizationStatus === AuthorizationStatus.Auth;
@@ -174,7 +168,6 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
           {
             renderMap(
               nearbyOffers,
-              room.city
             )
           }
 

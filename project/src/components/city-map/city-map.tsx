@@ -4,14 +4,14 @@ import useMap from '../../hooks/use-map';
 import { Icon, LayerGroup, Marker } from 'leaflet';
 import { IconUrl, MapType } from '../../const';
 import { Offer } from '../../types/offer';
-import { City } from '../../types/city';
 import { useLocation } from 'react-router-dom';
 import { getMapType } from '../utils';
+import { useAppSelector } from '../../hooks/store';
+import { getCity } from '../../store/selectors';
 
 type MapProps = {
   offers: Offer[];
   activeCardId: number | null;
-  city: City;
 };
 
 const DEFAULT_ICON = new Icon({
@@ -26,8 +26,9 @@ const ACTIVE_ICON = new Icon({
   iconAnchor: [20, 40]
 });
 
-function CityMap({ offers, activeCardId, city }: MapProps): JSX.Element {
+function CityMap({ offers, activeCardId }: MapProps): JSX.Element {
 
+  const city = useAppSelector(getCity);
   const { latitude, longitude, zoom } = city.location;
 
   const mapRef = useRef(null);
