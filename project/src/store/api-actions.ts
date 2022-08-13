@@ -16,7 +16,7 @@ type ThunkApiConfigType = {
 };
 
 export const fetchOffersAction = createAsyncThunk<Offer[], undefined, ThunkApiConfigType>(
-  StateAction.Data.LoadOffers, async ( _arg, { dispatch, extra: api } ) => {
+  StateAction.Data.LoadOffers, async ( _arg, { extra: api } ) => {
     try {
       const { data } = await api.get(ApiRoute.Offers);
       return data;
@@ -29,7 +29,7 @@ export const fetchOffersAction = createAsyncThunk<Offer[], undefined, ThunkApiCo
 
 export const fetchRoomAction = createAsyncThunk<{ room: Offer, comments: Comment[], nearbyOffers: Offer[] }, string, ThunkApiConfigType>(
   StateAction.Data.LoadRoom,
-  async ( id, { dispatch, extra: api } ) => {
+  async ( id, { extra: api } ) => {
     const { data: room } = await api.get<Offer>(
       `${ApiRoute.Offers}/${id}`
     );

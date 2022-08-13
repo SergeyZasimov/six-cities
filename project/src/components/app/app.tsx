@@ -8,8 +8,6 @@ import RoomScreen from '../../pages/room-screen/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import withMap from '../../hocs/with-map';
 import { useAppSelector } from '../../hooks/store';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import { checkAuthStatus } from '../utils';
 import HistoryRouter from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
 import { Cities } from '../../types/city';

@@ -1,4 +1,3 @@
-import { City } from './city';
 import { Offer } from './offer';
 
 type MapHocProps = {
