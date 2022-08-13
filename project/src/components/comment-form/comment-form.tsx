@@ -40,10 +40,10 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
     setNewComment(INITIAL_NEW_COMMENT);
   };
 
-  const checkNewCommentLength =
+  const isNewCommentLengthValid =
     newComment.comment.length >= NewCommentLength.Min && newComment.comment.length <= NewCommentLength.Max;
 
-  const isSubmitAvailable = newComment.rating && checkNewCommentLength;
+  const isSubmitAvailable = newComment.rating && isNewCommentLengthValid;
 
   return (
     <form
