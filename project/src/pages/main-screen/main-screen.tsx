@@ -4,17 +4,18 @@ import LocationList from '../../components/location-list/location-list';
 import SortForm from '../../components/sort-form/sort-form';
 import { getSortOffers } from '../../components/utils';
 import { Cities } from '../../types/city';
-import MapHocProps from '../../types/map-hoc';
 import { useAppSelector } from '../../hooks/store';
 import { getIsDataLoading, getLocation, getOffers } from '../../store/selectors';
 import { SortType } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
+import OfferList from '../../components/offer-list/offer-list';
+import CityMap from '../../components/city-map/city-map';
 
 type MainScreenProps = {
   cities: Cities;
 };
 
-function MainScreen( { cities, renderMap, renderOfferList }: MainScreenProps & MapHocProps ): JSX.Element {
+function MainScreen({ cities }: MainScreenProps): JSX.Element {
 
   const location = useAppSelector(getLocation);
   const locationOffers = useAppSelector(getOffers);
@@ -23,12 +24,18 @@ function MainScreen( { cities, renderMap, renderOfferList }: MainScreenProps & M
 
   const [sortType, setSortType] = useState<string>(SortType.Popular);
 
-  const handleChangeSortType = useCallback(( type: string ) => {
+  const handleChangeSortType = useCallback((type: string) => {
     setSortType(type);
   }, []);
 
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+
+  const handleCardHover = (id: number | null): void => {
+    setActiveCardId(id);
+  };
+
   if (isDataLoading) {
-    return <LoadingScreen/>;
+    return <LoadingScreen />;
   }
 
   return (
@@ -49,20 +56,20 @@ function MainScreen( { cities, renderMap, renderOfferList }: MainScreenProps & M
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{cardsOnPage} places to stay in {location}</b>
+
               <SortForm
                 sortType={sortType}
                 onChangeSortType={handleChangeSortType}
               />
 
-              {renderOfferList(getSortOffers(sortType, [...locationOffers]))}
+              <OfferList
+                offers={(getSortOffers(sortType, [...locationOffers]))}
+                onHoverCard={handleCardHover}
+              />
 
             </section>
             <div className="cities__right-section">
-              {
-                renderMap(
-                  locationOffers,
-                )
-              }
+              <CityMap offers={locationOffers} activeCardId={activeCardId} />
             </div>
           </div>
         </div>

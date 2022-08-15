@@ -2,7 +2,6 @@ import { getRatingStyle } from '../../components/utils';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
 import { AuthorizationStatus, FavoriteButtonScreen, MAX_GALLERY_LENGTH } from '../../const';
-import MapHocProps from '../../types/map-hoc';
 import Header from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -18,8 +17,10 @@ import {
 } from '../../store/selectors';
 import { Offer } from '../../types/offer';
 import FavoriteButton from '../../components/favorite-button/favorite-button';
+import CityMap from '../../components/city-map/city-map';
+import OfferList from '../../components/offer-list/offer-list';
 
-function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
+function RoomScreen(): JSX.Element {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoading = useAppSelector(getIsDataLoading);
@@ -156,17 +157,14 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
           </div>
         </section>
         <div className="container">
-          {
-            renderMap(
-              nearbyOffers,
-            )
-          }
+
+          <CityMap offers={[...nearbyOffers, room]} activeCardId={room.id} />
 
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            {
-              renderOfferList(nearbyOffers)
-            }
+
+            <OfferList offers={nearbyOffers} />
+
           </section>
         </div>
       </main>

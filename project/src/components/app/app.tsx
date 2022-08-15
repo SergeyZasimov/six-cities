@@ -6,7 +6,6 @@ import PrivateRoute from '../private-route/private-route';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import withMap from '../../hocs/with-map';
 import { useAppSelector } from '../../hooks/store';
 import HistoryRouter from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
@@ -19,9 +18,6 @@ import RestrictRoute from '../restrict-route/restrict-route';
 type AppProps = {
   cities: Cities;
 };
-
-const MainScreenWithMap = withMap(MainScreen);
-const RoomScreenWithMap = withMap(RoomScreen);
 
 function App({ cities }: AppProps): JSX.Element {
 
@@ -37,7 +33,7 @@ function App({ cities }: AppProps): JSX.Element {
         <Route
           path={AppRoute.Main}
           element={
-            <MainScreenWithMap
+            <MainScreen
               cities={cities}
             />
           }
@@ -60,7 +56,7 @@ function App({ cities }: AppProps): JSX.Element {
         />
         <Route
           path={`${AppRoute.Room}/:id`}
-          element={<RoomScreenWithMap />}
+          element={<RoomScreen />}
         />
         <Route
           path={AppRoute.NotFound}
