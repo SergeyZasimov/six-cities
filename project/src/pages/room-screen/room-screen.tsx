@@ -1,7 +1,7 @@
 import { getRatingStyle, setFavoriteButtonClassName } from '../../components/utils';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { AuthorizationStatus } from '../../const';
+import { AuthorizationStatus, MAX_GALLERY_LENGTH } from '../../const';
 import MapHocProps from '../../types/map-hoc';
 import Header from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
@@ -36,6 +36,8 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
 
   const isCommentFormAvailable = authorizationStatus === AuthorizationStatus.Auth;
 
+  const gallerySize = room?.images.length < MAX_GALLERY_LENGTH ? room?.images.length : MAX_GALLERY_LENGTH;
+
   if (isDataLoading || room === null) {
     return <LoadingScreen />;
   }
@@ -49,7 +51,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {
-                room.images.map(( img, index ) => (
+                room.images.slice(0, gallerySize).map(( img, index ) => (
                   <div
                     className="property__image-wrapper"
                     key={img}
