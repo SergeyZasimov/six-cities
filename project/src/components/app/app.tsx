@@ -14,6 +14,7 @@ import { Cities } from '../../types/city';
 import { getAuthorizationStatus } from '../../store/selectors';
 import { checkAuthStatus } from '../utils';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import RestrictRoute from '../restrict-route/restrict-route';
 
 type AppProps = {
   cities: Cities;
@@ -43,7 +44,11 @@ function App({ cities }: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Login}
-          element={<LoginScreen />}
+          element={
+            <RestrictRoute authStatus={authorizationStatus}>
+              <LoginScreen />
+            </RestrictRoute>
+          }
         />
         <Route
           path={AppRoute.Favorites}
