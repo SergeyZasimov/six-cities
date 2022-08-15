@@ -12,6 +12,8 @@ import HistoryRouter from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
 import { Cities } from '../../types/city';
 import { getAuthorizationStatus } from '../../store/selectors';
+import { checkAuthStatus } from '../utils';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 type AppProps = {
   cities: Cities;
@@ -20,9 +22,13 @@ type AppProps = {
 const MainScreenWithMap = withMap(MainScreen);
 const RoomScreenWithMap = withMap(RoomScreen);
 
-function App( { cities }: AppProps ): JSX.Element {
+function App({ cities }: AppProps): JSX.Element {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  if (checkAuthStatus(authorizationStatus)) {
+    return <LoadingScreen />;
+  }
 
   return (
     <HistoryRouter history={browserHistory}>
