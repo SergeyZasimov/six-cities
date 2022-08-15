@@ -46,6 +46,14 @@ export const fetchRoomAction = createAsyncThunk<{ room: Offer, comments: Comment
   }
 );
 
+export const fetchFavoriteOffers = createAsyncThunk<Offer[], undefined, ThunkApiConfigType>(
+  StateAction.Data.LoadFavorites,
+  async(_arg, {extra: api}) => {
+    const {data} = await api.get(ApiRoute.Favorite);
+    return data;
+  }
+);
+
 export const checkAuthAction = createAsyncThunk<string, undefined, ThunkApiConfigType>(
   StateAction.User.CheckAuth,
   async ( _arg, { dispatch, extra: api } ) => {

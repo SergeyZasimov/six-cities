@@ -19,6 +19,7 @@ export type DataProcess = {
   nearbyOffers: Offer[],
   isDataLoading: boolean,
   isDataSending: boolean,
+  favoriteOffers: Offer[],
 }
 
 export type LocationProcess = {

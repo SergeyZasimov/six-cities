@@ -33,6 +33,7 @@ enum ApiRoute {
   Login = '/login',
   Logout = '/logout',
   Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 enum DomainNameSpace {
@@ -55,6 +56,7 @@ const StateAction = {
   Data: {
     LoadOffers: 'data/loadOffers',
     LoadRoom: 'data/loadRoom',
+    LoadFavorites: 'data/loadFavorites',
     SendNewComment: 'data/sendNewComment',
   },
   User: {
