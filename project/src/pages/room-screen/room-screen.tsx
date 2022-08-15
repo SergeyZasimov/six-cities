@@ -145,7 +145,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
                     {room.host.name}
                   </span>
                   <span className="property__user-status">
-                    {room.host.isPro}
+                    {room.host.isPro && 'Pro'}
                   </span>
                 </div>
                 <div className="property__description">
