@@ -79,7 +79,7 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
                 <h1 className="property__name">
                   {room.title}
                 </h1>
-                <FavoriteButton isFavorite={room.isFavorite} screen={FavoriteButtonScreen.Property} />
+                <FavoriteButton isFavorite={room.isFavorite} screen={FavoriteButtonScreen.Property} id={room.id} />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -144,7 +144,7 @@ function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">reviews &middot;
+                <h2 className="reviews__title">Reviews &middot;
                   <span className="reviews__amount">{commentsList.length}</span>
                 </h2>
                 <CommentList comments={commentsList} />

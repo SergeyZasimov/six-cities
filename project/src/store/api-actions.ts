@@ -54,9 +54,17 @@ export const fetchFavoriteOffers = createAsyncThunk<Offer[], undefined, ThunkApi
   }
 );
 
+export const toggleFavorite = createAsyncThunk<Offer, {id: number, status: number}, ThunkApiConfigType>(
+  StateAction.Data.ToggleFavorite,
+  async({id, status}, {dispatch, extra: api}) => {
+    const {data} = await api.post(`${ApiRoute.Favorite}/${id}/${status}`);
+    return data;
+  }
+);
+
 export const checkAuthAction = createAsyncThunk<string, undefined, ThunkApiConfigType>(
   StateAction.User.CheckAuth,
-  async ( _arg, { dispatch, extra: api } ) => {
+  async ( _arg, { extra: api } ) => {
     const {
       data: { email: userName },
     } = await api.get(ApiRoute.Login);

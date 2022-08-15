@@ -40,6 +40,7 @@ enum DomainNameSpace {
   User = 'User',
   Data = 'Data',
   Location = 'Location',
+  Favorite = 'Favorite',
 }
 
 const SortType = {
@@ -57,6 +58,7 @@ const StateAction = {
     LoadOffers: 'data/loadOffers',
     LoadRoom: 'data/loadRoom',
     LoadFavorites: 'data/loadFavorites',
+    ToggleFavorite: 'data/toggleFavorite',
     SendNewComment: 'data/sendNewComment',
   },
   User: {

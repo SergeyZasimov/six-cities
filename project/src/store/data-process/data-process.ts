@@ -6,6 +6,7 @@ import {
   fetchOffersAction,
   fetchRoomAction,
   sendNewComment,
+  toggleFavorite,
 } from '../api-actions';
 
 const initialState: DataProcess = {
@@ -22,7 +23,7 @@ export const dataProcess = createSlice({
   name: DomainNameSpace.Data,
   initialState,
   reducers: {},
-  extraReducers(builder) {
+  extraReducers: (builder) => {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
         state.isDataLoading = true;
@@ -58,6 +59,29 @@ export const dataProcess = createSlice({
       })
       .addCase(fetchFavoriteOffers.fulfilled, (state, action) => {
         state.favoriteOffers = action.payload;
+      })
+      .addCase(toggleFavorite.fulfilled, (state, action) => {
+        const {payload: offer} = action;
+
+        if (offer.isFavorite) {
+          state.favoriteOffers.push(offer);
+        } else {
+          state.favoriteOffers = state.favoriteOffers.filter((item) => item.id !== offer.id);
+        }
+        const currentOffer = state.offers.find((item) => item.id === offer.id);
+        if (currentOffer) {
+          currentOffer.isFavorite = !currentOffer.isFavorite;
+        }
+
+        const currentNearbyOffer = state.nearbyOffers.find((item) => item.id === offer.id);
+        if (currentNearbyOffer) {
+          currentNearbyOffer.isFavorite = !currentNearbyOffer.isFavorite;
+        }
+
+        if (offer.id === state.room?.id) {
+          state.room.isFavorite = !state.room?.isFavorite;
+        }
       });
   },
 });
+

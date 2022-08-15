@@ -11,7 +11,7 @@ import { useAppSelector } from '../../hooks/store';
 import HistoryRouter from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
 import { Cities } from '../../types/city';
-import { getAuthorizationStatus, getOffers } from '../../store/selectors';
+import { getAuthorizationStatus } from '../../store/selectors';
 
 type AppProps = {
   cities: Cities;
@@ -22,7 +22,6 @@ const RoomScreenWithMap = withMap(RoomScreen);
 
 function App( { cities }: AppProps ): JSX.Element {
 
-  const offers = useAppSelector(getOffers);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
@@ -44,7 +43,7 @@ function App( { cities }: AppProps ): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authStatus={authorizationStatus}>
-              <FavoritesScreen offers={offers} />
+              <FavoritesScreen />
             </PrivateRoute>
           }
         />

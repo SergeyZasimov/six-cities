@@ -10,18 +10,22 @@ export type AppDispatch = typeof store.dispatch;
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   userName: string;
-}
+};
 
 export type DataProcess = {
-  offers: Offer[],
-  room: Offer | null,
-  commentList: Comment[],
-  nearbyOffers: Offer[],
-  isDataLoading: boolean,
-  isDataSending: boolean,
-  favoriteOffers: Offer[],
-}
+  offers: Offer[];
+  room: Offer | null;
+  commentList: Comment[];
+  nearbyOffers: Offer[];
+  isDataLoading: boolean;
+  isDataSending: boolean;
+  favoriteOffers: Offer[];
+};
 
 export type LocationProcess = {
-  currentLocation: typeof DEFAULT_CITIES[number],
-}
+  currentLocation: typeof DEFAULT_CITIES[number];
+};
+
+export type FavoriteProcess = {
+  currentFavoriteOffer: Offer | null;
+};
