@@ -1,7 +1,7 @@
-import { getRatingStyle, setFavoriteButtonClassName } from '../../components/utils';
+import { getRatingStyle } from '../../components/utils';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { AuthorizationStatus, MAX_GALLERY_LENGTH } from '../../const';
+import { AuthorizationStatus, FavoriteButtonScreen, MAX_GALLERY_LENGTH } from '../../const';
 import MapHocProps from '../../types/map-hoc';
 import Header from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
@@ -17,8 +17,9 @@ import {
   getRoom
 } from '../../store/selectors';
 import { Offer } from '../../types/offer';
+import FavoriteButton from '../../components/favorite-button/favorite-button';
 
-function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element {
+function RoomScreen({ renderMap, renderOfferList }: MapHocProps): JSX.Element {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoading = useAppSelector(getIsDataLoading);
@@ -51,7 +52,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {
-                room.images.slice(0, gallerySize).map(( img, index ) => (
+                room.images.slice(0, gallerySize).map((img, index) => (
                   <div
                     className="property__image-wrapper"
                     key={img}
@@ -78,19 +79,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
                 <h1 className="property__name">
                   {room.title}
                 </h1>
-                <button
-                  className={setFavoriteButtonClassName(room.isFavorite, 'property')}
-                  type="button"
-                >
-                  <svg
-                    className="property__bookmark-icon"
-                    width="31"
-                    height="33"
-                  >
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoriteButton isFavorite={room.isFavorite} screen={FavoriteButtonScreen.Property} />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -118,7 +107,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {
-                    room.goods.map(( good: string ) => (
+                    room.goods.map((good: string) => (
                       <li
                         key={good}
                         className="property__inside-item"

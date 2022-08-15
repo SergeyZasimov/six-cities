@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, CardType } from '../../const';
+import { AppRoute, CardType, FavoriteButtonScreen } from '../../const';
 import { Offer } from '../../types/offer';
-import { getRatingStyle, setFavoriteButtonClassName } from '../utils';
+import FavoriteButton from '../favorite-button/favorite-button';
+import { getRatingStyle } from '../utils';
 
 type OfferCardProps = {
   cardType: string;
@@ -72,19 +73,7 @@ function OfferCard({ cardType, offer, onHoverCard }: OfferCardProps): JSX.Elemen
             <b className="place-card__price-value">&euro;{offer.price}</b>{' '}
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            className={setFavoriteButtonClassName(offer.isFavorite, 'place-card')}
-            type="button"
-          >
-            <svg
-              className="place-card__bookmark-icon"
-              width="18"
-              height="19"
-            >
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">In bookmarks</span>
-          </button>
+          <FavoriteButton isFavorite={offer.isFavorite} screen={FavoriteButtonScreen.PlaceCard} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

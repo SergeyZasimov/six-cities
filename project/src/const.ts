@@ -79,6 +79,11 @@ enum NewCommentLength {
   Min = 50,
 }
 
+enum FavoriteButtonScreen {
+  PlaceCard = 'place-card',
+  Property = 'property',
+}
+
 const DEFAULT_CITY_NAME = 'Paris';
 const BACKEND_URL = 'https://10.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
@@ -96,6 +101,7 @@ export {
   ApiRoute,
   DomainNameSpace,
   NewCommentLength,
+  FavoriteButtonScreen,
   SortType,
   StateAction,
   DEFAULT_CITIES,

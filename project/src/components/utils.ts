@@ -16,14 +16,6 @@ const getRatingStyle = (
   return { width: `${width}%` };
 };
 
-const setFavoriteButtonClassName = (
-  isFavorite: boolean,
-  screen: string,
-): string =>
-  isFavorite
-    ? `${screen}__bookmark-button ${screen}__bookmark-button--active button`
-    : `${screen}__bookmark-button button`;
-
 const getCardType = ( pathname: string ): string => {
   if (pathname.includes(AppRoute.Room)) {
     return CardType.NearPlaces;
@@ -71,7 +63,6 @@ const checkAuthStatus = ( authStatus: AuthorizationStatus ): boolean =>
 
 export {
   getRatingStyle,
-  setFavoriteButtonClassName,
   getCardType,
   getMapType,
   getSortOffers,
