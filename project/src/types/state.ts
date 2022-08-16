@@ -18,7 +18,7 @@ export type DataProcess = {
   commentList: Comment[];
   nearbyOffers: Offer[];
   isDataLoading: boolean;
-  SendingStatus: SendingStatus;
+  sendingStatus: SendingStatus;
   favoriteOffers: Offer[];
 };
 

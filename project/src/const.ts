@@ -101,6 +101,7 @@ const REQUEST_TIMEOUT = 5000;
 const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 const MAX_RATING = 5;
 const MAX_GALLERY_LENGTH = 6;
+const MAX_COMMENTS = 10;
 
 
 export {
@@ -123,4 +124,5 @@ export {
   AUTH_TOKEN_KEY_NAME,
   MAX_RATING,
   MAX_GALLERY_LENGTH,
+  MAX_COMMENTS,
 };

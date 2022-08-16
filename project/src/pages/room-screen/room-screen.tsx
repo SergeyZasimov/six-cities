@@ -145,9 +145,7 @@ function RoomScreen(): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot;
-                  <span className="reviews__amount">{commentsList.length}</span>
-                </h2>
+
                 <CommentList comments={commentsList} />
                 {
                   isCommentFormAvailable && <CommentForm roomId={room.id} />

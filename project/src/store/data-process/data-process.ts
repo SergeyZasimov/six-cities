@@ -15,7 +15,7 @@ const initialState: DataProcess = {
   commentList: [],
   nearbyOffers: [],
   isDataLoading: false,
-  SendingStatus: SendingStatus.Unknown,
+  sendingStatus: SendingStatus.Unknown,
   favoriteOffers: [],
 };
 
@@ -48,32 +48,36 @@ export const dataProcess = createSlice({
         state.isDataLoading = false;
       })
       .addCase(sendNewComment.pending, (state) => {
-        state.SendingStatus = SendingStatus.Sending;
+        state.sendingStatus = SendingStatus.Sending;
       })
       .addCase(sendNewComment.fulfilled, (state, action) => {
         state.commentList = action.payload;
-        state.SendingStatus = SendingStatus.Success;
+        state.sendingStatus = SendingStatus.Success;
       })
       .addCase(sendNewComment.rejected, (state) => {
-        state.SendingStatus = SendingStatus.Error;
+        state.sendingStatus = SendingStatus.Error;
       })
       .addCase(fetchFavoriteOffers.fulfilled, (state, action) => {
         state.favoriteOffers = action.payload;
       })
       .addCase(toggleFavorite.fulfilled, (state, action) => {
-        const {payload: offer} = action;
+        const { payload: offer } = action;
 
         if (offer.isFavorite) {
           state.favoriteOffers.push(offer);
         } else {
-          state.favoriteOffers = state.favoriteOffers.filter((item) => item.id !== offer.id);
+          state.favoriteOffers = state.favoriteOffers.filter(
+            (item) => item.id !== offer.id,
+          );
         }
         const currentOffer = state.offers.find((item) => item.id === offer.id);
         if (currentOffer) {
           currentOffer.isFavorite = !currentOffer.isFavorite;
         }
 
-        const currentNearbyOffer = state.nearbyOffers.find((item) => item.id === offer.id);
+        const currentNearbyOffer = state.nearbyOffers.find(
+          (item) => item.id === offer.id,
+        );
         if (currentNearbyOffer) {
           currentNearbyOffer.isFavorite = !currentNearbyOffer.isFavorite;
         }
@@ -84,4 +88,3 @@ export const dataProcess = createSlice({
       });
   },
 });
-

@@ -28,7 +28,7 @@ export const getIsDataLoading = (state: State) =>
   state[DomainNameSpace.Data].isDataLoading;
 
 export const getSendingStatus = (state: State) =>
-  state[DomainNameSpace.Data].SendingStatus;
+  state[DomainNameSpace.Data].sendingStatus;
 
 export const getCity = (state: State) => getOffers(state)[0].city;
 
