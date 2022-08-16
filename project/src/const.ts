@@ -78,6 +78,13 @@ const DEFAULT_CITIES = [
   'Dusseldorf',
 ] as const;
 
+enum SendingStatus {
+  Unknown='Unknown',
+  Sending='Sending',
+  Success='Success',
+  Error='Error',
+}
+
 enum NewCommentLength {
   Max = 300,
   Min = 50,
@@ -106,6 +113,7 @@ export {
   DomainNameSpace,
   NewCommentLength,
   FavoriteButtonScreen,
+  SendingStatus,
   SortType,
   StateAction,
   DEFAULT_CITIES,

@@ -27,8 +27,8 @@ export const getUserName = (state: State) =>
 export const getIsDataLoading = (state: State) =>
   state[DomainNameSpace.Data].isDataLoading;
 
-export const getIsDataSending = (state: State) =>
-  state[DomainNameSpace.Data].isDataSending;
+export const getSendingStatus = (state: State) =>
+  state[DomainNameSpace.Data].SendingStatus;
 
 export const getCity = (state: State) => getOffers(state)[0].city;
 

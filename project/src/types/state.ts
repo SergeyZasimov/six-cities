@@ -1,5 +1,5 @@
 import { store } from '../store';
-import { AuthorizationStatus, DEFAULT_CITIES } from '../const';
+import { AuthorizationStatus, DEFAULT_CITIES, SendingStatus } from '../const';
 import { Offer } from './offer';
 import { Comment } from './comment';
 
@@ -18,7 +18,7 @@ export type DataProcess = {
   commentList: Comment[];
   nearbyOffers: Offer[];
   isDataLoading: boolean;
-  isDataSending: boolean;
+  SendingStatus: SendingStatus;
   favoriteOffers: Offer[];
 };
 

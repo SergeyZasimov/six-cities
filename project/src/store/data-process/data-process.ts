@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DomainNameSpace } from '../../const';
+import { DomainNameSpace, SendingStatus } from '../../const';
 import { DataProcess } from '../../types/state';
 import {
   fetchFavoriteOffers,
@@ -15,7 +15,7 @@ const initialState: DataProcess = {
   commentList: [],
   nearbyOffers: [],
   isDataLoading: false,
-  isDataSending: false,
+  SendingStatus: SendingStatus.Unknown,
   favoriteOffers: [],
 };
 
@@ -48,14 +48,14 @@ export const dataProcess = createSlice({
         state.isDataLoading = false;
       })
       .addCase(sendNewComment.pending, (state) => {
-        state.isDataSending = true;
+        state.SendingStatus = SendingStatus.Sending;
       })
       .addCase(sendNewComment.fulfilled, (state, action) => {
         state.commentList = action.payload;
-        state.isDataSending = false;
+        state.SendingStatus = SendingStatus.Success;
       })
       .addCase(sendNewComment.rejected, (state) => {
-        state.isDataSending = false;
+        state.SendingStatus = SendingStatus.Error;
       })
       .addCase(fetchFavoriteOffers.fulfilled, (state, action) => {
         state.favoriteOffers = action.payload;
