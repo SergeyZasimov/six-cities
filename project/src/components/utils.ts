@@ -8,11 +8,13 @@ import {
 } from '../const';
 import { Offer } from '../types/offer';
 
-const getRatingStyle = (
-  rating: number,
-  maxRating: number = MAX_RATING,
-): { width: string } => {
+const getRatingStyle = ( rating: number, maxRating: number = MAX_RATING, ): { width: string } => {
   const width = ((rating / maxRating) * 100);
+  return { width: `${width}%` };
+};
+
+const getRoundRatingStyle = ( rating: number, maxRating: number = MAX_RATING, ): { width: string } => {
+  const width = ((Math.round(rating) / maxRating) * 100);
   return { width: `${width}%` };
 };
 
@@ -67,4 +69,5 @@ export {
   getMapType,
   getSortOffers,
   checkAuthStatus,
+  getRoundRatingStyle,
 };

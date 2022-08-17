@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute, CardType, FavoriteButtonScreen } from '../../const';
 import { Offer } from '../../types/offer';
 import FavoriteButton from '../favorite-button/favorite-button';
-import { getRatingStyle } from '../utils';
+import { getRoundRatingStyle } from '../utils';
 
 type OfferCardProps = {
   cardType: string;
@@ -77,7 +77,7 @@ function OfferCard({ cardType, offer, onHoverCard }: OfferCardProps): JSX.Elemen
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={getRatingStyle(offer.rating)}></span>
+            <span style={getRoundRatingStyle(offer.rating)}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
