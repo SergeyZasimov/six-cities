@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { logoutAction } from '../../store/api-actions';
 import { memo, SyntheticEvent } from 'react';
-import { getAuthorizationStatus, getFavoriteOffers, getUserName } from '../../store/selectors';
+import { getFavoriteOffers } from '../../store/favotires-process/selectors';
+import { logoutAction } from '../../store/user-process/async-actions';
+import { getAuthorizationStatus, getUserName } from '../../store/user-process/selectors';
 
 
 function Header(): JSX.Element {

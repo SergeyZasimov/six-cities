@@ -1,7 +1,7 @@
 import FavoriteCardItem from '../../components/favorite-card-item/favorite-card-item';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks/store';
-import { getFavoriteOffers } from '../../store/selectors';
+import { getFavoriteOffers } from '../../store/favotires-process/selectors';
 import { Offer } from '../../types/offer';
 
 

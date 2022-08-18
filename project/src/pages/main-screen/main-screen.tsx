@@ -5,11 +5,14 @@ import SortForm from '../../components/sort-form/sort-form';
 import { getSortOffers } from '../../components/utils';
 import { Cities } from '../../types/city';
 import { useAppSelector } from '../../hooks/store';
-import { getIsDataLoading, getLocation, getOffers } from '../../store/selectors';
-import { SortType } from '../../const';
+import { LoadingStatus, SortType } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import OfferList from '../../components/offer-list/offer-list';
 import CityMap from '../../components/city-map/city-map';
+import { getLocationOffers, getOffersLoadingStatus } from '../../store/offers-process/selectors';
+import MainEmptyScreen from '../main-empty-screen/main-empty-screen';
+import { toast } from 'react-toastify';
+import { getLocation } from '../../store/location-process/selectors';
 
 type MainScreenProps = {
   cities: Cities;
@@ -18,24 +21,29 @@ type MainScreenProps = {
 function MainScreen({ cities }: MainScreenProps): JSX.Element {
 
   const location = useAppSelector(getLocation);
-  const locationOffers = useAppSelector(getOffers);
-  const isDataLoading = useAppSelector(getIsDataLoading);
+  const locationOffers = useAppSelector(getLocationOffers);
+  const offersLoadingStatus = useAppSelector(getOffersLoadingStatus);
   const cardsOnPage = locationOffers.length;
 
   const [sortType, setSortType] = useState<string>(SortType.Popular);
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
 
   const handleChangeSortType = useCallback((type: string) => {
     setSortType(type);
   }, []);
 
-  const [activeCardId, setActiveCardId] = useState<number | null>(null);
 
   const handleCardHover = (id: number | null): void => {
     setActiveCardId(id);
   };
 
-  if (isDataLoading) {
+  if (offersLoadingStatus === LoadingStatus.Loading) {
     return <LoadingScreen />;
+  }
+
+  if (offersLoadingStatus === LoadingStatus.Failed) {
+    toast.error('Offers didn\'t load');
+    return <MainEmptyScreen />;
   }
 
   return (
@@ -46,9 +54,7 @@ function MainScreen({ cities }: MainScreenProps): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <LocationList
-              cities={cities}
-            />
+            <LocationList />
           </section>
         </div>
         <div className="cities">

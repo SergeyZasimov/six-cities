@@ -10,10 +10,10 @@ import { useAppSelector } from '../../hooks/store';
 import HistoryRouter from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
 import { Cities } from '../../types/city';
-import { getAuthorizationStatus } from '../../store/selectors';
 import { checkAuthStatus } from '../utils';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import RestrictRoute from '../restrict-route/restrict-route';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type AppProps = {
   cities: Cities;

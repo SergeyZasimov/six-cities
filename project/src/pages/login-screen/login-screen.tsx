@@ -2,7 +2,7 @@ import Header from '../../components/header/header';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { AuthData } from '../../types/auth-data';
 import { useAppDispatch } from '../../hooks/store';
-import { loginAction } from '../../store/api-actions';
+import { loginAction } from '../../store/user-process/async-actions';
 
 function LoginScreen(): JSX.Element {
 

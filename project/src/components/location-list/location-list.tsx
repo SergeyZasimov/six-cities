@@ -1,16 +1,14 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { Cities } from '../../types/city';
 import LocationItem from '../location-item/location-item';
 import { memo } from 'react';
-import { getLocation } from '../../store/selectors';
 import { changeLocation } from '../../store/location-process/location-process';
+import { DEFAULT_CITIES } from '../../const';
+import { getLocation } from '../../store/location-process/selectors';
 
-type LocationListProps = {
-  cities: Cities;
-};
 
-function LocationList( { cities }: LocationListProps ): JSX.Element {
+function LocationList(): JSX.Element {
 
+  const cities = DEFAULT_CITIES;
   const currentLocation = useAppSelector(getLocation);
   const dispatch = useAppDispatch();
 

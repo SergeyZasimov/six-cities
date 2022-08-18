@@ -1,8 +1,8 @@
 import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react';
 import { MAX_RATING, NewCommentLength, SendingStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { sendNewComment } from '../../store/api-actions';
-import { getSendingStatus } from '../../store/selectors';
+import { sendNewComment } from '../../store/comments-process/async-actions';
+import { getSendingStatus } from '../../store/comments-process/selectors';
 
 type CommentFormProps = {
   roomId: number;

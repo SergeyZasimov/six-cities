@@ -2,8 +2,8 @@ import { SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus, FavoriteButtonScreen } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { toggleFavorite } from '../../store/api-actions';
-import { getAuthorizationStatus } from '../../store/selectors';
+import { toggleFavorite } from '../../store/favotires-process/async-actions';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type FavoriteButtonProps = {
   isFavorite: boolean;

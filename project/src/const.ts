@@ -40,7 +40,18 @@ enum DomainNameSpace {
   User = 'User',
   Data = 'Data',
   Location = 'Location',
-  Favorite = 'Favorite',
+  Favorites = 'Favorites',
+  Offers = 'Offers',
+  Room = 'Room',
+  NearbyOffers = 'NearbyOffers',
+  Comments = 'Comments',
+}
+
+enum LoadingStatus {
+  Idle = 'IDLE',
+  Loading = 'LOADING',
+  Success = 'SUCCESS',
+  Failed = 'FAILED',
 }
 
 const SortType = {
@@ -54,12 +65,22 @@ const StateAction = {
   Location: {
     ChangeLocation: 'location/changeLocation',
   },
-  Data: {
-    LoadOffers: 'data/loadOffers',
-    LoadRoom: 'data/loadRoom',
-    LoadFavorites: 'data/loadFavorites',
-    ToggleFavorite: 'data/toggleFavorite',
-    SendNewComment: 'data/sendNewComment',
+  Offers: {
+    LoadOffers: 'offers/loadOffers',
+  },
+  Room: {
+    LoadRoom: 'room/loadRoom',
+  },
+  NearbyOffers: {
+    LoadNearbyOffers: 'nearbyOffers/loadNearbyOffers',
+  },
+  Comments: {
+    SendNewComment: 'comments/sendNewComment',
+    LoadComments: 'comments/loadComments',
+  },
+  Favorites: {
+    LoadFavorites: 'favorites/loadFavorites',
+    ToggleFavorite: 'favorites/toggleFavorite',
   },
   User: {
     CheckAuth: 'user/checkAuth',
@@ -79,10 +100,10 @@ const DEFAULT_CITIES = [
 ] as const;
 
 enum SendingStatus {
-  Unknown='Unknown',
-  Sending='Sending',
-  Success='Success',
-  Error='Error',
+  Idle = 'IDLE',
+  Sending = 'SENDING',
+  Success = 'SUCCESS',
+  Failed = 'FAILED',
 }
 
 enum NewCommentLength {
@@ -103,7 +124,6 @@ const MAX_RATING = 5;
 const MAX_GALLERY_LENGTH = 6;
 const MAX_COMMENTS = 10;
 
-
 export {
   AppRoute,
   AuthorizationStatus,
@@ -115,6 +135,7 @@ export {
   NewCommentLength,
   FavoriteButtonScreen,
   SendingStatus,
+  LoadingStatus,
   SortType,
   StateAction,
   DEFAULT_CITIES,

@@ -1,46 +1,52 @@
 import { getRatingStyle } from '../../components/utils';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { AuthorizationStatus, FavoriteButtonScreen, MAX_GALLERY_LENGTH } from '../../const';
+import { AppRoute, AuthorizationStatus, FavoriteButtonScreen, LoadingStatus, MAX_GALLERY_LENGTH } from '../../const';
 import Header from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchRoomAction } from '../../store/api-actions';
-import {
-  getAuthorizationStatus,
-  getCommentList,
-  getIsDataLoading,
-  getNearbyOffers,
-  getRoom
-} from '../../store/selectors';
-import { Offer } from '../../types/offer';
+import { useNavigate, useParams } from 'react-router-dom';
 import FavoriteButton from '../../components/favorite-button/favorite-button';
 import CityMap from '../../components/city-map/city-map';
 import OfferList from '../../components/offer-list/offer-list';
+import { getRoom, getRoomLoadingStatus } from '../../store/room-process/selectors';
+import { Offer } from '../../types/offer';
+import { fetchRoomAction } from '../../store/room-process/async-actions';
+import { fetchNearbyOffers } from '../../store/nearby-offers-process/async-actions';
+import { getNearbyOffers } from '../../store/nearby-offers-process/selectors';
+import { getCommentsList } from '../../store/comments-process/selectors';
+import { fetchComments } from '../../store/comments-process/async-actions';
+import { resetLoadingStatus } from '../../store/room-process/room-process';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function RoomScreen(): JSX.Element {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isDataLoading = useAppSelector(getIsDataLoading);
+  const roomLoadingStatus = useAppSelector(getRoomLoadingStatus);
   const room = useAppSelector(getRoom) as Offer;
-  const commentsList = useAppSelector(getCommentList);
+  const commentsList = useAppSelector(getCommentsList);
   const nearbyOffers = useAppSelector(getNearbyOffers);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { id } = useParams();
 
   useEffect(() => {
     dispatch(fetchRoomAction(id as string));
+    dispatch(fetchNearbyOffers(id as string));
+    dispatch(fetchComments(id as string));
   }, [dispatch, id]);
 
   const isCommentFormAvailable = authorizationStatus === AuthorizationStatus.Auth;
 
-  const gallerySize = room?.images.length < MAX_GALLERY_LENGTH ? room?.images.length : MAX_GALLERY_LENGTH;
+  if (roomLoadingStatus === LoadingStatus.Failed) {
+    navigate(AppRoute.NotFound);
+    dispatch(resetLoadingStatus());
+  }
 
-  if (isDataLoading || room === null) {
+  if (roomLoadingStatus === LoadingStatus.Loading || room === null) {
     return <LoadingScreen />;
   }
 
@@ -53,7 +59,7 @@ function RoomScreen(): JSX.Element {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {
-                room.images.slice(0, gallerySize).map((img, index) => (
+                room.images.slice(0, MAX_GALLERY_LENGTH).map((img, index) => (
                   <div
                     className="property__image-wrapper"
                     key={img}
