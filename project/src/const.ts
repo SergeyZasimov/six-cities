@@ -38,7 +38,6 @@ enum ApiRoute {
 
 enum DomainNameSpace {
   User = 'User',
-  Data = 'Data',
   Location = 'Location',
   Favorites = 'Favorites',
   Offers = 'Offers',
