@@ -46,7 +46,7 @@ function RoomScreen(): JSX.Element {
     dispatch(resetLoadingStatus());
   }
 
-  if (roomLoadingStatus === LoadingStatus.Loading || room === null) {
+  if (roomLoadingStatus === LoadingStatus.Loading || Object.keys(room).length === 0) {
     return <LoadingScreen />;
   }
 

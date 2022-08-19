@@ -4,12 +4,12 @@ import { Offer } from '../../types/offer';
 import { fetchRoomAction } from './async-actions';
 
 type RoomProcess = {
-  room: Offer | null;
+  room: Offer;
   status: LoadingStatus;
 };
 
 const initialState: RoomProcess = {
-  room: null,
+  room: {} as Offer,
   status: LoadingStatus.Idle,
 };
 
@@ -19,7 +19,7 @@ export const roomProcess = createSlice({
   reducers: {
     toggleFavoriteRoom: (state, action) => {
       const { payload: offer } = action;
-      if (state.room !== null && offer.id === state.room.id) {
+      if (offer.id === state.room.id) {
         state.room.isFavorite = !state.room.isFavorite;
       }
     },
@@ -27,9 +27,7 @@ export const roomProcess = createSlice({
       state.status = LoadingStatus.Idle;
     },
     resetFavoritesRoom: (state) => {
-      if (state.room !== null) {
-        state.room.isFavorite = false;
-      }
+      state.room.isFavorite = false;
     },
   },
   extraReducers: (builder) => {
@@ -47,8 +45,5 @@ export const roomProcess = createSlice({
   },
 });
 
-export const {
-  toggleFavoriteRoom,
-  resetLoadingStatus,
-  resetFavoritesRoom,
-} = roomProcess.actions;
+export const { toggleFavoriteRoom, resetLoadingStatus, resetFavoritesRoom } =
+  roomProcess.actions;
