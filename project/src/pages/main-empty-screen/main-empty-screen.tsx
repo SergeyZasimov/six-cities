@@ -1,5 +1,6 @@
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
+import { DEFAULT_CITIES } from '../../const';
 import { useAppSelector } from '../../hooks/store';
 import { getLocation } from '../../store/location-process/selectors';
 
@@ -15,7 +16,7 @@ function MainEmptyScreen(): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <LocationList />
+            <LocationList cities={DEFAULT_CITIES} />
           </section>
         </div>
         <div className="cities">
