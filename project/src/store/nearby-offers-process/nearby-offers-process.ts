@@ -15,7 +15,7 @@ export const nearbyOffersProcess = createSlice({
   name: DomainNameSpace.NearbyOffers,
   initialState,
   reducers: {
-    toggleNearbyOffersFavorite: (state, action) => {
+    toggleFavoriteNearbyOffers: (state, action) => {
       const { payload: offer } = action;
       const updatedNearbyOffer = state.nearbyOffers.find(
         (item) => item.id === offer.id,
@@ -37,4 +37,7 @@ export const nearbyOffersProcess = createSlice({
   },
 });
 
-export const { toggleNearbyOffersFavorite, resetFavoritesNearbyOffers } = nearbyOffersProcess.actions;
+export const {
+  toggleFavoriteNearbyOffers,
+  resetFavoritesNearbyOffers,
+} = nearbyOffersProcess.actions;

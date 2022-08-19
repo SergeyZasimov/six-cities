@@ -17,10 +17,10 @@ export const roomProcess = createSlice({
   name: DomainNameSpace.Room,
   initialState,
   reducers: {
-    toggleRoomFavorite: (state, action) => {
+    toggleFavoriteRoom: (state, action) => {
       const { payload: offer } = action;
       if (state.room !== null && offer.id === state.room.id) {
-        state.room.isFavorite = !state.room?.isFavorite;
+        state.room.isFavorite = !state.room.isFavorite;
       }
     },
     resetLoadingStatus: (state) => {
@@ -30,7 +30,7 @@ export const roomProcess = createSlice({
       if (state.room !== null) {
         state.room.isFavorite = false;
       }
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -47,4 +47,8 @@ export const roomProcess = createSlice({
   },
 });
 
-export const { toggleRoomFavorite, resetLoadingStatus, resetFavoritesRoom } = roomProcess.actions;
+export const {
+  toggleFavoriteRoom,
+  resetLoadingStatus,
+  resetFavoritesRoom,
+} = roomProcess.actions;

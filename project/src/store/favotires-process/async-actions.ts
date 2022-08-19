@@ -2,9 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiRoute, StateAction } from '../../const';
 import { Offer } from '../../types/offer';
 import { ThunkApiConfigType } from '../../types/state';
-import { toggleNearbyOffersFavorite } from '../nearby-offers-process/nearby-offers-process';
+import { toggleFavoriteNearbyOffers } from '../nearby-offers-process/nearby-offers-process';
 import { toggleFavoriteOffers } from '../offers-process/offers-process';
-import { toggleRoomFavorite } from '../room-process/room-process';
+import { toggleFavoriteRoom } from '../room-process/room-process';
 
 export const fetchFavoriteOffers = createAsyncThunk<
   Offer[],
@@ -26,8 +26,8 @@ export const toggleFavorite = createAsyncThunk<
       `${ApiRoute.Favorite}/${id}/${status}`,
     );
     dispatch(toggleFavoriteOffers(data as Offer));
-    dispatch(toggleRoomFavorite(data as Offer));
-    dispatch(toggleNearbyOffersFavorite(data as Offer));
+    dispatch(toggleFavoriteRoom(data as Offer));
+    dispatch(toggleFavoriteNearbyOffers(data as Offer));
 
     return data as Offer;
   },

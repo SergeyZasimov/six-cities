@@ -42,7 +42,7 @@ function App({ cities }: AppProps): JSX.Element {
           path={AppRoute.Login}
           element={
             <RestrictRoute authStatus={authorizationStatus}>
-              <LoginScreen />
+              <LoginScreen cities={cities} />
             </RestrictRoute>
           }
         />
