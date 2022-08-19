@@ -14,15 +14,15 @@ const getCommentsLength = ( comments: Comment[] ): number => (
     : comments.length
 );
 
-const dateSorting = ( commentA: Comment, commentB: Comment ) => {
-  const timeA = dayjs(commentA.date);
-  const timeB = dayjs(commentB.date);
-  return timeB.diff(timeA);
+const sortCommentsByDate = ( commentA: Comment, commentB: Comment ) => {
+  const dateA = dayjs(commentA.date);
+  const dateB = dayjs(commentB.date);
+  return dateB.diff(dateA);
 };
 
 const prepareComments = ( comments: Comment[] ): Comment[] => (
   [...comments]
-    .sort(dateSorting)
+    .sort(sortCommentsByDate)
     .slice(0, getCommentsLength(comments))
 );
 
