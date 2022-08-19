@@ -1,31 +1,50 @@
 import Header from '../../components/header/header';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, SyntheticEvent, useState } from 'react';
 import { AuthData } from '../../types/auth-data';
 import { useAppDispatch } from '../../hooks/store';
-import { loginAction } from '../../store/api-actions';
+import { loginAction } from '../../store/user-process/async-actions';
+import { Cities } from '../../types/city';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { changeLocation } from '../../store/location-process/location-process';
 
-function LoginScreen(): JSX.Element {
+type LoginScreenProps = {
+  cities: Cities;
+};
+
+const getRandomCity = (cities: Cities) => {
+  const randomIndex = Math.floor(Math.random() * cities.length);
+  return cities[randomIndex];
+};
+
+function LoginScreen({ cities }: LoginScreenProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
   const [authData, setAuthData] = useState<AuthData>({ login: '', password: '' });
 
-  const handleLoginChange = ( evt: ChangeEvent<HTMLInputElement> ): void => {
+  const randomCity = getRandomCity(cities);
+
+  const handleLoginChange = (evt: ChangeEvent<HTMLInputElement>): void => {
     evt.preventDefault();
     setAuthData({ ...authData, login: evt.target.value });
   };
 
-  const handlePasswordChange = ( evt: ChangeEvent<HTMLInputElement> ): void => {
+  const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>): void => {
     evt.preventDefault();
     setAuthData({ ...authData, password: evt.target.value });
   };
 
-  const handleSubmit = ( evt: FormEvent<HTMLFormElement> ): void => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
 
     if (authData.login !== '' && authData.password !== '') {
       dispatch(loginAction(authData));
     }
+  };
+
+  const handleLocationLinkClick = (evt: SyntheticEvent) => {
+    dispatch(changeLocation(randomCity));
   };
 
   return (
@@ -74,12 +93,13 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a
+              <Link
+                to={AppRoute.Main}
                 className="locations__item-link"
-                href="#"
+                onClick={handleLocationLinkClick}
               >
-                <span>Amsterdam</span>
-              </a>
+                <span>{randomCity}</span>
+              </Link>
             </div>
           </section>
         </div>

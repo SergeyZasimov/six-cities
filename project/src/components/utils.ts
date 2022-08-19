@@ -8,21 +8,15 @@ import {
 } from '../const';
 import { Offer } from '../types/offer';
 
-const getRatingStyle = (
-  rating: number,
-  maxRating: number = MAX_RATING,
-): { width: string } => {
+const getRatingStyle = ( rating: number, maxRating: number = MAX_RATING, ): { width: string } => {
   const width = ((rating / maxRating) * 100);
   return { width: `${width}%` };
 };
 
-const setFavoriteButtonClassName = (
-  isFavorite: boolean,
-  screen: string,
-): string =>
-  isFavorite
-    ? `${screen}__bookmark-button ${screen}__bookmark-button--active button`
-    : `${screen}__bookmark-button button`;
+const getRoundRatingStyle = ( rating: number, maxRating: number = MAX_RATING, ): { width: string } => {
+  const width = ((Math.round(rating) / maxRating) * 100);
+  return { width: `${width}%` };
+};
 
 const getCardType = ( pathname: string ): string => {
   if (pathname.includes(AppRoute.Room)) {
@@ -71,9 +65,9 @@ const checkAuthStatus = ( authStatus: AuthorizationStatus ): boolean =>
 
 export {
   getRatingStyle,
-  setFavoriteButtonClassName,
   getCardType,
   getMapType,
   getSortOffers,
   checkAuthStatus,
+  getRoundRatingStyle,
 };

@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { logoutAction } from '../../store/api-actions';
 import { memo, SyntheticEvent } from 'react';
-import { getAuthorizationStatus, getUserName } from '../../store/selectors';
+import { getFavoriteOffers } from '../../store/favotires-process/selectors';
+import { logoutAction } from '../../store/user-process/async-actions';
+import { getAuthorizationStatus, getUserName } from '../../store/user-process/selectors';
 
 
 function Header(): JSX.Element {
@@ -13,6 +14,7 @@ function Header(): JSX.Element {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const userName = useAppSelector(getUserName);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
 
   const isLogoLinkActive = pathname === AppRoute.Main;
   const isSignInAvailable = pathname !== AppRoute.Login;
@@ -53,7 +55,7 @@ function Header(): JSX.Element {
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
                       <span className="header__user-name user__name">{userName}</span>
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__favorite-count">{favoriteOffers.length}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">

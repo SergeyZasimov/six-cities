@@ -7,7 +7,7 @@ import { Offer } from '../../types/offer';
 import { useLocation } from 'react-router-dom';
 import { getMapType } from '../utils';
 import { useAppSelector } from '../../hooks/store';
-import { getCity } from '../../store/selectors';
+import { getCity } from '../../store/offers-process/selectors';
 
 type MapProps = {
   offers: Offer[];

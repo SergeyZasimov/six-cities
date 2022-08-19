@@ -1,19 +1,19 @@
-import Header from '../../components/header/header';
+import { NavLink } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import './not-found-screen.css';
 
 function NotFoundScreen(): JSX.Element {
   return (
     <div className="page page--gray">
-      <Header />
       <main className="page--main">
         <section className="not-found__message">
           <p className="not-found__text">404</p>
           <p className="not-found__text">Page not found</p>
-          <a
+          <NavLink
             className="not-found__return-link"
-            href="/"
+            to={AppRoute.Main}
           >Return to main page
-          </a>
+          </NavLink>
         </section>
       </main>
     </div>

@@ -1,49 +1,49 @@
-import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
-import { MAX_RATING, NewCommentLength } from '../../const';
+import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react';
+import { MAX_RATING, NewCommentLength, SendingStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { sendNewComment } from '../../store/api-actions';
-import { getIsDataSending } from '../../store/selectors';
-
-type NewComment = {
-  rating: number;
-  comment: string;
-};
+import { sendNewComment } from '../../store/comments-process/async-actions';
+import { getSendingStatus } from '../../store/comments-process/selectors';
 
 type CommentFormProps = {
   roomId: number;
 };
 
-const RATING_VALUES = Array.from({ length: MAX_RATING }, ( _, index ) => MAX_RATING - index);
+const RATING_VALUES = Array.from({ length: MAX_RATING }, (_, index) => MAX_RATING - index);
 
-const INITIAL_NEW_COMMENT = { rating: 0, comment: '' };
+function CommentForm({ roomId }: CommentFormProps): JSX.Element {
 
-function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
-
-  const [newComment, setNewComment] = useState<NewComment>(INITIAL_NEW_COMMENT);
+  const [rating, setRating] = useState<number>(0);
+  const [comment, setComment] = useState<string>('');
   const dispatch = useAppDispatch();
 
-  const isDataSending = useAppSelector(getIsDataSending);
+  const sendingStatus = useAppSelector(getSendingStatus);
 
-  const handleRatingChange = ( evt: ChangeEvent<HTMLInputElement> ): void => {
+  useEffect(() => {
+    if (sendingStatus === SendingStatus.Success) {
+      setRating(0);
+      setComment('');
+    }
+  }, [sendingStatus]);
+
+  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>): void => {
     evt.preventDefault();
-    setNewComment({ ...newComment, rating: +evt.target.value });
+    setRating(+evt.target.value);
   };
 
-  const handleTextChange = ( evt: ChangeEvent<HTMLTextAreaElement> ): void => {
+  const handleTextChange = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
     evt.preventDefault();
-    setNewComment({ ...newComment, comment: evt.target.value });
+    setComment(evt.target.value);
   };
 
-  const handleSubmit = ( evt: FormEvent<HTMLFormElement> ): void => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
-    dispatch(sendNewComment({ roomId, rating: newComment.rating, comment: newComment.comment }));
-    setNewComment(INITIAL_NEW_COMMENT);
+    dispatch(sendNewComment({ roomId, rating: rating, comment: comment }));
   };
 
   const isNewCommentLengthValid =
-    newComment.comment.length >= NewCommentLength.Min && newComment.comment.length <= NewCommentLength.Max;
+    comment.length >= NewCommentLength.Min && comment.length <= NewCommentLength.Max;
 
-  const isSubmitAvailable = newComment.rating && isNewCommentLengthValid;
+  const isSubmitAvailable = rating && isNewCommentLengthValid;
 
   return (
     <form
@@ -59,7 +59,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
       </label>
       <div className="reviews__rating-form form__rating">
         {
-          RATING_VALUES.map(( ratingValue ) => (
+          RATING_VALUES.map((ratingValue) => (
             <Fragment key={ratingValue}>
               <input
                 className="form__rating-input visually-hidden"
@@ -68,7 +68,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
                 id={`${ratingValue}-star`}
                 type="radio"
                 onChange={handleRatingChange}
-                disabled={isDataSending}
+                disabled={sendingStatus === SendingStatus.Sending}
               />
               <label
                 htmlFor={`${ratingValue}-star`}
@@ -79,7 +79,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
                   className="form__star-image"
                   width="37"
                   height="33"
-                  style={ratingValue <= newComment.rating ? { fill: '#ff9000' } : {}}
+                  style={ratingValue <= rating ? { fill: '#ff9000' } : {}}
                 >
                   <use xlinkHref="#icon-star"></use>
                 </svg>
@@ -95,9 +95,9 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleTextChange}
-        value={newComment.comment}
+        value={comment}
         maxLength={NewCommentLength.Max}
-        disabled={isDataSending}
+        disabled={sendingStatus === SendingStatus.Sending}
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -108,7 +108,7 @@ function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isSubmitAvailable || isDataSending}
+          disabled={!isSubmitAvailable || sendingStatus === SendingStatus.Sending}
         >Submit
         </button>
       </div>

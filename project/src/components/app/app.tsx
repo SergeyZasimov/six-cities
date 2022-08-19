@@ -6,24 +6,26 @@ import PrivateRoute from '../private-route/private-route';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import withMap from '../../hocs/with-map';
 import { useAppSelector } from '../../hooks/store';
 import HistoryRouter from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
 import { Cities } from '../../types/city';
-import { getAuthorizationStatus, getOffers } from '../../store/selectors';
+import { checkAuthStatus } from '../utils';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import RestrictRoute from '../restrict-route/restrict-route';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type AppProps = {
   cities: Cities;
 };
 
-const MainScreenWithMap = withMap(MainScreen);
-const RoomScreenWithMap = withMap(RoomScreen);
+function App({ cities }: AppProps): JSX.Element {
 
-function App( { cities }: AppProps ): JSX.Element {
-
-  const offers = useAppSelector(getOffers);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  if (checkAuthStatus(authorizationStatus)) {
+    return <LoadingScreen />;
+  }
 
   return (
     <HistoryRouter history={browserHistory}>
@@ -31,26 +33,30 @@ function App( { cities }: AppProps ): JSX.Element {
         <Route
           path={AppRoute.Main}
           element={
-            <MainScreenWithMap
+            <MainScreen
               cities={cities}
             />
           }
         />
         <Route
           path={AppRoute.Login}
-          element={<LoginScreen />}
+          element={
+            <RestrictRoute authStatus={authorizationStatus}>
+              <LoginScreen cities={cities} />
+            </RestrictRoute>
+          }
         />
         <Route
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authStatus={authorizationStatus}>
-              <FavoritesScreen offers={offers} />
+              <FavoritesScreen />
             </PrivateRoute>
           }
         />
         <Route
           path={`${AppRoute.Room}/:id`}
-          element={<RoomScreenWithMap />}
+          element={<RoomScreen />}
         />
         <Route
           path={AppRoute.NotFound}

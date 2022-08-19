@@ -1,42 +1,52 @@
-import { getRatingStyle, setFavoriteButtonClassName } from '../../components/utils';
+import { getRatingStyle } from '../../components/utils';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { AuthorizationStatus } from '../../const';
-import MapHocProps from '../../types/map-hoc';
+import { AppRoute, AuthorizationStatus, FavoriteButtonScreen, LoadingStatus, MAX_GALLERY_LENGTH } from '../../const';
 import Header from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchRoomAction } from '../../store/api-actions';
-import {
-  getAuthorizationStatus,
-  getCommentList,
-  getIsDataLoading,
-  getNearbyOffers,
-  getRoom
-} from '../../store/selectors';
+import { useNavigate, useParams } from 'react-router-dom';
+import FavoriteButton from '../../components/favorite-button/favorite-button';
+import CityMap from '../../components/city-map/city-map';
+import OfferList from '../../components/offer-list/offer-list';
+import { getRoom, getRoomLoadingStatus } from '../../store/room-process/selectors';
 import { Offer } from '../../types/offer';
+import { fetchRoomAction } from '../../store/room-process/async-actions';
+import { fetchNearbyOffers } from '../../store/nearby-offers-process/async-actions';
+import { getNearbyOffers } from '../../store/nearby-offers-process/selectors';
+import { getCommentsList } from '../../store/comments-process/selectors';
+import { fetchComments } from '../../store/comments-process/async-actions';
+import { resetLoadingStatus } from '../../store/room-process/room-process';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
-function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element {
+function RoomScreen(): JSX.Element {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isDataLoading = useAppSelector(getIsDataLoading);
+  const roomLoadingStatus = useAppSelector(getRoomLoadingStatus);
   const room = useAppSelector(getRoom) as Offer;
-  const commentsList = useAppSelector(getCommentList);
+  const commentsList = useAppSelector(getCommentsList);
   const nearbyOffers = useAppSelector(getNearbyOffers);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { id } = useParams();
 
   useEffect(() => {
     dispatch(fetchRoomAction(id as string));
+    dispatch(fetchNearbyOffers(id as string));
+    dispatch(fetchComments(id as string));
   }, [dispatch, id]);
 
   const isCommentFormAvailable = authorizationStatus === AuthorizationStatus.Auth;
 
-  if (isDataLoading || room === null) {
+  if (roomLoadingStatus === LoadingStatus.Failed) {
+    navigate(AppRoute.NotFound);
+    dispatch(resetLoadingStatus());
+  }
+
+  if (roomLoadingStatus === LoadingStatus.Loading || Object.keys(room).length === 0) {
     return <LoadingScreen />;
   }
 
@@ -49,7 +59,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {
-                room.images.map(( img, index ) => (
+                room.images.slice(0, MAX_GALLERY_LENGTH).map((img, index) => (
                   <div
                     className="property__image-wrapper"
                     key={img}
@@ -76,19 +86,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
                 <h1 className="property__name">
                   {room.title}
                 </h1>
-                <button
-                  className={setFavoriteButtonClassName(room.isFavorite, 'property')}
-                  type="button"
-                >
-                  <svg
-                    className="property__bookmark-icon"
-                    width="31"
-                    height="33"
-                  >
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoriteButton isFavorite={room.isFavorite} screen={FavoriteButtonScreen.Property} id={room.id} />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -116,7 +114,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {
-                    room.goods.map(( good: string ) => (
+                    room.goods.map((good: string) => (
                       <li
                         key={good}
                         className="property__inside-item"
@@ -143,7 +141,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
                     {room.host.name}
                   </span>
                   <span className="property__user-status">
-                    {room.host.isPro}
+                    {room.host.isPro && 'Pro'}
                   </span>
                 </div>
                 <div className="property__description">
@@ -153,9 +151,7 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">reviews &middot;
-                  <span className="reviews__amount">{commentsList.length}</span>
-                </h2>
+
                 <CommentList comments={commentsList} />
                 {
                   isCommentFormAvailable && <CommentForm roomId={room.id} />
@@ -165,17 +161,14 @@ function RoomScreen( { renderMap, renderOfferList }: MapHocProps ): JSX.Element 
           </div>
         </section>
         <div className="container">
-          {
-            renderMap(
-              nearbyOffers,
-            )
-          }
+
+          <CityMap offers={[...nearbyOffers, room]} activeCardId={room.id} />
 
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            {
-              renderOfferList(nearbyOffers)
-            }
+
+            <OfferList offers={nearbyOffers} />
+
           </section>
         </div>
       </main>
