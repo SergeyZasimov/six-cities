@@ -27,6 +27,10 @@ export type CommentsProcess = {
   status: SendingStatus;
 };
 
+export type FavoritesProcess = {
+  favoriteOffers: Offer[];
+};
+
 export type ThunkApiConfigType = {
   dispatch: AppDispatch;
   state: State;
