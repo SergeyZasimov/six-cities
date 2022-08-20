@@ -2,11 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { DomainNameSpace, LoadingStatus } from '../../const';
 import { Offer } from '../../types/offer';
 import { fetchRoomAction } from './async-actions';
-
-type RoomProcess = {
-  room: Offer;
-  status: LoadingStatus;
-};
+import { RoomProcess } from '../../types/state';
 
 const initialState: RoomProcess = {
   room: {} as Offer,

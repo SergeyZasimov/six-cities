@@ -1,6 +1,7 @@
 import { store } from '../store';
-import { AuthorizationStatus, DEFAULT_CITIES } from '../const';
+import { AuthorizationStatus, DEFAULT_CITIES, LoadingStatus } from '../const';
 import { AxiosInstance } from 'axios';
+import { Offer } from './offer';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -13,6 +14,11 @@ export type UserProcess = {
 
 export type LocationProcess = {
   currentLocation: typeof DEFAULT_CITIES[number];
+};
+
+export type RoomProcess = {
+  room: Offer;
+  status: LoadingStatus;
 };
 
 export type ThunkApiConfigType = {
