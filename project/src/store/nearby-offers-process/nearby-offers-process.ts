@@ -1,11 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { DomainNameSpace } from '../../const';
-import { Offer } from '../../types/offer';
 import { fetchNearbyOffers } from './async-actions';
-
-type NearbyOffersProcess = {
-  nearbyOffers: Offer[];
-};
+import { NearbyOffersProcess } from '../../types/state';
 
 const initialState: NearbyOffersProcess = {
   nearbyOffers: [],

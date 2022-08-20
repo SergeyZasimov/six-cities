@@ -31,6 +31,10 @@ export type FavoritesProcess = {
   favoriteOffers: Offer[];
 };
 
+export type NearbyOffersProcess = {
+  nearbyOffers: Offer[];
+};
+
 export type ThunkApiConfigType = {
   dispatch: AppDispatch;
   state: State;
