@@ -35,6 +35,11 @@ export type NearbyOffersProcess = {
   nearbyOffers: Offer[];
 };
 
+export type OffersProcess = {
+  offers: Offer[];
+  status: LoadingStatus;
+};
+
 export type ThunkApiConfigType = {
   dispatch: AppDispatch;
   state: State;
