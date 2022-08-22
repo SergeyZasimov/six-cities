@@ -1,5 +1,5 @@
 import Header from '../../components/header/header';
-import { ChangeEvent, FormEvent, SyntheticEvent, useState } from 'react';
+import { FormEvent, useRef } from 'react';
 import { AuthData } from '../../types/auth-data';
 import { useAppDispatch } from '../../hooks/store';
 import { loginAction } from '../../store/user-process/async-actions';
@@ -12,38 +12,33 @@ type LoginScreenProps = {
   cities: Cities;
 };
 
-const getRandomCity = (cities: Cities) => {
+const getRandomCity = ( cities: Cities ) => {
   const randomIndex = Math.floor(Math.random() * cities.length);
   return cities[randomIndex];
 };
 
-function LoginScreen({ cities }: LoginScreenProps): JSX.Element {
+function LoginScreen( { cities }: LoginScreenProps ): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const [authData, setAuthData] = useState<AuthData>({ login: '', password: '' });
+  const loginRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const randomCity = getRandomCity(cities);
 
-  const handleLoginChange = (evt: ChangeEvent<HTMLInputElement>): void => {
-    evt.preventDefault();
-    setAuthData({ ...authData, login: evt.target.value });
-  };
-
-  const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>): void => {
-    evt.preventDefault();
-    setAuthData({ ...authData, password: evt.target.value });
-  };
-
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = ( evt: FormEvent<HTMLFormElement> ): void => {
     evt.preventDefault();
 
-    if (authData.login !== '' && authData.password !== '') {
+    if (loginRef.current !== null && passwordRef.current !== null) {
+      const authData: AuthData = {
+        login: loginRef.current.value,
+        password: passwordRef.current.value
+      };
       dispatch(loginAction(authData));
     }
   };
 
-  const handleLocationLinkClick = (evt: SyntheticEvent) => {
+  const handleLocationLinkClick = () => {
     dispatch(changeLocation(randomCity));
   };
 
@@ -67,8 +62,8 @@ function LoginScreen({ cities }: LoginScreenProps): JSX.Element {
                   type="email"
                   name="email"
                   placeholder="Email"
-                  value={authData.login}
-                  onChange={handleLoginChange}
+                  data-testid="login"
+                  ref={loginRef}
                   required
                 />
               </div>
@@ -79,8 +74,8 @@ function LoginScreen({ cities }: LoginScreenProps): JSX.Element {
                   type="password"
                   name="password"
                   placeholder="Password"
-                  value={authData.password}
-                  onChange={handlePasswordChange}
+                  data-testid="password"
+                  ref={passwordRef}
                   required
                 />
               </div>
