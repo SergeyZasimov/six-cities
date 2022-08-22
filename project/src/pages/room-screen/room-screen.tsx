@@ -55,7 +55,7 @@ function RoomScreen(): JSX.Element {
       <Header />
 
       <main className="page__main page__main--property">
-        <section className="property">
+        <section className="property" data-testid="room-container">
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {
@@ -164,7 +164,7 @@ function RoomScreen(): JSX.Element {
 
           <CityMap offers={[...nearbyOffers, room]} activeCardId={room.id} />
 
-          <section className="near-places places">
+          <section className="near-places places" data-testid="room-nearby-container">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
 
             <OfferList offers={nearbyOffers} />

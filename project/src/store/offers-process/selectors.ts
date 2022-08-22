@@ -1,7 +1,5 @@
 import { State } from '../../types/state';
 
-export const getAllOffers = (state: State) => state.Offers.offers;
-
 export const getOffersLoadingStatus = (state: State) => state.Offers.status;
 
 export const getLocationOffers = (state: State) => {
@@ -13,4 +11,3 @@ export const getLocationOffers = (state: State) => {
 };
 
 export const getCity = (state: State) => getLocationOffers(state)[0].city;
-
