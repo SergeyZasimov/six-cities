@@ -69,6 +69,7 @@ function CommentForm({ roomId }: CommentFormProps): JSX.Element {
                 type="radio"
                 onChange={handleRatingChange}
                 disabled={sendingStatus === SendingStatus.Sending}
+                data-testid={`rating-star-${ratingValue}`}
               />
               <label
                 htmlFor={`${ratingValue}-star`}
@@ -98,6 +99,7 @@ function CommentForm({ roomId }: CommentFormProps): JSX.Element {
         value={comment}
         maxLength={NewCommentLength.Max}
         disabled={sendingStatus === SendingStatus.Sending}
+        data-testid="comment-text"
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -109,6 +111,7 @@ function CommentForm({ roomId }: CommentFormProps): JSX.Element {
           className="reviews__submit form__submit button"
           type="submit"
           disabled={!isSubmitAvailable || sendingStatus === SendingStatus.Sending}
+          data-testid="comment-submit-button"
         >Submit
         </button>
       </div>
