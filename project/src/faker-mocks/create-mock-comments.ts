@@ -11,12 +11,11 @@ export const createMockComment = (): Comment => ({
   user: createMockHost(),
 });
 
-export const createMockCommentsList = ( count: number ): Comment[] => {
-  return Array.from({ length: count }, createMockComment);
-};
+export const createMockCommentsList = ( count: number ): Comment[] =>
+  Array.from({ length: count }, createMockComment);
 
 export const createMockNewComment = (): CommentData => ({
   roomId: datatype.number(),
   rating: datatype.number({ min: 1, max: 5 }),
   comment: lorem.words(50),
-})
+});

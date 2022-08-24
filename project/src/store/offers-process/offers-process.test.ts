@@ -8,7 +8,6 @@ import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
-import { fetchRoomAction } from '../room-process/async-actions';
 
 describe('OffersProcess: Reducer', () => {
   it('should return initial state', () => {
