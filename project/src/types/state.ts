@@ -1,6 +1,8 @@
 import { store } from '../store';
-import { AuthorizationStatus, DEFAULT_CITIES } from '../const';
+import { AuthorizationStatus, DEFAULT_CITIES, LoadingStatus, SendingStatus } from '../const';
 import { AxiosInstance } from 'axios';
+import { Offer } from './offer';
+import { Comment } from './comment';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -13,6 +15,29 @@ export type UserProcess = {
 
 export type LocationProcess = {
   currentLocation: typeof DEFAULT_CITIES[number];
+};
+
+export type RoomProcess = {
+  room: Offer;
+  status: LoadingStatus;
+};
+
+export type CommentsProcess = {
+  commentsList: Comment[];
+  status: SendingStatus;
+};
+
+export type FavoritesProcess = {
+  favoriteOffers: Offer[];
+};
+
+export type NearbyOffersProcess = {
+  nearbyOffers: Offer[];
+};
+
+export type OffersProcess = {
+  offers: Offer[];
+  status: LoadingStatus;
 };
 
 export type ThunkApiConfigType = {

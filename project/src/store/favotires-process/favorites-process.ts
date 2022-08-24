@@ -1,11 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { DomainNameSpace } from '../../const';
-import { Offer } from '../../types/offer';
 import { fetchFavoriteOffers, toggleFavorite } from './async-actions';
+import { FavoritesProcess } from '../../types/state';
 
-type FavoritesProcess = {
-  favoriteOffers: Offer[];
-};
 
 const initialState: FavoritesProcess = {
   favoriteOffers: [],

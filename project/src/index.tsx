@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { fetchOffersAction } from './store/offers-process/async-actions';
 import { fetchFavoriteOffers } from './store/favotires-process/async-actions';
 import { checkAuthAction } from './store/user-process/async-actions';
+import HistoryRouter from './components/history-router/history-router';
+import { browserHistory } from './browser-history';
 
 store.dispatch(checkAuthAction());
 store.dispatch(fetchOffersAction());
@@ -21,8 +23,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ToastContainer />
-      <App cities={DEFAULT_CITIES} />
+      <HistoryRouter history={browserHistory}>
+        <ToastContainer />
+        <App cities={DEFAULT_CITIES} />
+      </HistoryRouter>
     </Provider>
   </React.StrictMode>,
 );

@@ -1,12 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { DomainNameSpace, LoadingStatus } from '../../const';
-import { Offer } from '../../types/offer';
 import { fetchOffersAction } from './async-actions';
-
-type OffersProcess = {
-  offers: Offer[];
-  status: LoadingStatus;
-};
+import { OffersProcess } from '../../types/state';
 
 const initialState: OffersProcess = {
   offers: [],

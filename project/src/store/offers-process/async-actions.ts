@@ -15,6 +15,6 @@ export const fetchOffersAction = createAsyncThunk<
   undefined,
   ThunkApiConfigType
 >(StateAction.Offers.LoadOffers, async (_arg, { extra: api }) => {
-  const { data } = await api.get(ApiRoute.Offers);
+  const { data } = await api.get<Offer[]>(ApiRoute.Offers);
   return data;
 });

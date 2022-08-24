@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommentForm: Snapshot should render correctly 1`] = `
+<div>
+  <form
+    action="#"
+    class="reviews__form form"
+    method="post"
+  >
+    <label
+      class="reviews__label form__label"
+      for="review"
+    >
+      Your review
+    </label>
+    <div
+      class="reviews__rating-form form__rating"
+    >
+      <input
+        class="form__rating-input visually-hidden"
+        data-testid="rating-star-5"
+        id="5-star"
+        name="rating"
+        type="radio"
+        value="5"
+      />
+      <label
+        class="reviews__rating-label form__rating-label"
+        for="5-star"
+        title="perfect"
+      >
+        <svg
+          class="form__star-image"
+          height="33"
+          width="37"
+        >
+          <use
+            xlink:href="#icon-star"
+          />
+        </svg>
+      </label>
+      <input
+        class="form__rating-input visually-hidden"
+        data-testid="rating-star-4"
+        id="4-star"
+        name="rating"
+        type="radio"
+        value="4"
+      />
+      <label
+        class="reviews__rating-label form__rating-label"
+        for="4-star"
+        title="perfect"
+      >
+        <svg
+          class="form__star-image"
+          height="33"
+          width="37"
+        >
+          <use
+            xlink:href="#icon-star"
+          />
+        </svg>
+      </label>
+      <input
+        class="form__rating-input visually-hidden"
+        data-testid="rating-star-3"
+        id="3-star"
+        name="rating"
+        type="radio"
+        value="3"
+      />
+      <label
+        class="reviews__rating-label form__rating-label"
+        for="3-star"
+        title="perfect"
+      >
+        <svg
+          class="form__star-image"
+          height="33"
+          width="37"
+        >
+          <use
+            xlink:href="#icon-star"
+          />
+        </svg>
+      </label>
+      <input
+        class="form__rating-input visually-hidden"
+        data-testid="rating-star-2"
+        id="2-star"
+        name="rating"
+        type="radio"
+        value="2"
+      />
+      <label
+        class="reviews__rating-label form__rating-label"
+        for="2-star"
+        title="perfect"
+      >
+        <svg
+          class="form__star-image"
+          height="33"
+          width="37"
+        >
+          <use
+            xlink:href="#icon-star"
+          />
+        </svg>
+      </label>
+      <input
+        class="form__rating-input visually-hidden"
+        data-testid="rating-star-1"
+        id="1-star"
+        name="rating"
+        type="radio"
+        value="1"
+      />
+      <label
+        class="reviews__rating-label form__rating-label"
+        for="1-star"
+        title="perfect"
+      >
+        <svg
+          class="form__star-image"
+          height="33"
+          width="37"
+        >
+          <use
+            xlink:href="#icon-star"
+          />
+        </svg>
+      </label>
+    </div>
+    <textarea
+      class="reviews__textarea form__textarea"
+      data-testid="comment-text"
+      id="review"
+      maxlength="300"
+      name="review"
+      placeholder="Tell how was your stay, what you like and what can be improved"
+    />
+    <div
+      class="reviews__button-wrapper"
+    >
+      <p
+        class="reviews__help"
+      >
+        To submit review please make sure to set 
+        <span
+          class="reviews__star"
+        >
+          rating
+        </span>
+         and describe your stay with at least 
+        <b
+          class="reviews__text-amount"
+        >
+          50
+           characters
+        </b>
+        .
+      </p>
+      <button
+        class="reviews__submit form__submit button"
+        data-testid="comment-submit-button"
+        disabled=""
+        type="submit"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+`;

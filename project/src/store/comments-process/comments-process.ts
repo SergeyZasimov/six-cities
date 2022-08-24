@@ -1,12 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { DomainNameSpace, SendingStatus } from '../../const';
-import { Comment } from '../../types/comment';
+import { CommentsProcess } from '../../types/state';
 import { fetchComments, sendNewComment } from './async-actions';
-
-type CommentsProcess = {
-  commentsList: Comment[];
-  status: SendingStatus;
-};
 
 const initialState: CommentsProcess = {
   commentsList: [],

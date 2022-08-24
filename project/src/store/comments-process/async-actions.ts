@@ -19,7 +19,7 @@ export const sendNewComment = createAsyncThunk<
 >(
   StateAction.Comments.SendNewComment,
   async ({ roomId, rating, comment }, { extra: api }) => {
-    const { data } = await api.post(`${ApiRoute.Comments}/${roomId}`, {
+    const { data } = await api.post<Comment[]>(`${ApiRoute.Comments}/${roomId}`, {
       rating,
       comment,
     });
