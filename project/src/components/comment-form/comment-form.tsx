@@ -1,16 +1,16 @@
-import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react';
-import { MAX_RATING, NewCommentLength, SendingStatus } from '../../const';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { NewCommentLength, SendingStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { sendNewComment } from '../../store/comments-process/async-actions';
 import { getSendingStatus } from '../../store/comments-process/selectors';
+import RatingStars from '../rating-stars/rating-stars';
 
 type CommentFormProps = {
   roomId: number;
 };
 
-const RATING_VALUES = Array.from({ length: MAX_RATING }, (_, index) => MAX_RATING - index);
 
-function CommentForm({ roomId }: CommentFormProps): JSX.Element {
+function CommentForm( { roomId }: CommentFormProps ): JSX.Element {
 
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>('');
@@ -25,17 +25,17 @@ function CommentForm({ roomId }: CommentFormProps): JSX.Element {
     }
   }, [sendingStatus]);
 
-  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>): void => {
+  const handleRatingChange = ( evt: ChangeEvent<HTMLInputElement> ): void => {
     evt.preventDefault();
     setRating(+evt.target.value);
   };
 
-  const handleTextChange = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
+  const handleTextChange = ( evt: ChangeEvent<HTMLTextAreaElement> ): void => {
     evt.preventDefault();
     setComment(evt.target.value);
   };
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = ( evt: FormEvent<HTMLFormElement> ): void => {
     evt.preventDefault();
     dispatch(sendNewComment({ roomId, rating: rating, comment: comment }));
   };
@@ -58,37 +58,11 @@ function CommentForm({ roomId }: CommentFormProps): JSX.Element {
       >Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        {
-          RATING_VALUES.map((ratingValue) => (
-            <Fragment key={ratingValue}>
-              <input
-                className="form__rating-input visually-hidden"
-                name="rating"
-                value={ratingValue}
-                id={`${ratingValue}-star`}
-                type="radio"
-                onChange={handleRatingChange}
-                disabled={sendingStatus === SendingStatus.Sending}
-                data-testid={`rating-star-${ratingValue}`}
-              />
-              <label
-                htmlFor={`${ratingValue}-star`}
-                className="reviews__rating-label form__rating-label"
-                title="perfect"
-              >
-                <svg
-                  className="form__star-image"
-                  width="37"
-                  height="33"
-                  style={ratingValue <= rating ? { fill: '#ff9000' } : {}}
-                >
-                  <use xlinkHref="#icon-star"></use>
-                </svg>
-              </label>
-            </Fragment>
-
-          ))
-        }
+        <RatingStars
+          rating={rating}
+          onRatingChange={handleRatingChange}
+          sendingStatus={sendingStatus}
+        />
       </div>
       <textarea
         className="reviews__textarea form__textarea"

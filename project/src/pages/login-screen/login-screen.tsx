@@ -7,6 +7,7 @@ import { Cities } from '../../types/city';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { changeLocation } from '../../store/location-process/location-process';
+import { toast } from 'react-toastify';
 
 type LoginScreenProps = {
   cities: Cities;
@@ -16,6 +17,10 @@ const getRandomCity = ( cities: Cities ) => {
   const randomIndex = Math.floor(Math.random() * cities.length);
   return cities[randomIndex];
 };
+
+const validatePassword = ( password: string ): boolean =>
+  (/[a-zA-Z]+[1-90]+|[1-90]+[a-zA-Z]+/).test(password);
+
 
 function LoginScreen( { cities }: LoginScreenProps ): JSX.Element {
 
@@ -30,11 +35,16 @@ function LoginScreen( { cities }: LoginScreenProps ): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
-      const authData: AuthData = {
-        login: loginRef.current.value,
-        password: passwordRef.current.value
-      };
-      dispatch(loginAction(authData));
+
+      if (validatePassword(passwordRef.current.value)) {
+        const authData: AuthData = {
+          login: loginRef.current.value,
+          password: passwordRef.current.value
+        };
+        dispatch(loginAction(authData));
+      } else {
+        toast.warning('Incorrect password');
+      }
     }
   };
 
